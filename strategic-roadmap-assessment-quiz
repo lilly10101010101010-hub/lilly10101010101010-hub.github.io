@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Roadmap Builder Quiz | Advanced Planning Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #2A5C82;
+            --secondary: #5D8AA8;
+            --accent: #FF6B35;
+            --light: #F5F9FC;
+            --dark: #1E3A5F;
+            --success: #2ECC71;
+            --warning: #E74C3C;
+            --neutral: #95A5A6;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --gradient: linear-gradient(135deg, #2A5C82 0%, #5D8AA8 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background-color: #f8fafd;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+            min-height: calc(100vh - 300px);
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        /* Intro Screen */
+        .intro-screen {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .intro-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-screen h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .intro-screen p {
+            font-size: 1.1rem;
+            color: var(--neutral);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(42, 92, 130, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(42, 92, 130, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Question Screen */
+        .question-screen {
+            display: none;
+            padding: 3rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .question-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: rgba(42, 92, 130, 0.1);
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .progress-container {
+            width: 60%;
+            max-width: 400px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-content {
+            margin-bottom: 3rem;
+        }
+
+        .question-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .question-hint {
+            font-size: 1rem;
+            color: var(--neutral);
+            font-style: italic;
+            padding: 15px;
+            background: rgba(149, 165, 166, 0.05);
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e8f0f7;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(42, 92, 130, 0.03);
+            box-shadow: 0 10px 20px rgba(42, 92, 130, 0.1);
+        }
+
+        .option-letter {
+            width: 50px;
+            height: 50px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(42, 92, 130, 0.05);
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .results-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        .results-score {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .results-message {
+            font-size: 1.2rem;
+            color: var(--neutral);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .results-details {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .results-details h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .incorrect-questions {
+            display: none;
+        }
+
+        .incorrect-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid var(--warning);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .incorrect-question {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .incorrect-answer, .correct-answer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-label {
+            font-weight: 600;
+            min-width: 120px;
+        }
+
+        .incorrect-answer .answer-label {
+            color: var(--warning);
+        }
+
+        .correct-answer .answer-label {
+            color: var(--success);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .stats-bar {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .progress-container {
+                width: 100%;
+            }
+            
+            .question-text {
+                font-size: 1.5rem;
+            }
+            
+            .results-score {
+                font-size: 4rem;
+            }
+            
+            .results-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Celebration Overlay -->
+    <div class="celebration" id="celebration"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    Roadmap Mastery
+                    <div class="logo-subtitle">Strategic Planning Assessment</div>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat">
+                        <div class="stat-value" id="questions-count">15</div>
+                        <div class="stat-label">Questions</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="score-display">0</div>
+                        <div class="stat-label">Current Score</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="time-spent">0:00</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="quiz-container">
+                <!-- Intro Screen -->
+                <div class="intro-screen fade-in" id="introScreen">
+                    <div class="intro-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <h1>Roadmap Building Mastery Quiz</h1>
+                    <p>Test your strategic planning skills with this advanced assessment on roadmap development principles. This quiz evaluates your understanding of effective planning methodologies, milestone creation, resource allocation, and adaptation strategies for successful project execution.</p>
+                    <p>You'll answer 15 challenging multiple-choice questions. After completion, you'll receive a detailed analysis of your performance with explanations for any incorrect answers.</p>
+                    <button class="btn" id="startBtn">Begin Assessment</button>
+                </div>
+
+                <!-- Question Screen -->
+                <div class="question-screen" id="questionScreen">
+                    <div class="question-header">
+                        <div class="question-number">Question <span id="currentQuestion">1</span> of 15</div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-content">
+                        <div class="question-text" id="questionText"></div>
+                        <div class="question-hint" id="questionHint"></div>
+                    </div>
+                    
+                    <div class="options-grid" id="optionsContainer"></div>
+                    
+                    <div class="navigation-buttons">
+                        <button class="btn btn-secondary" id="prevBtn">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn" id="nextBtn">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn" id="submitQuizBtn" style="display: none;">
+                            Submit Quiz <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Screen -->
+                <div class="results-screen" id="resultsScreen">
+                    <div class="results-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="results-score" id="finalScore">0%</div>
+                    <h2 class="results-title" id="resultsTitle">Assessment Complete!</h2>
+                    <p class="results-message" id="resultsMessage"></p>
+                    
+                    <button class="btn" id="restartBtn">
+                        <i class="fas fa-redo"></i> Retake Assessment
+                    </button>
+                    
+                    <div class="results-details">
+                        <h3>Performance Analysis</h3>
+                        <div class="incorrect-questions" id="incorrectQuestions">
+                            <!-- Incorrect questions will be inserted here -->
+                        </div>
+                        <div id="perfectScoreMessage" style="text-align: center; padding: 2rem;">
+                            <h4 style="color: var(--success); margin-bottom: 1rem;">
+                                <i class="fas fa-star" style="margin-right: 10px;"></i>Perfect Score!
+                            </h4>
+                            <p>You answered all questions correctly! You've demonstrated exceptional understanding of roadmap development principles.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Roadmap Mastery</h3>
+                    <p>Advanced strategic planning assessment tool designed for academic and professional development in project management and strategic planning.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Assessment Topics</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Strategic Planning</a></li>
+                        <li><a href="#">Milestone Development</a></li>
+                        <li><a href="#">Resource Allocation</a></li>
+                        <li><a href="#">Risk Management</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Academic Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Project Management Institute</a></li>
+                        <li><a href="#">Harvard Business Review</a></li>
+                        <li><a href="#">Strategic Planning Journal</a></li>
+                        <li><a href="#">Academic Research Database</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Roadmap Mastery Assessment Tool. Created for academic and research purposes. This interactive assessment evaluates strategic planning competencies.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Quiz data - 15 questions about roadmap development
+        const quizData = [
+            {
+                question: "What is the FIRST critical step when creating any roadmap?",
+                hint: "Consider what needs to be achieved before planning how to get there.",
+                options: [
+                    "Identifying clear objectives and success metrics",
+                    "Selecting the project management software",
+                    "Assigning team members to specific tasks",
+                    "Setting arbitrary deadlines for completion"
+                ],
+                correct: 0
+            },
+            {
+                question: "Which principle is MOST important for effective milestone creation in a roadmap?",
+                hint: "Milestones should represent meaningful progress points.",
+                options: [
+                    "Milestones should be SMART (Specific, Measurable, Achievable, Relevant, Time-bound)",
+                    "Milestones should be spaced exactly two weeks apart",
+                    "Milestones should always involve external stakeholders",
+                    "Milestones should be kept secret from the team"
+                ],
+                correct: 0
+            },
+            {
+                question: "How should resource allocation be handled in a well-constructed roadmap?",
+                hint: "Resources include time, budget, personnel, and tools.",
+                options: [
+                    "Based on task dependencies, priorities, and available capacity",
+                    "Evenly distributed across all tasks regardless of complexity",
+                    "Allocated only when a task is about to begin",
+                    "Determined by the most senior team member's preference"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the BEST approach for incorporating flexibility into a roadmap?",
+                hint: "Roadmaps should adapt to changing circumstances.",
+                options: [
+                    "Including buffer time and defining contingency plans for key risks",
+                    "Making all deadlines flexible with no fixed dates",
+                    "Creating multiple completely separate roadmaps",
+                    "Avoiding documentation to allow for spontaneous changes"
+                ],
+                correct: 0
+            },
+            {
+                question: "Which stakeholder group should be involved EARLIEST in the roadmap creation process?",
+                hint: "Consider who will be most impacted by the roadmap's outcomes.",
+                options: [
+                    "End-users or customers who will benefit from the outcomes",
+                    "External vendors and suppliers",
+                    "Company executives for approval only",
+                    "Only the core project team members"
+                ],
+                correct: 0
+            },
+            {
+                question: "When is the appropriate time to revise a roadmap during execution?",
+                hint: "Roadmaps are living documents that should be updated based on reality.",
+                options: [
+                    "When significant assumptions change or new information emerges",
+                    "Only at predetermined quarterly review periods",
+                    "Whenever any team member requests a change",
+                    "Roadmaps should never be revised once published"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the PRIMARY purpose of visualizing a roadmap (Gantt charts, timelines, etc.)?",
+                hint: "Visualization helps with communication and understanding.",
+                options: [
+                    "To communicate timelines, dependencies, and progress clearly to all stakeholders",
+                    "To create colorful documents for presentations",
+                    "To satisfy project management software requirements",
+                    "To make the project appear more complex than it is"
+                ],
+                correct: 0
+            },
+            {
+                question: "How should dependencies between tasks be handled in a roadmap?",
+                hint: "Some tasks cannot begin until others are completed.",
+                options: [
+                    "Clearly identified with contingency time for critical dependencies",
+                    "Ignored to allow teams to work in parallel",
+                    "Assumed to be someone else's responsibility",
+                    "Added as an afterthought once the roadmap is complete"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the MOST effective way to prioritize features or initiatives in a product roadmap?",
+                hint: "Prioritization should balance multiple factors.",
+                options: [
+                    "Using a weighted scoring system that considers value, effort, risk, and strategic alignment",
+                    "Implementing whatever the CEO requested most recently",
+                    "Building features in the order they were suggested",
+                    "Prioritizing the easiest tasks first to show quick progress"
+                ],
+                correct: 0
+            },
+            {
+                question: "Which metric is LEAST useful for measuring roadmap progress?",
+                hint: "Some metrics measure activity rather than meaningful progress.",
+                options: [
+                    "Number of meetings held about the roadmap",
+                    "Percentage of milestones completed on time",
+                    "Budget variance (actual vs. planned)",
+                    "Stakeholder satisfaction with deliverables"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the BEST practice for communicating roadmap changes to stakeholders?",
+                hint: "Transparency builds trust even when changes are necessary.",
+                options: [
+                    "Proactively communicating the change, reason, and impact with alternative solutions",
+                    "Waiting until the next scheduled meeting to mention it briefly",
+                    "Only informing stakeholders who directly ask about it",
+                    "Hiding changes to avoid difficult conversations"
+                ],
+                correct: 0
+            },
+            {
+                question: "How should risk management be integrated into a roadmap?",
+                hint: "Risks should be identified and planned for in advance.",
+                options: [
+                    "Identifying potential risks during planning and including mitigation strategies",
+                    "Assuming everything will go according to plan",
+                    "Creating a separate document that no one reviews",
+                    "Adding extra time to every task as a blanket contingency"
+                ],
+                correct: 0
+            },
+            {
+                question: "What is the IDEAL timeframe for a detailed tactical roadmap?",
+                hint: "Consider the balance between detailed planning and adaptability.",
+                options: [
+                    "3-6 months, with higher-level planning for subsequent periods",
+                    "Exactly 1 year with no flexibility",
+                    "Only 2 weeks at a time to maintain agility",
+                    "5 years to ensure long-term vision alignment"
+                ],
+                correct: 0
+            },
+            {
+                question: "Which technique is MOST effective for estimating task durations in roadmap planning?",
+                hint: "Estimates are more accurate when based on data and multiple perspectives.",
+                options: [
+                    "Using historical data combined with input from those who will do the work",
+                    "Taking a wild guess and doubling it",
+                    "Asking one senior manager for their estimate",
+                    "Using the same duration for all similar-looking tasks"
+                ],
+                correct: 0
+            },
+            {
+                question: "How should success be measured AFTER roadmap completion?",
+                hint: "Success measurement should align with the original objectives.",
+                options: [
+                    "Comparing actual outcomes against the original objectives and success metrics",
+                    "Checking if all tasks were completed regardless of value delivered",
+                    "Asking if the team worked overtime to complete everything",
+                    "Determining if the roadmap looked impressive in presentations"
+                ],
+                correct: 0
+            }
+        ];
+
+        // DOM Elements
+        const introScreen = document.getElementById('introScreen');
+        const questionScreen = document.getElementById('questionScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startBtn = document.getElementById('startBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const submitQuizBtn = document.getElementById('submitQuizBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const currentQuestionEl = document.getElementById('currentQuestion');
+        const questionText = document.getElementById('questionText');
+        const questionHint = document.getElementById('questionHint');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const progressFill = document.getElementById('progressFill');
+        const scoreDisplay = document.getElementById('score-display');
+        const questionsCount = document.getElementById('questions-count');
+        const timeSpent = document.getElementById('time-spent');
+        const finalScore = document.getElementById('finalScore');
+        const resultsTitle = document.getElementById('resultsTitle');
+        const resultsMessage = document.getElementById('resultsMessage');
+        const incorrectQuestions = document.getElementById('incorrectQuestions');
+        const perfectScoreMessage = document.getElementById('perfectScoreMessage');
+        const celebration = document.getElementById('celebration');
+
+        // Quiz state
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let score = 0;
+        let startTime;
+        let timerInterval;
+
+        // Initialize
+        questionsCount.textContent = quizData.length;
+        perfectScoreMessage.style.display = 'none';
+
+        // Start quiz
+        startBtn.addEventListener('click', startQuiz);
+
+        function startQuiz() {
+            introScreen.style.display = 'none';
+            questionScreen.style.display = 'block';
+            questionScreen.classList.add('fade-in');
+            
+            // Start timer
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            loadQuestion(currentQuestionIndex);
+            updateProgressBar();
+            updateNavigationButtons();
+        }
+
+        function loadQuestion(index) {
+            const question = quizData[index];
+            currentQuestionEl.textContent = index + 1;
+            questionText.textContent = question.question;
+            questionHint.textContent = question.hint;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create option elements
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, i) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[index] === i) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[i]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => selectOption(i));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            updateProgressBar();
+        }
+
+        function selectOption(optionIndex) {
+            // Remove selected class from all options
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.currentTarget.classList.add('selected');
+            
+            // Save user's answer
+            userAnswers[currentQuestionIndex] = optionIndex;
+            
+            // Update score display if answer is correct
+            const question = quizData[currentQuestionIndex];
+            if (optionIndex === question.correct) {
+                // Update score if not already counted
+                if (userAnswers[currentQuestionIndex] !== optionIndex) {
+                    score++;
+                    scoreDisplay.textContent = score;
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        function updateNavigationButtons() {
+            // Show/hide previous button
+            if (currentQuestionIndex === 0) {
+                prevBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'inline-block';
+            }
+            
+            // Update next/submit button
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.style.display = 'none';
+                submitQuizBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitQuizBtn.style.display = 'none';
+            }
+        }
+
+        // Next button
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion(currentQuestionIndex);
+                updateNavigationButtons();
+            }
+        });
+
+        // Previous button
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion(currentQuestionIndex);
+                updateNavigationButtons();
+            }
+        });
+
+        // Submit quiz
+        submitQuizBtn.addEventListener('click', showResults);
+
+        function showResults() {
+            // Calculate final score
+            score = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizData[index].correct) {
+                    score++;
+                }
+            });
+            
+            // Stop timer
+            clearInterval(timerInterval);
+            
+            // Hide question screen, show results
+            questionScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            resultsScreen.classList.add('fade-in');
+            
+            // Calculate percentage
+            const percentage = Math.round((score / quizData.length) * 100);
+            finalScore.textContent = `${percentage}%`;
+            
+            // Set results message based on score
+            let title, message;
+            if (percentage >= 90) {
+                title = "Expert Roadmap Strategist!";
+                message = "Your understanding of roadmap development principles is exceptional. You demonstrate mastery of strategic planning concepts that would benefit any organization.";
+                triggerCelebration();
+            } else if (percentage >= 70) {
+                title = "Proficient Roadmap Planner";
+                message = "You have a strong grasp of roadmap fundamentals with room to refine some advanced concepts. Your strategic planning skills are well-developed.";
+            } else if (percentage >= 50) {
+                title = "Developing Roadmap Skills";
+                message = "You understand basic roadmap concepts but should focus on deepening your knowledge of strategic planning methodologies and risk management.";
+            } else {
+                title = "Foundational Understanding";
+                message = "You have a starting point for roadmap development knowledge. Consider studying strategic planning fundamentals and milestone creation techniques.";
+            }
+            
+            resultsTitle.textContent = title;
+            resultsMessage.textContent = message;
+            
+            // Show incorrect questions with explanations
+            incorrectQuestions.innerHTML = '';
+            let incorrectCount = 0;
+            
+            userAnswers.forEach((answer, index) => {
+                if (answer !== quizData[index].correct) {
+                    incorrectCount++;
+                    const question = quizData[index];
+                    const optionLetters = ['A', 'B', 'C', 'D'];
+                    
+                    const incorrectItem = document.createElement('div');
+                    incorrectItem.className = 'incorrect-item fade-in';
+                    incorrectItem.innerHTML = `
+                        <div class="incorrect-question">${index + 1}. ${question.question}</div>
+                        <div class="incorrect-answer">
+                            <span class="answer-label">Your answer:</span>
+                            <span>${answer !== null ? optionLetters[answer] + '. ' + question.options[answer] : 'No answer selected'}</span>
+                        </div>
+                        <div class="correct-answer">
+                            <span class="answer-label">Correct answer:</span>
+                            <span>${optionLetters[question.correct]}. ${question.options[question.correct]}</span>
+                        </div>
+                    `;
+                    
+                    incorrectQuestions.appendChild(incorrectItem);
+                }
+            });
+            
+            // Show/hide sections based on performance
+            if (incorrectCount > 0) {
+                incorrectQuestions.style.display = 'block';
+                perfectScoreMessage.style.display = 'none';
+            } else {
+                incorrectQuestions.style.display = 'none';
+                perfectScoreMessage.style.display = 'block';
+            }
+        }
+
+        // Restart quiz
+        restartBtn.addEventListener('click', restartQuiz);
+
+        function restartQuiz() {
+            // Reset state
+            currentQuestionIndex = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            score = 0;
+            scoreDisplay.textContent = score;
+            
+            // Hide results, show intro
+            resultsScreen.style.display = 'none';
+            introScreen.style.display = 'block';
+            introScreen.classList.add('fade-in');
+            
+            // Reset timer
+            timeSpent.textContent = '0:00';
+        }
+
+        // Timer function
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((now - startTime) / 1000); // difference in seconds
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+            timeSpent.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Celebration function
+        function triggerCelebration() {
+            celebration.style.display = 'block';
+            
+            // Create multiple confetti bursts
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+            }, 250);
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }, 400);
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 }
+                });
+            }, 600);
+            
+            // Hide celebration after 3 seconds
+            setTimeout(() => {
+                celebration.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize with first question ready
+        updateProgressBar();
+        updateNavigationButtons();
+    </script>
+</body>
+</html>
