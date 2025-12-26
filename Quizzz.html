@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Quiz Pro | Strategic Planning Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #0f62fe;
+            --primary-hover: #0353e9;
+            --secondary: #8a3ffc;
+            --accent: #ff7eb6;
+            --success: #42be65;
+            --warning: #f1c21b;
+            --error: #fa4d56;
+            --bg-dark: #161616;
+            --bg-card: #262626;
+            --bg-element: #393939;
+            --text-primary: #f4f4f4;
+            --text-secondary: #c6c6c6;
+            --text-tertiary: #8d8d8d;
+            --border: #393939;
+            --shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background: var(--bg-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(22, 22, 22, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .logo-subtext {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-element);
+            padding: 4px;
+            border-radius: var(--radius);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .welcome-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(15, 98, 254, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(138, 63, 252, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .welcome-card {
+            background: var(--bg-card);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group label i {
+            color: var(--primary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--bg-element);
+            color: var(--text-primary);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+        }
+
+        .start-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .start-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        /* Quiz Screen */
+        .quiz-screen {
+            display: none;
+            padding: 4rem 0;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            background: var(--bg-element);
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            min-width: 160px;
+            border: 1px solid var(--border);
+        }
+
+        .info-box .label {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .info-box .value {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .timer-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+        }
+
+        .timer-box .label, .timer-box .value {
+            color: white;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 3rem;
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-element);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-element);
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-primary);
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: rgba(15, 98, 254, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: rgba(15, 98, 254, 0.15);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.2);
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: 0.95rem;
+            font-family: 'IBM Plex Mono', monospace;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .option-btn.selected .option-letter {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-btn {
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-element);
+            color: var(--text-primary);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+        }
+
+        .nav-btn.next, .nav-btn.submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .nav-btn.next:hover, .nav-btn.submit:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            padding: 4rem 0;
+        }
+
+        .results-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .results-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 5rem;
+            font-weight: 600;
+            margin: 2.5rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .score-message {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .results-details {
+            text-align: left;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .results-details h3 {
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results-details h3 i {
+            color: var(--primary);
+        }
+
+        .incorrect-question {
+            background: rgba(250, 77, 86, 0.05);
+            border-left: 4px solid var(--error);
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(250, 77, 86, 0.1);
+        }
+
+        .incorrect-question p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .correct-answer {
+            color: var(--success);
+            font-weight: 500;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-element);
+            color: var(--text-primary);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+        }
+
+        .action-btn.download {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .action-btn.download:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 98, 254, 0.3);
+        }
+
+        /* Professor Message */
+        .professor-message {
+            background: linear-gradient(135deg, rgba(15, 98, 254, 0.1), rgba(138, 63, 252, 0.1));
+            border: 1px solid var(--primary);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            margin-top: 3rem;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .professor-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(15, 98, 254, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(138, 63, 252, 0.05) 0%, transparent 50%);
+        }
+
+        .thank-you-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .thank-you-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: slideUp 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .animated-heart {
+            color: var(--accent);
+            animation: heartbeat 1.5s ease-in-out infinite;
+            font-size: 2.2rem;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            10% { transform: scale(1.2); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.2); }
+            40% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gratitude-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: slideUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .signature {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            animation: slideUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-element);
+            padding: 3rem 0;
+            margin-top: 5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Timer Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .timer-warning {
+            animation: pulse 1s infinite;
+            color: var(--warning) !important;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s cubic-bezier(0.2, 0, 0, 1) forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.3rem;
+            }
+            
+            .results-card {
+                padding: 2rem;
+            }
+            
+            .score-display {
+                font-size: 4rem;
+            }
+            
+            .quiz-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .info-box {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .results-actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+            
+            .thank-you-text {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .welcome-card, .question-card {
+                padding: 2rem;
+            }
+        }
+
+        /* Interactive Hover Effects */
+        .info-box, .option-btn, .nav-btn, .action-btn {
+            transition: var(--transition);
+        }
+
+        .info-box:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus Styles */
+        button:focus, input:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <div>
+                        <div class="logo-text">ROADMAP QUIZ PRO</div>
+                        <div class="logo-subtext">Strategic Assessment</div>
+                    </div>
+                </div>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="en">
+                        <i class="fas fa-globe-americas"></i>
+                        EN
+                    </button>
+                    <button class="lang-btn" data-lang="fr">
+                        <i class="fas fa-globe-europe"></i>
+                        FR
+                    </button>
+                    <button class="lang-btn" data-lang="ar">
+                        <i class="fas fa-globe-africa"></i>
+                        AR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Screen -->
+    <section class="welcome-screen" id="welcomeScreen">
+        <div class="container">
+            <h1 class="welcome-title" data-en="Roadmap Proficiency Assessment" data-fr="Évaluation de Maîtrise des Feuilles de Route" data-ar="تقييم الكفاءة في خطط العمل">Roadmap Proficiency Assessment</h1>
+            <p class="welcome-subtitle" data-en="Demonstrate your understanding of strategic roadmap principles with this professional assessment. Complete all 15 questions to receive your certification score." data-fr="Démontrez votre compréhension des principes de feuille de route stratégique avec cette évaluation professionnelle. Répondez aux 15 questions pour recevoir votre score de certification." data-ar="أظهر فهمك لمبادئ خطة العمل الاستراتيجية مع هذا التقييم الاحترافي. أجب على جميع الأسئلة الـ 15 للحصول على درجة شهادتك.">Demonstrate your understanding of strategic roadmap principles with this professional assessment. Complete all 15 questions to receive your certification score.</p>
+            
+            <div class="welcome-card fade-in">
+                <div class="form-group">
+                    <label for="userName" data-en="Enter Your Full Name" data-fr="Entrez Votre Nom Complet" data-ar="أدخل اسمك الكامل">
+                        <i class="fas fa-user"></i>
+                        <span id="nameLabel">Enter Your Full Name</span>
+                    </label>
+                    <input type="text" id="userName" placeholder="John Smith" data-en-placeholder="John Smith" data-fr-placeholder="Jean Dupont" data-ar-placeholder="محمد أحمد">
+                </div>
+                
+                <button class="start-btn" id="startBtn" data-en="Begin Assessment" data-fr="Commencer l'Évaluation" data-ar="بدء التقييم">
+                    <i class="fas fa-play"></i>
+                    <span id="startText">Begin Assessment</span>
+                </button>
+            </div>
+            
+            <div style="max-width: 600px; margin-top: 2rem;">
+                <p style="font-size: 0.95rem; color: var(--text-tertiary);" data-en="• 15 foundational questions • 15-minute time limit • Professional scoring • Detailed feedback" data-fr="• 15 questions fondamentales • Limite de temps de 15 minutes • Notation professionnelle • Retour détaillé" data-ar="• 15 سؤالاً أساسياً • مهلة زمنية 15 دقيقة • تقييم احترافي • ملاحظات مفصلة">• 15 foundational questions • 15-minute time limit • Professional scoring • Detailed feedback</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section class="quiz-screen" id="quizScreen">
+        <div class="container">
+            <div class="quiz-header">
+                <div class="quiz-info">
+                    <div class="info-box">
+                        <div class="label" data-en="Participant" data-fr="Participant" data-ar="المشارك">Participant</div>
+                        <div class="value" id="playerNameDisplay">-</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="label" data-en="Question" data-fr="Question" data-ar="السؤال">Question</div>
+                        <div class="value" id="questionCounter">1/15</div>
+                    </div>
+                    <div class="info-box timer-box">
+                        <div class="label" data-en="Time Remaining" data-fr="Temps Restant" data-ar="الوقت المتبقي">Time Remaining</div>
+                        <div class="value" id="timerDisplay">15:00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span data-en="Assessment Progress" data-fr="Progression de l'Évaluation" data-ar="تقدم التقييم">Assessment Progress</span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <div class="question-card fade-in" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1</div>
+                <h2 class="question-text" id="questionText">Question text will appear here</h2>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be generated here -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="nav-btn prev" id="prevBtn" data-en="Previous Question" data-fr="Question Précédente" data-ar="السؤال السابق">
+                        <i class="fas fa-arrow-left"></i>
+                        <span id="prevText">Previous Question</span>
+                    </button>
+                    <button class="nav-btn next" id="nextBtn" data-en="Next Question" data-fr="Question Suivante" data-ar="السؤال التالي">
+                        <span id="nextText">Next Question</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section class="results-screen" id="resultsScreen">
+        <div class="container">
+            <div class="results-card fade-in">
+                <h2 class="results-title" data-en="Assessment Results" data-fr="Résultats de l'Évaluation" data-ar="نتائج التقييم">Assessment Results</h2>
+                <div class="score-display" id="finalScore">0/15</div>
+                <p class="score-message" id="scoreMessage">Your performance analysis will appear here</p>
+                
+                <div class="results-details" id="resultsDetails">
+                    <h3>
+                        <i class="fas fa-analytics"></i>
+                        <span data-en="Performance Analysis" data-fr="Analyse de Performance" data-ar="تحليل الأداء">Performance Analysis</span>
+                    </h3>
+                    <!-- Incorrect questions will be displayed here -->
+                </div>
+                
+                <div class="results-actions">
+                    <button class="action-btn" id="restartBtn" data-en="New Assessment" data-fr="Nouvelle Évaluation" data-ar="تقييم جديد">
+                        <i class="fas fa-redo"></i>
+                        <span id="restartText">New Assessment</span>
+                    </button>
+                    <button class="action-btn download" id="downloadBtn" data-en="Download Certificate" data-fr="Télécharger Certificat" data-ar="تحميل الشهادة">
+                        <i class="fas fa-download"></i>
+                        <span id="downloadText">Download Certificate</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Professor Message (only for Sherif) -->
+            <div class="professor-message" id="professorMessage">
+                <div class="thank-you-container">
+                    <div class="thank-you-text">
+                        <span data-en="Thank You!" data-fr="Merci !" data-ar="شكرًا!">Thank You!</span>
+                        <i class="fas fa-heart animated-heart"></i>
+                    </div>
+                    
+                    <p class="gratitude-message" data-en="Professor Sherif, thank you for your exceptional guidance and support throughout this course. Your expertise has been invaluable in developing this comprehensive assessment." data-fr="Professeur Sherif, merci pour votre orientation exceptionnelle et votre soutien tout au long de ce cours. Votre expertise a été inestimable dans le développement de cette évaluation complète." data-ar="البروفيسور شريف، شكرًا لك على توجيهك الاستثنائي ودعمك خلال هذه الدورة. كانت خبرتك لا تقدر بثمن في تطوير هذا التقييم الشامل.">Professor Sherif, thank you for your exceptional guidance and support throughout this course. Your expertise has been invaluable in developing this comprehensive assessment.</p>
+                    
+                    <p class="signature" data-en="With sincere appreciation," data-fr="Avec une sincère appréciation," data-ar="مع التقدير الصادق،">With sincere appreciation,</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p data-en="Roadmap Quiz Pro | Professional Assessment Tool" data-fr="Roadmap Quiz Pro | Outil d'Évaluation Professionnelle" data-ar="اختبار خطة العمل الاحترافي | أداة التقييم المهنية">Roadmap Quiz Pro | Professional Assessment Tool</p>
+                <p data-en="Academic Excellence Initiative | © 2023" data-fr="Initiative d'Excellence Académique | © 2023" data-ar="مبادرة التميز الأكاديمي | © 2023">Academic Excellence Initiative | © 2023</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language management
+        let currentLang = 'en';
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const textElements = document.querySelectorAll('[data-en]');
+        
+        // Update all text elements based on selected language
+        function updateLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            langButtons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Update all text elements
+            textElements.forEach(element => {
+                const text = element.getAttribute(`data-${lang}`);
+                if (text) {
+                    if (element.hasAttribute('data-en-placeholder')) {
+                        element.placeholder = element.getAttribute(`data-${lang}-placeholder`);
+                    } else if (element.tagName === 'INPUT') {
+                        element.placeholder = element.getAttribute(`data-${lang}-placeholder`) || text;
+                    } else if (element.id === 'nameLabel' || element.id === 'startText' || 
+                               element.id === 'prevText' || element.id === 'nextText' ||
+                               element.id === 'restartText' || element.id === 'downloadText') {
+                        element.textContent = text;
+                    } else {
+                        element.textContent = text;
+                    }
+                }
+            });
+            
+            // Update question data if quiz has started
+            if (currentQuestion > 0) {
+                displayQuestion(currentQuestion - 1);
+            }
+            
+            // Update results if shown
+            if (resultsShown) {
+                updateResultsDisplay();
+            }
+        }
+        
+        // Language button click events
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                updateLanguage(lang);
+            });
+        });
+        
+        // Quiz data in all three languages - SIMPLIFIED QUESTIONS
+        const quizData = {
+            en: [
+                {
+                    question: "A roadmap is a visual plan that shows the direction and goals for a project or business.",
+                    options: ["True", "False"],
+                    correct: 0,
+                    explanation: "Correct. A roadmap is indeed a visual strategic plan that shows direction and goals."
+                },
+                {
+                    question: "What is the main purpose of a roadmap?",
+                    options: ["To track daily tasks", "To communicate strategy", "To calculate budgets", "To write code"],
+                    correct: 1,
+                    explanation: "Correct. The main purpose is to communicate the strategic direction and plan."
+                },
+                {
+                    question: "Should a roadmap be updated regularly?",
+                    options: ["Yes, it should evolve", "No, it should stay fixed", "Only once a year", "Never change it"],
+                    correct: 0,
+                    explanation: "Correct. Roadmaps should be updated regularly as circumstances change."
+                },
+                {
+                    question: "Which of these should a good roadmap include?",
+                    options: ["Clear goals", "Every tiny detail", "Employee salaries", "Office locations"],
+                    correct: 0,
+                    explanation: "Correct. A good roadmap includes clear, achievable goals."
+                },
+                {
+                    question: "Who is a roadmap typically created for?",
+                    options: ["Only developers", "Only managers", "Stakeholders and team", "Only customers"],
+                    correct: 2,
+                    explanation: "Correct. Roadmaps are created for stakeholders and the team to align everyone."
+                },
+                {
+                    question: "What does 'timeline' mean in a roadmap?",
+                    options: ["List of people", "Schedule of when things happen", "Budget numbers", "Meeting dates"],
+                    correct: 1,
+                    explanation: "Correct. A timeline shows when different parts of the plan will happen."
+                },
+                {
+                    question: "Is a roadmap the same as a project plan?",
+                    options: ["Yes, exactly the same", "No, roadmap is higher-level", "No, roadmap is for coding only", "They're completely different"],
+                    correct: 1,
+                    explanation: "Correct. A roadmap is higher-level strategy; project plans have detailed tasks."
+                },
+                {
+                    question: "What should you do first when creating a roadmap?",
+                    options: ["Buy software", "Define your goals", "Hire more people", "Design the logo"],
+                    correct: 1,
+                    explanation: "Correct. Always start by defining clear goals and objectives."
+                },
+                {
+                    question: "Can a roadmap help with decision making?",
+                    options: ["Yes, it guides decisions", "No, it's just decoration", "Only for budget decisions", "Only technical decisions"],
+                    correct: 0,
+                    explanation: "Correct. A good roadmap helps guide important decisions by showing priorities."
+                },
+                {
+                    question: "Should a roadmap show everything you might possibly do?",
+                    options: ["Yes, include everything", "No, only key priorities", "Only easy tasks", "Only what's already done"],
+                    correct: 1,
+                    explanation: "Correct. A roadmap should focus on key priorities, not every possible idea."
+                },
+                {
+                    question: "What is a 'milestone' in a roadmap?",
+                    options: ["A type of stone", "An important achievement point", "A meeting", "A budget item"],
+                    correct: 1,
+                    explanation: "Correct. Milestones mark important achievement points in the plan."
+                },
+                {
+                    question: "Is it important to get feedback on your roadmap?",
+                    options: ["Yes, from stakeholders", "No, keep it secret", "Only from the boss", "Only at the end"],
+                    correct: 0,
+                    explanation: "Correct. Getting stakeholder feedback improves the roadmap."
+                },
+                {
+                    question: "What makes a roadmap easy to understand?",
+                    options: ["Simple visuals", "Complex technical terms", "Very small text", "Lots of data"],
+                    correct: 0,
+                    explanation: "Correct. Simple visuals and clear language make roadmaps easy to understand."
+                },
+                {
+                    question: "Should a roadmap show how goals will be achieved?",
+                    options: ["Yes, at high level", "No, only show goals", "Only show problems", "Only show costs"],
+                    correct: 0,
+                    explanation: "Correct. A roadmap should show at a high level how goals will be achieved."
+                },
+                {
+                    question: "Is a roadmap useful for tracking progress?",
+                    options: ["Yes, it shows progress", "No, use something else", "Only for daily progress", "Only at the start"],
+                    correct: 0,
+                    explanation: "Correct. A roadmap helps track progress toward goals over time."
+                }
+            ],
+            fr: [
+                {
+                    question: "Une feuille de route est un plan visuel qui montre la direction et les objectifs d'un projet ou d'une entreprise.",
+                    options: ["Vrai", "Faux"],
+                    correct: 0,
+                    explanation: "Correct. Une feuille de route est bien un plan stratégique visuel."
+                },
+                {
+                    question: "Quel est le but principal d'une feuille de route?",
+                    options: ["Suivre les tâches quotidiennes", "Communiquer la stratégie", "Calculer les budgets", "Écrire du code"],
+                    correct: 1,
+                    explanation: "Correct. Le but principal est de communiquer la direction stratégique."
+                },
+                {
+                    question: "Une feuille de route doit-elle être mise à jour régulièrement?",
+                    options: ["Oui, elle doit évoluer", "Non, elle doit rester fixe", "Seulement une fois par an", "Ne jamais la changer"],
+                    correct: 0,
+                    explanation: "Correct. Les feuilles de route doivent être mises à jour régulièrement."
+                },
+                {
+                    question: "Qu'est-ce qu'une bonne feuille de route devrait inclure?",
+                    options: ["Des objectifs clairs", "Chaque petit détail", "Les salaires des employés", "Les emplacements des bureaux"],
+                    correct: 0,
+                    explanation: "Correct. Une bonne feuille de route inclut des objectifs clairs."
+                },
+                {
+                    question: "Pour qui une feuille de route est-elle généralement créée?",
+                    options: ["Seulement les développeurs", "Seulement les managers", "Les parties prenantes et l'équipe", "Seulement les clients"],
+                    correct: 2,
+                    explanation: "Correct. Elle est créée pour les parties prenantes et l'équipe."
+                },
+                {
+                    question: "Que signifie 'calendrier' dans une feuille de route?",
+                    options: ["Liste de personnes", "Calendrier des événements", "Chiffres du budget", "Dates de réunion"],
+                    correct: 1,
+                    explanation: "Correct. Un calendrier montre quand les choses se produiront."
+                },
+                {
+                    question: "Une feuille de route est-elle la même chose qu'un plan de projet?",
+                    options: ["Oui, exactement la même", "Non, la feuille de route est de haut niveau", "Non, la feuille de route est seulement pour le codage", "Ils sont complètement différents"],
+                    correct: 1,
+                    explanation: "Correct. La feuille de route est de niveau stratégique supérieur."
+                },
+                {
+                    question: "Que devez-vous faire en premier lors de la création d'une feuille de route?",
+                    options: ["Acheter un logiciel", "Définir vos objectifs", "Embaucher plus de personnes", "Concevoir le logo"],
+                    correct: 1,
+                    explanation: "Correct. Commencez toujours par définir des objectifs clairs."
+                },
+                {
+                    question: "Une feuille de route peut-elle aider à la prise de décision?",
+                    options: ["Oui, elle guide les décisions", "Non, c'est juste une décoration", "Seulement pour les décisions budgétaires", "Seulement les décisions techniques"],
+                    correct: 0,
+                    explanation: "Correct. Une bonne feuille de route guide les décisions importantes."
+                },
+                {
+                    question: "Une feuille de route devrait-elle montrer tout ce que vous pourriez éventuellement faire?",
+                    options: ["Oui, inclure tout", "Non, seulement les priorités clés", "Seulement les tâches faciles", "Seulement ce qui est déjà fait"],
+                    correct: 1,
+                    explanation: "Correct. Concentrez-vous sur les priorités clés."
+                },
+                {
+                    question: "Qu'est-ce qu'un 'jalon' dans une feuille de route?",
+                    options: ["Un type de pierre", "Un point d'achèvement important", "Une réunion", "Un élément budgétaire"],
+                    correct: 1,
+                    explanation: "Correct. Les jalons marquent des points d'achèvement importants."
+                },
+                {
+                    question: "Est-il important d'obtenir des commentaires sur votre feuille de route?",
+                    options: ["Oui, des parties prenantes", "Non, gardez-la secrète", "Seulement du patron", "Seulement à la fin"],
+                    correct: 0,
+                    explanation: "Correct. Les commentaires des parties prenantes améliorent la feuille de route."
+                },
+                {
+                    question: "Qu'est-ce qui rend une feuille de route facile à comprendre?",
+                    options: ["Visuels simples", "Termes techniques complexes", "Texte très petit", "Beaucoup de données"],
+                    correct: 0,
+                    explanation: "Correct. Des visuels simples et un langage clé la rendent facile à comprendre."
+                },
+                {
+                    question: "Une feuille de route devrait-elle montrer comment les objectifs seront atteints?",
+                    options: ["Oui, à haut niveau", "Non, montrez seulement les objectifs", "Montrez seulement les problèmes", "Montrez seulement les coûts"],
+                    correct: 0,
+                    explanation: "Correct. Elle devrait montrer à haut niveau comment atteindre les objectifs."
+                },
+                {
+                    question: "Une feuille de route est-elle utile pour suivre les progrès?",
+                    options: ["Oui, elle montre les progrès", "Non, utilisez autre chose", "Seulement pour les progrès quotidiens", "Seulement au début"],
+                    correct: 0,
+                    explanation: "Correct. Elle aide à suivre les progrès vers les objectifs."
+                }
+            ],
+            ar: [
+                {
+                    question: "خطة العمل هي خطة مرئية تظهر اتجاه وأهداف مشروع أو عمل.",
+                    options: ["صحيح", "خطأ"],
+                    correct: 0,
+                    explanation: "صحيح. خطة العمل هي بالفعل خطة استراتيجية مرئية."
+                },
+                {
+                    question: "ما هو الغرض الرئيسي من خطة العمل؟",
+                    options: ["تتبع المهام اليومية", "توصيل الاستراتيجية", "حساب الميزانيات", "كتابة الكود"],
+                    correct: 1,
+                    explanation: "صحيح. الغرض الرئيسي هو توصيل الاتجاه والخطة الاستراتيجية."
+                },
+                {
+                    question: "هل يجب تحديث خطة العمل بانتظام؟",
+                    options: ["نعم، يجب أن تتطور", "لا، يجب أن تبقى ثابتة", "مرة واحدة فقط في السنة", "لا تغيرها أبدًا"],
+                    correct: 0,
+                    explanation: "صحيح. يجب تحديث خطط العمل بانتظام مع تغير الظروف."
+                },
+                {
+                    question: "ما الذي يجب أن تتضمنه خطة عمل جيدة؟",
+                    options: ["أهداف واضحة", "كل تفصيل صغير", "رواتب الموظفين", "مواقع المكاتب"],
+                    correct: 0,
+                    explanation: "صحيح. خطة العمل الجيدة تتضمن أهدافًا واضحة وقابلة للتحقيق."
+                },
+                {
+                    question: "لمن يتم إنشاء خطة العمل عادةً؟",
+                    options: ["المطورين فقط", "المديرين فقط", "أصحاب المصلحة والفريق", "العملاء فقط"],
+                    correct: 2,
+                    explanation: "صحيح. يتم إنشاؤها لأصحاب المصلحة والفريق لمحاذاة الجميع."
+                },
+                {
+                    question: "ماذا يعني 'الجدول الزمني' في خطة العمل؟",
+                    options: ["قائمة الأشخاص", "جدول مواعيد الأحداث", "أرقام الميزانية", "مواعيد الاجتماعات"],
+                    correct: 1,
+                    explanation: "صحيح. الجدول الزمني يظهر متى ستحدث أجزاء مختلفة من الخطة."
+                },
+                {
+                    question: "هل خطة العمل هي نفسها خطة المشروع؟",
+                    options: ["نعم، نفس الشيء تمامًا", "لا، خطة العمل ذات مستوى أعلى", "لا، خطة العمل للبرمجة فقط", "مختلفان تمامًا"],
+                    correct: 1,
+                    explanation: "صحيح. خطة العمل ذات مستوى استراتيجي أعلى."
+                },
+                {
+                    question: "ما الذي يجب أن تفعله أولاً عند إنشاء خطة العمل؟",
+                    options: ["شراء برنامج", "تحديد أهدافك", "توظيف المزيد من الأشخاص", "تصميم الشعار"],
+                    correct: 1,
+                    explanation: "صحيح. ابدأ دائمًا بتحديد أهداف واضحة."
+                },
+                {
+                    question: "هل يمكن أن تساعد خطة العمل في اتخاذ القرارات؟",
+                    options: ["نعم، توجه القرارات", "لا، إنها مجرد زينة", "فقط لقرارات الميزانية", "فقط القرارات التقنية"],
+                    correct: 0,
+                    explanation: "صحيح. خطة العمل الجيدة توجه القرارات المهمة."
+                },
+                {
+                    question: "هل يجب أن تظهر خطة العمل كل ما قد تفعله؟",
+                    options: ["نعم، تضمين كل شيء", "لا، الأولويات الرئيسية فقط", "المهام السهلة فقط", "ما تم إنجازه فقط"],
+                    correct: 1,
+                    explanation: "صحيح. ركز على الأولويات الرئيسية، وليس كل فكرة ممكنة."
+                },
+                {
+                    question: "ما هو 'المحطة الرئيسية' في خطة العمل؟",
+                    options: ["نوع من الحجر", "نقطة إنجاز مهمة", "اجتماع", "بند ميزانية"],
+                    correct: 1,
+                    explanation: "صحيح. المحطات الرئيسية ت标记 نقاط إنجاز مهمة في الخطة."
+                },
+                {
+                    question: "هل من المهم الحصول على ملاحظات على خطة العمل؟",
+                    options: ["نعم، من أصحاب المصلحة", "لا، احتفظ بها سرية", "من الرئيس فقط", "في النهاية فقط"],
+                    correct: 0,
+                    explanation: "صحيح. ملاحظات أصحاب المصلحة تحسن خطة العمل."
+                },
+                {
+                    question: "ما الذي يجعل خطة العمل سهلة الفهم؟",
+                    options: ["صور مرئية بسيطة", "مصطلحات تقنية معقدة", "نص صغير جدًا", "الكثير من البيانات"],
+                    correct: 0,
+                    explanation: "صحيح. الصور البسيطة واللغة الواضحة تجعلها سهلة الفهم."
+                },
+                {
+                    question: "هل يجب أن تظهر خطة العمل كيفية تحقيق الأهداف؟",
+                    options: ["نعم، على مستوى عالٍ", "لا، أظهر الأهداف فقط", "أظهر المشاكل فقط", "أظهر التكاليف فقط"],
+                    correct: 0,
+                    explanation: "صحيح. يجب أن تظهر على مستوى عالٍ كيفية تحقيق الأهداف."
+                },
+                {
+                    question: "هل خطة العمل مفيدة لتتبع التقدم؟",
+                    options: ["نعم، تظهر التقدم", "لا، استخدم شيئًا آخر", "لتقدم يومي فقط", "في البداية فقط"],
+                    correct: 0,
+                    explanation: "صحيح. تساعد خطة العمل في تتبع التقدم نحو الأهداف."
+                }
+            ]
+        };
+
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = new Array(15).fill(null);
+        let userName = "";
+        let resultsShown = false;
+        let timerInterval;
+        let timeRemaining = 15 * 60; // 15 minutes in seconds
+        
+        // DOM elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startBtn = document.getElementById('startBtn');
+        const userNameInput = document.getElementById('userName');
+        const playerNameDisplay = document.getElementById('playerNameDisplay');
+        const questionCounter = document.getElementById('questionCounter');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercentage = document.getElementById('progressPercentage');
+        const questionNumber = document.getElementById('questionNumber');
+        const questionText = document.getElementById('questionText');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const finalScore = document.getElementById('finalScore');
+        const scoreMessage = document.getElementById('scoreMessage');
+        const resultsDetails = document.getElementById('resultsDetails');
+        const restartBtn = document.getElementById('restartBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const professorMessage = document.getElementById('professorMessage');
+        
+        // Start quiz
+        startBtn.addEventListener('click', () => {
+            userName = userNameInput.value.trim();
+            
+            if (!userName) {
+                let alertMessage = "Please enter your name before starting the assessment.";
+                if (currentLang === 'fr') {
+                    alertMessage = "Veuillez entrer votre nom avant de commencer l'évaluation.";
+                } else if (currentLang === 'ar') {
+                    alertMessage = "يرجى إدخال اسمك قبل بدء التقييم.";
+                }
+                alert(alertMessage);
+                return;
+            }
+            
+            playerNameDisplay.textContent = userName;
+            welcomeScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            
+            // Initialize quiz
+            currentQuestion = 1;
+            displayQuestion(0);
+            updateProgress();
+            
+            // Start timer
+            startTimer();
+        });
+        
+        // Timer functions
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    // Auto-submit when time runs out
+                    if (quizScreen.style.display !== 'none') {
+                        submitQuiz();
+                    }
+                }
+                
+                // Add warning when 3 minutes remain
+                if (timeRemaining === 3 * 60) {
+                    timerDisplay.classList.add('timer-warning');
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Display question
+        function displayQuestion(index) {
+            const questions = quizData[currentLang];
+            const question = questions[index];
+            
+            // Update question counter
+            questionCounter.textContent = `${index + 1}/15`;
+            
+            // Update question number
+            let questionNumberText = `Question ${index + 1}`;
+            if (currentLang === 'fr') {
+                questionNumberText = `Question ${index + 1}`;
+            } else if (currentLang === 'ar') {
+                questionNumberText = `سؤال ${index + 1}`;
+            }
+            questionNumber.textContent = questionNumberText;
+            
+            // Update question text
+            questionText.textContent = question.question;
+            
+            // Clear options grid
+            optionsGrid.innerHTML = '';
+            
+            // Create option buttons
+            const letters = ['A', 'B', 'C', 'D'];
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                if (userAnswers[index] === i) {
+                    button.classList.add('selected');
+                }
+                
+                button.innerHTML = `
+                    <div class="option-letter">${letters[i]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                button.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    button.classList.add('selected');
+                    
+                    // Save answer
+                    userAnswers[index] = i;
+                });
+                
+                optionsGrid.appendChild(button);
+            });
+            
+            // Update navigation buttons
+            updateNavigation();
+        }
+        
+        // Update navigation buttons - SIMPLIFIED AND WORKING
+        function updateNavigation() {
+            // Previous button
+            if (currentQuestion === 1) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+            
+            // Next/Submit button
+            if (currentQuestion === 15) {
+                let submitText = "Submit Assessment";
+                if (currentLang === 'fr') {
+                    submitText = "Soumettre l'Évaluation";
+                } else if (currentLang === 'ar') {
+                    submitText = "تقديم التقييم";
+                }
+                
+                nextBtn.innerHTML = `<span id="nextText">${submitText}</span> <i class="fas fa-paper-plane"></i>`;
+                nextBtn.className = 'nav-btn submit';
+            } else {
+                let nextText = "Next Question";
+                if (currentLang === 'fr') {
+                    nextText = "Question Suivante";
+                } else if (currentLang === 'ar') {
+                    nextText = "السؤال التالي";
+                }
+                
+                nextBtn.innerHTML = `<span id="nextText">${nextText}</span> <i class="fas fa-arrow-right"></i>`;
+                nextBtn.className = 'nav-btn next';
+            }
+        }
+        
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < 15) {
+                currentQuestion++;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Previous question
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                displayQuestion(currentQuestion - 1);
+                updateProgress();
+            }
+        }
+        
+        // Submit quiz
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            
+            // Check if all questions are answered
+            const unanswered = userAnswers.filter(answer => answer === null).length;
+            
+            if (unanswered > 0) {
+                let confirmMessage = `You have ${unanswered} unanswered question(s). Submit anyway?`;
+                if (currentLang === 'fr') {
+                    confirmMessage = `Vous avez ${unanswered} question(s) sans réponse. Soumettre quand même ?`;
+                } else if (currentLang === 'ar') {
+                    confirmMessage = `لديك ${unanswered} سؤال(أسئلة) لم تتم الإجابة عليه. التقديم على أي حال؟`;
+                }
+                
+                if (confirm(confirmMessage)) {
+                    showResults();
+                }
+            } else {
+                showResults();
+            }
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progressPercentageValue = (currentQuestion / 15) * 100;
+            progressFill.style.width = `${progressPercentageValue}%`;
+            progressPercentage.textContent = `${Math.round(progressPercentageValue)}%`;
+        }
+        
+        // Show results
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            // Calculate final score
+            const questions = quizData[currentLang];
+            let score = 0;
+            let incorrectQuestions = [];
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                } else {
+                    incorrectQuestions.push(i);
+                }
+            }
+            
+            // Display final score
+            finalScore.textContent = `${score}/15`;
+            
+            // Display score message
+            let message = "";
+            if (currentLang === 'en') {
+                if (score === 15) {
+                    message = "Perfect score! You have excellent understanding of roadmap principles.";
+                } else if (score >= 12) {
+                    message = "Excellent! You have strong knowledge of roadmap fundamentals.";
+                } else if (score >= 9) {
+                    message = "Good performance. You understand the basic concepts of roadmapping.";
+                } else if (score >= 7) {
+                    message = "Fair performance. Review the concepts for better understanding.";
+                } else {
+                    message = "Keep learning! Review roadmap principles and try again.";
+                }
+            } else if (currentLang === 'fr') {
+                if (score === 15) {
+                    message = "Score parfait ! Vous avez une excellente compréhension des principes des feuilles de route.";
+                } else if (score >= 12) {
+                    message = "Excellent ! Vous avez de solides connaissances des fondamentaux.";
+                } else if (score >= 9) {
+                    message = "Bonne performance. Vous comprenez les concepts de base.";
+                } else if (score >= 7) {
+                    message = "Performance correcte. Revoyez les concepts pour mieux comprendre.";
+                } else {
+                    message = "Continuez à apprendre ! Revoyez les principes et réessayez.";
+                }
+            } else if (currentLang === 'ar') {
+                if (score === 15) {
+                    message = "نتيجة مثالية! لديك فهم ممتاز لمبادئ خطط العمل.";
+                } else if (score >= 12) {
+                    message = "ممتاز! لديك معرفة قوية بأساسيات خطط العمل.";
+                } else if (score >= 9) {
+                    message = "أداء جيد. تفهم المفاهيم الأساسية لخطط العمل.";
+                } else if (score >= 7) {
+                    message = "أداء جيد. راجع المفاهيم لفهم أفضل.";
+                } else {
+                    message = "استمر في التعلم! راجع مبادئ خطط العمل وحاول مرة أخرى.";
+                }
+            }
+            
+            scoreMessage.textContent = message;
+            
+            // Show confetti if score >= 7
+            if (score >= 7) {
+                triggerConfetti();
+            }
+            
+            // Display incorrect questions with explanations
+            resultsDetails.innerHTML = '';
+            
+            if (incorrectQuestions.length > 0) {
+                let detailsTitle = document.createElement('h3');
+                detailsTitle.innerHTML = `<i class="fas fa-analytics"></i> <span>${currentLang === 'en' ? 'Performance Analysis' : 
+                                          currentLang === 'fr' ? 'Analyse de Performance' : 
+                                          'تحليل الأداء'}</span>`;
+                resultsDetails.appendChild(detailsTitle);
+                
+                incorrectQuestions.forEach(index => {
+                    const question = questions[index];
+                    const incorrectDiv = document.createElement('div');
+                    incorrectDiv.className = 'incorrect-question';
+                    
+                    const questionElem = document.createElement('p');
+                    questionElem.innerHTML = `<strong>${currentLang === 'ar' ? 'سؤال' : 'Question'} ${index + 1}:</strong> ${question.question}`;
+                    incorrectDiv.appendChild(questionElem);
+                    
+                    const explanationElem = document.createElement('p');
+                    explanationElem.className = 'correct-answer';
+                    explanationElem.innerHTML = `<i class="fas fa-check-circle"></i> <strong>${currentLang === 'en' ? 'Correct Answer:' : 
+                                                  currentLang === 'fr' ? 'Réponse Correcte:' : 
+                                                  'الإجابة الصحيحة:'}</strong> ${question.options[question.correct]}`;
+                    incorrectDiv.appendChild(explanationElem);
+                    
+                    const reasonElem = document.createElement('p');
+                    reasonElem.style.fontSize = '0.95rem';
+                    reasonElem.style.color = 'var(--text-secondary)';
+                    reasonElem.style.marginTop = '0.5rem';
+                    reasonElem.textContent = question.explanation;
+                    incorrectDiv.appendChild(reasonElem);
+                    
+                    resultsDetails.appendChild(incorrectDiv);
+                });
+            } else {
+                let allCorrectMessage = document.createElement('p');
+                allCorrectMessage.textContent = currentLang === 'en' ? 
+                    'Perfect! You answered all questions correctly. Excellent performance!' :
+                    currentLang === 'fr' ? 
+                    'Parfait ! Vous avez répondu correctement à toutes les questions. Performance excellente!' :
+                    'ممتاز! لقد أجبت على جميع الأسئلة بشكل صحيح. أداء رائع!';
+                allCorrectMessage.style.color = 'var(--success)';
+                allCorrectMessage.style.fontWeight = '500';
+                allCorrectMessage.style.padding = '1.5rem';
+                allCorrectMessage.style.textAlign = 'center';
+                allCorrectMessage.style.fontSize = '1.1rem';
+                resultsDetails.appendChild(allCorrectMessage);
+            }
+            
+            // Show professor message if user is Sherif (case-insensitive)
+            if (userName.toLowerCase() === 'sherif') {
+                professorMessage.style.display = 'block';
+            }
+            
+            resultsShown = true;
+        }
+        
+        // Restart quiz
+        restartBtn.addEventListener('click', () => {
+            // Reset quiz state
+            currentQuestion = 0;
+            userAnswers = new Array(15).fill(null);
+            resultsShown = false;
+            timeRemaining = 15 * 60;
+            
+            // Clear timer
+            clearInterval(timerInterval);
+            timerDisplay.classList.remove('timer-warning');
+            
+            // Show welcome screen
+            resultsScreen.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+            
+            // Reset form
+            userNameInput.value = userName;
+            
+            // Hide professor message
+            professorMessage.style.display = 'none';
+        });
+        
+        // Download results
+        downloadBtn.addEventListener('click', () => {
+            const questions = quizData[currentLang];
+            let score = 0;
+            
+            for (let i = 0; i < 15; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    score++;
+                }
+            }
+            
+            let resultsText = `${currentLang === 'en' ? 'Roadmap Proficiency Assessment - Results' : 
+                              currentLang === 'fr' ? 'Évaluation de Maîtrise des Feuilles de Route - Résultats' : 
+                              'تقييم الكفاءة في خطط العمل - النتائج'}\n`;
+            resultsText += `================================================\n\n`;
+            resultsText += `${currentLang === 'en' ? 'Participant' : 
+                           currentLang === 'fr' ? 'Participant' : 
+                           'المشارك'}: ${userName}\n`;
+            resultsText += `${currentLang === 'en' ? 'Date' : 
+                           currentLang === 'fr' ? 'Date' : 
+                           'التاريخ'}: ${new Date().toLocaleDateString()}\n`;
+            resultsText += `${currentLang === 'en' ? 'Time' : 
+                           currentLang === 'fr' ? 'Heure' : 
+                           'الوقت'}: ${new Date().toLocaleTimeString()}\n`;
+            resultsText += `${currentLang === 'en' ? 'Score' : 
+                           currentLang === 'fr' ? 'Score' : 
+                           'النتيجة'}: ${score}/15 (${Math.round((score/15)*100)}%)\n\n`;
+            
+            resultsText += `${currentLang === 'en' ? 'Performance Summary:' : 
+                           currentLang === 'fr' ? 'Résumé de Performance:' : 
+                           'ملخص الأداء:'}\n`;
+            
+            if (score === 15) {
+                resultsText += currentLang === 'en' ? 
+                    'Perfect score demonstrating excellent roadmap understanding.\n' :
+                    currentLang === 'fr' ?
+                    'Score parfait démontrant une excellente compréhension.\n' :
+                    'نتيجة مثالية تظهر فهماً ممتازاً لخطط العمل.\n';
+            } else if (score >= 12) {
+                resultsText += currentLang === 'en' ? 
+                    'Excellent performance showing strong foundational knowledge.\n' :
+                    currentLang === 'fr' ?
+                    'Performance excellente montrant de solides connaissances.\n' :
+                    'أداء ممتاز يظهر معرفة أساسية قوية.\n';
+            } else if (score >= 9) {
+                resultsText += currentLang === 'en' ? 
+                    'Good performance with solid understanding of basics.\n' :
+                    currentLang === 'fr' ?
+                    'Bonne performance avec une bonne compréhension des bases.\n' :
+                    'أداء جيد مع فهم راسخ للأساسيات.\n';
+            } else if (score >= 7) {
+                resultsText += currentLang === 'en' ? 
+                    'Fair performance. Review concepts for improvement.\n' :
+                    currentLang === 'fr' ?
+                    'Performance correcte. Revoyez les concepts pour vous améliorer.\n' :
+                    'أداء جيد. راجع المفاهيم للتحسين.\n';
+            } else {
+                resultsText += currentLang === 'en' ? 
+                    'Review roadmap principles and try again for better results.\n' :
+                    currentLang === 'fr' ?
+                    'Revoyez les principes des feuilles de route et réessayez.\n' :
+                    'راجع مبادئ خطط العمل وحاول مرة أخرى لتحقيق نتائج أفضل.\n';
+            }
+            
+            resultsText += `\n${currentLang === 'en' ? 'Detailed Results:' : 
+                           currentLang === 'fr' ? 'Résultats Détaillés:' : 
+                           'النتائج التفصيلية:'}\n`;
+            resultsText += `----------------\n\n`;
+            
+            for (let i = 0; i < 15; i++) {
+                const question = questions[i];
+                resultsText += `${i + 1}. ${question.question}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Your Answer:' : 
+                               currentLang === 'fr' ? 'Votre Réponse:' : 
+                               'إجابتك:'} ${userAnswers[i] !== null ? question.options[userAnswers[i]] : 
+                               currentLang === 'en' ? 'Not answered' : 
+                               currentLang === 'fr' ? 'Non répondue' : 
+                               'لم تتم الإجابة'}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Correct Answer:' : 
+                               currentLang === 'fr' ? 'Réponse Correcte:' : 
+                               'الإجابة الصحيحة:'} ${question.options[question.correct]}\n`;
+                resultsText += `   ${currentLang === 'en' ? 'Explanation:' : 
+                               currentLang === 'fr' ? 'Explication:' : 
+                               'الشرح:'} ${question.explanation}\n\n`;
+            }
+            
+            const blob = new Blob([resultsText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const fileName = currentLang === 'en' ? 'roadmap-assessment-results' :
+                            currentLang === 'fr' ? 'resultats-evaluation-feuille-route' :
+                            'نتائج-تقييم-خطة-العمل';
+            a.download = `${fileName}-${userName.replace(/\s+/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+        
+        // Confetti function
+        function triggerConfetti() {
+            // Main burst
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+            
+            // Side bursts
+            setTimeout(() => {
+                confetti({
+                    particleCount: 80,
+                    angle: 60,
+                    spread: 80,
+                    origin: { x: 0 }
+                });
+                
+                confetti({
+                    particleCount: 80,
+                    angle: 120,
+                    spread: 80,
+                    origin: { x: 1 }
+                });
+            }, 250);
+        }
+        
+        // Navigation event listeners - SIMPLE AND RELIABLE
+        prevBtn.addEventListener('click', prevQuestion);
+        
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestion === 15) {
+                submitQuiz();
+            } else {
+                nextQuestion();
+            }
+        });
+        
+        // Initialize with English
+        updateLanguage('en');
+    </script>
+</body>
+</html>
