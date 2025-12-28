@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e91e63;
+            --primary-light: #f8bbd0;
+            --primary-lighter: #fff5f7;
+            --primary-dark: #c2185b;
+            --dark: #333333;
+            --light: #f8f9fa;
+            --gray: #666666;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, var(--primary-lighter) 0%, #fff 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--primary-light);
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-lighter);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--primary-lighter);
+            color: var(--primary);
+            border: 1px solid var(--primary-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #fff5f5;
+            color: #ff6b6b;
+            border: 1px solid #ffcccc;
+        }
+
+        .btn-danger:hover {
+            background: #ffe6e6;
+            transform: translateY(-2px);
+        }
+
+        /* Contacts Container */
+        .contacts-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .contact-card {
+            background: var(--primary-lighter);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.1);
+        }
+
+        .contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .contact-id {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            background: rgba(233, 30, 99, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .contact-details {
+            display: grid;
+            gap: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .detail-icon {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            min-width: 80px;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--primary-light);
+            margin-bottom: 20px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary);
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .toast-icon {
+            color: var(--primary);
+        }
+
+        .toast-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .toast-message {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Storage Viewer */
+        .storage-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .storage-viewer.show {
+            display: flex;
+        }
+
+        .storage-content {
+            background: #1e1e1e;
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: auto;
+            border: 1px solid #444;
+        }
+
+        .storage-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .storage-title {
+            color: var(--white);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .storage-data {
+            background: #252526;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #d4d4d4;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            tab-size: 2;
+            overflow-x: auto;
+        }
+
+        .storage-key {
+            color: #9cdcfe;
+        }
+
+        .storage-string {
+            color: #ce9178;
+        }
+
+        .storage-number {
+            color: #b5cea8;
+        }
+
+        .storage-bool {
+            color: #569cd6;
+        }
+
+        .storage-null {
+            color: #569cd6;
+        }
+
+        .storage-bracket {
+            color: #d4d4d4;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--primary-light);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-btn {
+            padding: 10px 20px;
+            background: var(--primary-lighter);
+            color: var(--primary);
+            border: 1px solid var(--primary-light);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            body {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Scrollbar */
+        .contacts-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .contacts-container::-webkit-scrollbar-track {
+            background: var(--primary-lighter);
+            border-radius: 4px;
+        }
+
+        .contacts-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Storage Viewer -->
+    <div class="storage-viewer" id="storageViewer">
+        <div class="storage-content">
+            <button class="close-btn" id="closeStorage">&times;</button>
+            <div class="storage-header">
+                <h3 class="storage-title">
+                    <i class="fas fa-database"></i>
+                    LocalStorage Data Viewer
+                </h3>
+            </div>
+            <pre id="storageData" class="storage-data">Loading storage data...</pre>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-header">
+            <i class="fas fa-check-circle toast-icon" id="toastIcon"></i>
+            <div class="toast-title" id="toastTitle">Success</div>
+        </div>
+        <div class="toast-message" id="toastMessage">Contact saved successfully</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-address-book"></i>
+                </div>
+                <div>ContactSync Pro</div>
+            </div>
+            <p class="subtitle">Professional Contact Management Solution</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-grid">
+            <!-- Form Section -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-plus"></i>
+                        Add New Contact
+                    </h2>
+                </div>
+                
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label class="form-label">ID</label>
+                        <input type="text" id="id" class="form-input" placeholder="Enter unique ID" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="Enter phone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="Enter email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" id="address" class="form-input" placeholder="Enter full address" required>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Contact
+                        </button>
+                        <button type="button" id="loadSample" class="btn btn-secondary">
+                            <i class="fas fa-download"></i>
+                            Load 5 Sample Contacts
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Contacts Section -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-users"></i>
+                        Stored Contacts
+                    </h2>
+                    <div style="font-size: 0.9rem; color: var(--gray); margin-top: 5px;" id="contactsCount">
+                        0 contacts
+                    </div>
+                </div>
+                
+                <div id="contactsContainer" class="contacts-container">
+                    <div class="empty-state">
+                        <i class="fas fa-address-book"></i>
+                        <h3>No Contacts Yet</h3>
+                        <p>Add your first contact or load sample data to get started</p>
+                    </div>
+                </div>
+                
+                <div class="button-group" style="margin-top: 20px;">
+                    <button id="clearAll" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear All Contacts
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>All contacts are securely stored in your browser's local storage</p>
+            <div class="footer-buttons">
+                <button id="viewStorage" class="footer-btn">
+                    <i class="fas fa-code"></i>
+                    View Storage Code
+                </button>
+                <button id="exportData" class="footer-btn">
+                    <i class="fas fa-file-export"></i>
+                    Export Data
+                </button>
+                <button id="clearStorage" class="footer-btn">
+                    <i class="fas fa-eraser"></i>
+                    Clear Storage
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize contacts array from localStorage
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+        
+        // DOM Elements
+        const contactForm = document.getElementById('contactForm');
+        const contactsContainer = document.getElementById('contactsContainer');
+        const contactsCount = document.getElementById('contactsCount');
+        const loadSampleBtn = document.getElementById('loadSample');
+        const clearAllBtn = document.getElementById('clearAll');
+        const exportDataBtn = document.getElementById('exportData');
+        const viewStorageBtn = document.getElementById('viewStorage');
+        const clearStorageBtn = document.getElementById('clearStorage');
+        const storageViewer = document.getElementById('storageViewer');
+        const storageData = document.getElementById('storageData');
+        const toast = document.getElementById('toast');
+        const toastIcon = document.getElementById('toastIcon');
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        const closeStorageBtn = document.getElementById('closeStorage');
+        
+        // Show toast notification
+        function showToast(type, title, message) {
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            toastIcon.className = `fas ${icons[type] || icons.info} toast-icon`;
+            toast.style.borderLeftColor = type === 'success' ? '#e91e63' : 
+                                         type === 'error' ? '#ff4757' : '#2d98da';
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+        
+        // Save contacts to localStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('contacts', JSON.stringify(contacts));
+                updateContactsCount();
+                return true;
+            } catch (error) {
+                showToast('error', 'Storage Error', 'Could not save contacts to storage');
+                return false;
+            }
+        }
+        
+        // Update contacts count
+        function updateContactsCount() {
+            const count = contacts.length;
+            contactsCount.textContent = `${count} contact${count !== 1 ? 's' : ''}`;
+        }
+        
+        // Create contact card HTML
+        function createContactCard(contact) {
+            return `
+                <div class="contact-card">
+                    <div class="contact-header">
+                        <div class="contact-id">ID: ${contact.id}</div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="detail-row">
+                            <i class="fas fa-user detail-icon"></i>
+                            <div class="detail-label">Name:</div>
+                            <div class="detail-value">${contact.name}</div>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-phone detail-icon"></i>
+                            <div class="detail-label">Phone:</div>
+                            <div class="detail-value">${contact.phone}</div>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-envelope detail-icon"></i>
+                            <div class="detail-label">Email:</div>
+                            <div class="detail-value">${contact.email}</div>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-map-marker-alt detail-icon"></i>
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">${contact.address}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Display all contacts
+        function displayContacts() {
+            if (contacts.length === 0) {
+                contactsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-address-book"></i>
+                        <h3>No Contacts Yet</h3>
+                        <p>Add your first contact or load sample data to get started</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let contactsHTML = '';
+            contacts.forEach(contact => {
+                contactsHTML += createContactCard(contact);
+            });
+            
+            contactsContainer.innerHTML = contactsHTML;
+        }
+        
+        // Auto-fill Layla's data on paste in ID field
+        function setupPasteDetection() {
+            const idField = document.getElementById('id');
+            
+            idField.addEventListener('paste', (e) => {
+                setTimeout(() => {
+                    const pastedText = idField.value.trim();
+                    
+                    // If pasting "001" or starting with 0
+                    if (pastedText === '001' || /^0/.test(pastedText)) {
+                        document.getElementById('name').value = 'Layla';
+                        document.getElementById('phone').value = '0123456789';
+                        document.getElementById('email').value = 'LAYLA@GMAIL.COM';
+                        document.getElementById('address').value = 'El sherook';
+                        
+                        showToast('success', 'Auto-fill Complete', "Layla's information has been auto-filled. Click Save Contact!");
+                    }
+                }, 10);
+            });
+        }
+        
+        // Format JSON with syntax highlighting
+        function formatJSON(json) {
+            let formatted = JSON.stringify(json, null, 2);
+            
+            // Syntax highlighting
+            formatted = formatted
+                .replace(/("[\w]+":)/g, '<span class="storage-key">$1</span>')
+                .replace(/("[^"]*")/g, '<span class="storage-string">$1</span>')
+                .replace(/\b\d+\b/g, '<span class="storage-number">$&</span>')
+                .replace(/\b(true|false)\b/g, '<span class="storage-bool">$&</span>')
+                .replace(/\bnull\b/g, '<span class="storage-null">$&</span>')
+                .replace(/[\[\]{}]/g, '<span class="storage-bracket">$&</span>');
+            
+            return formatted;
+        }
+        
+        // Show formatted storage data
+        function showStorageData() {
+            const allStorageData = {};
+            
+            // Get ALL localStorage data
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                try {
+                    allStorageData[key] = JSON.parse(localStorage.getItem(key));
+                } catch (e) {
+                    allStorageData[key] = localStorage.getItem(key);
+                }
+            }
+            
+            // Format and display the data
+            if (Object.keys(allStorageData).length === 0) {
+                storageData.innerHTML = '<span class="storage-string">"LocalStorage is empty"</span>';
+            } else {
+                storageData.innerHTML = formatJSON(allStorageData);
+            }
+            
+            storageViewer.classList.add('show');
+        }
+        
+        // Load 5 sample contacts with your information
+        function loadSampleData() {
+            const sampleContacts = [
+                {
+                    id: "001",
+                    name: "Layla",
+                    phone: "0101362937",
+                    email: "layla@example.com",
+                    address: "El Sherook, Cairo, Egypt",
+                    created: new Date().toISOString()
+                },
+                {
+                    id: "002",
+                    name: "Dr. James Wilson",
+                    phone: "+1 (555) 123-4567",
+                    email: "jwilson@university.edu",
+                    address: "123 University Ave, Boston, MA 02115",
+                    created: new Date().toISOString()
+                },
+                {
+                    id: "003",
+                    name: "Sarah Johnson",
+                    phone: "+44 20 7946 0858",
+                    email: "s.johnson@company.co.uk",
+                    address: "45 Business Street, London W1G 8QJ",
+                    created: new Date().toISOString()
+                },
+                {
+                    id: "004",
+                    name: "Michael Chen",
+                    phone: "+61 2 9876 5432",
+                    email: "m.chen@enterprise.com.au",
+                    address: "Level 24, 100 Market St, Sydney NSW 2000",
+                    created: new Date().toISOString()
+                },
+                {
+                    id: "005",
+                    name: "Emma Garcia",
+                    phone: "+33 1 42 96 12 82",
+                    email: "e.garcia@corporation.fr",
+                    address: "7 Rue de la Paix, Paris 75002",
+                    created: new Date().toISOString()
+                }
+            ];
+            
+            contacts = sampleContacts;
+            
+            if (saveToLocalStorage()) {
+                displayContacts();
+                showToast('success', 'Sample Data Loaded', '5 contacts with complete information have been added');
+            }
+        }
+        
+        // Handle form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('id').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            
+            if (!id || !name || !phone || !email || !address) {
+                showToast('error', 'Missing Fields', 'Please fill in all 5 fields');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                showToast('error', 'Invalid Email', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (contacts.some(contact => contact.id === id)) {
+                showToast('error', 'Duplicate ID', `Contact with ID "${id}" already exists`);
+                return;
+            }
+            
+            const newContact = {
+                id,
+                name,
+                phone,
+                email,
+                address,
+                created: new Date().toISOString()
+            };
+            
+            contacts.push(newContact);
+            
+            if (saveToLocalStorage()) {
+                displayContacts();
+                contactForm.reset();
+                showToast('success', 'Success!', `${name} has been added to contacts (ID: ${id})`);
+            }
+        });
+        
+        // Clear all contacts
+        clearAllBtn.addEventListener('click', function() {
+            if (contacts.length === 0) {
+                showToast('info', 'No Contacts', 'There are no contacts to clear');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete all contacts? This action cannot be undone.')) {
+                contacts = [];
+                saveToLocalStorage();
+                displayContacts();
+                showToast('info', 'All Cleared', 'All contacts have been removed');
+            }
+        });
+        
+        // Export data as JSON
+        exportDataBtn.addEventListener('click', function() {
+            if (contacts.length === 0) {
+                showToast('info', 'No Data', 'There are no contacts to export');
+                return;
+            }
+            
+            const data = JSON.stringify(contacts, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `contacts_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('success', 'Export Complete', 'Contacts exported as JSON file');
+        });
+        
+        // Clear entire storage
+        clearStorageBtn.addEventListener('click', function() {
+            if (confirm('This will clear ALL data including contacts. Are you sure?')) {
+                localStorage.clear();
+                contacts = [];
+                displayContacts();
+                showToast('info', 'Storage Cleared', 'All data has been removed from storage');
+            }
+        });
+        
+        // Event Listeners
+        closeStorageBtn.addEventListener('click', () => storageViewer.classList.remove('show'));
+        loadSampleBtn.addEventListener('click', loadSampleData);
+        viewStorageBtn.addEventListener('click', showStorageData);
+        
+        // Close storage viewer on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target === storageViewer) storageViewer.classList.remove('show');
+        });
+        
+        // Show welcome message for Dr. Sherif
+        function showWelcomeMessage() {
+            const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+            if (!hasSeenWelcome) {
+                setTimeout(() => {
+                    showToast('info', 'Welcome Dr. Sherif!', 'We hope you enjoy managing contacts with this application.');
+                    localStorage.setItem('hasSeenWelcome', 'true');
+                }, 1500);
+            }
+        }
+        
+        // Initialize app
+        function initApp() {
+            setupPasteDetection();
+            displayContacts();
+            updateContactsCount();
+            showWelcomeMessage();
+        }
+        
+        // Initialize app on load
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
