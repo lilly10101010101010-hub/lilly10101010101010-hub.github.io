@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(L) | Minimalist Chic Fashion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #1a1a1a;
+            background-color: #fefefe;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: rgba(254, 254, 254, 0.95);
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 40px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #888;
+        }
+        
+        .header-icons {
+            display: flex;
+        }
+        
+        .header-icons a {
+            color: #1a1a1a;
+            margin-left: 25px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .header-icons a:hover {
+            color: #888;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9f9f9;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: transparent;
+            color: #1a1a1a;
+            border: 1px solid #1a1a1a;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #1a1a1a;
+            color: #fefefe;
+        }
+        
+        /* Collections */
+        .section-title {
+            text-align: center;
+            margin: 100px 0 60px;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+        
+        .collections {
+            padding-bottom: 100px;
+        }
+        
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .collection-item {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+        }
+        
+        .collection-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .collection-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .collection-info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: #1a1a1a;
+        }
+        
+        .collection-info h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+        
+        .collection-info p {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        /* Featured Products */
+        .featured-products {
+            padding-bottom: 100px;
+            background-color: #f9f9f9;
+            padding-top: 60px;
+        }
+        
+        .product-slider {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0 40px;
+            gap: 30px;
+        }
+        
+        .product-slider::-webkit-scrollbar {
+            height: 5px;
+        }
+        
+        .product-slider::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .product-slider::-webkit-scrollbar-thumb {
+            background: #d0d0d0;
+        }
+        
+        .product-card {
+            min-width: 300px;
+            flex-shrink: 0;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .product-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .product-info p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* Philosophy */
+        .philosophy {
+            padding: 100px 0;
+        }
+        
+        .philosophy-content {
+            max-width: 600px;
+            margin-right: 80px;
+        }
+        
+        .philosophy h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .philosophy p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .philosophy-image {
+            height: 600px;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: #fefefe;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #fefefe;
+        }
+        
+        .footer-column p {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: transparent;
+            border: 1px solid #444;
+            color: #fefefe;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .newsletter-form button {
+            padding: 0 20px;
+            background-color: #fefefe;
+            border: none;
+            color: #1a1a1a;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            font-size: 13px;
+            color: #999;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .collection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .philosophy-content {
+                margin-right: 0;
+                margin-bottom: 50px;
+                max-width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+            }
+            
+            nav ul {
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .collection-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .philosophy {
+                padding: 60px 0;
+            }
+            
+            .philosophy-image {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                margin: 60px 0 40px;
+                font-size: 28px;
+            }
+            
+            .collection-item {
+                height: 400px;
+            }
+            
+            .product-card {
+                min-width: 250px;
+            }
+            
+            .product-card img {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">(L)</a>
+            <nav>
+                <ul>
+                    <li><a href="#collections">Collections</a></li>
+                    <li><a href="#products">Ready-to-wear</a></li>
+                    <li><a href="#philosophy">Philosophy</a></li>
+                    <li><a href="#footer">Contact</a></li>
+                    <li><a href="#">Stores</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="#"><i class="fas fa-search"></i></a>
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Quiet Luxury</h1>
+            <p>Timeless pieces crafted with precision and care. (L) embodies understated elegance through meticulous design and exceptional quality.</p>
+            <a href="#collections" class="btn">Discover the Collection</a>
+        </div>
+    </section>
+
+    <!-- Collections -->
+    <section id="collections" class="collections">
+        <div class="container">
+            <h2 class="section-title">Collections</h2>
+            <div class="collection-grid">
+                <div class="collection-item">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Spring Collection">
+                    <div class="collection-info">
+                        <h3>Spring '24</h3>
+                        <p>Silk & Linen</p>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1288&q=80" alt="Essentials">
+                    <div class="collection-info">
+                        <h3>Essentials</h3>
+                        <p>Year-Round Staples</p>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <img src="https://images.unsplash.com/photo-1519457431-44ccd64a579b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80" alt="Evening Wear">
+                    <div class="collection-info">
+                        <h3>Evening</h3>
+                        <p>After Dark Collection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="products" class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Pieces</h2>
+            <div class="product-slider">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Cashmere Turtleneck">
+                    <div class="product-info">
+                        <h3>Cashmere Turtleneck</h3>
+                        <p>Fine-gauge cashmere</p>
+                        <p>$890</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Wool Trousers">
+                    <div class="product-info">
+                        <h3>Tailored Wool Trousers</h3>
+                        <p>Italian wool</p>
+                        <p>$650</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80" alt="Silk Dress">
+                    <div class="product-info">
+                        <h3>Bias-Cut Silk Dress</h3>
+                        <p>Crepe de chine</p>
+                        <p>$1,250</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" alt="Leather Jacket">
+                    <div class="product-info">
+                        <h3>Lambskin Leather Jacket</h3>
+                        <p>Buttery soft lambskin</p>
+                        <p>$2,100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section id="philosophy" class="philosophy">
+        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center;">
+            <div class="philosophy-content">
+                <h2>The (L) Philosophy</h2>
+                <p>Founded on the principles of understated elegance, (L) creates clothing that transcends seasons. Each piece is designed with meticulous attention to detail, focusing on exceptional fabrics and perfect proportions.</p>
+                <p>We believe in quality over quantity, creating garments that will become cherished elements of your wardrobe for years to come. Our collections are produced in limited quantities by skilled artisans in Italy and Japan.</p>
+                <p>Minimalism is not about deprivation, but about refinement—stripping away the unnecessary to reveal the essential beauty of form, texture, and silhouette.</p>
+                <a href="#" class="btn" style="margin-top: 30px;">Our Story</a>
+            </div>
+            <div class="philosophy-image" style="flex: 1; min-width: 300px; margin-top: 40px;"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>(L)</h3>
+                    <p>An embodiment of quiet luxury and minimalist design. Timeless clothing for the discerning individual.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Collections</h3>
+                    <ul>
+                        <li><a href="#collections">Spring '24</a></li>
+                        <li><a href="#collections">Essentials</a></li>
+                        <li><a href="#collections">Evening</a></li>
+                        <li><a href="#">Archive</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="#">Stores</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe for updates on new collections and exclusive events.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email" required>
+                        <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 (L). All rights reserved. | Website inspired by The Row's minimalist aesthetic</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '15px 0';
+                header.style.backgroundColor = 'rgba(254, 254, 254, 0.98)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.backgroundColor = 'rgba(254, 254, 254, 0.95)';
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[type="email"]');
+            if(emailInput.value) {
+                alert('Thank you for subscribing to the (L) newsletter.');
+                emailInput.value = '';
+            }
+        });
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('(L) website loaded successfully');
+        });
+    </script>
+</body>
+</html>
