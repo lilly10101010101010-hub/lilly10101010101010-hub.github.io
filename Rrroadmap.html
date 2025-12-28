@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Genius Pro | Intelligent Strategic Planning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #36D1DC;
+            --accent: #FF6B9D;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #FF5252;
+            --dark: #0F0B30;
+            --darker: #080616;
+            --light: #F5F7FF;
+            --gray: #A0A3C1;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --glow: 0 0 30px rgba(108, 99, 255, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(54, 209, 220, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 107, 157, 0.1) 0%, transparent 50%);
+            animation: bgPulse 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(108, 99, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 99, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        /* Header */
+        .main-header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Progress Indicator */
+        .progress-tracker {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-step.active .step-circle {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: transparent;
+            box-shadow: var(--glow);
+            transform: scale(1.1);
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .progress-step.active .step-label {
+            color: var(--secondary);
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 25px;
+            left: 100%;
+            width: 40px;
+            height: 2px;
+            background: rgba(108, 99, 255, 0.3);
+            z-index: 1;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            color: var(--secondary);
+            background: rgba(54, 209, 220, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: rgba(15, 11, 48, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+
+        .interactive-card:hover {
+            border-color: rgba(108, 99, 255, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Goal Input Section */
+        .goal-input-container {
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .input-label i {
+            color: var(--secondary);
+        }
+
+        .goal-input {
+            width: 100%;
+            padding: 20px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 15px;
+            color: var(--light);
+            font-size: 1.1rem;
+            font-family: 'Exo 2', sans-serif;
+            transition: var(--transition);
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .goal-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.3);
+        }
+
+        .goal-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .example-card {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .example-card:hover {
+            background: rgba(108, 99, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .example-category {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .example-text {
+            color: var(--light);
+            line-height: 1.5;
+        }
+
+        /* Task Input Section */
+        .task-input-container {
+            background: rgba(15, 11, 48, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .current-goal-display {
+            background: rgba(54, 209, 220, 0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .current-goal-display i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .task-input-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .task-input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .task-input {
+            padding: 15px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+        }
+
+        .priority-select {
+            padding: 15px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            cursor: pointer;
+        }
+
+        /* Action Buttons */
+        .action-button {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .action-button:hover:before {
+            left: 100%;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Tasks List */
+        .tasks-list-container {
+            margin-top: 30px;
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .tasks-count {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .tasks-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .task-item {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid;
+            transition: var(--transition);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .task-item.high { border-color: var(--accent); }
+        .task-item.medium { border-color: var(--warning); }
+        .task-item.low { border-color: var(--secondary); }
+
+        .task-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .task-priority {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .priority-high { background: rgba(255, 107, 157, 0.2); color: var(--accent); }
+        .priority-medium { background: rgba(255, 152, 0, 0.2); color: var(--warning); }
+        .priority-low { background: rgba(54, 209, 220, 0.2); color: var(--secondary); }
+
+        .task-estimate {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-left: 15px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .task-action-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .task-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        /* 3D Prioritization Cube */
+        .cube-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            perspective: 1000px;
+            margin: 40px 0;
+        }
+
+        .cube {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-15deg) rotateY(-15deg);
+            animation: rotateCube 20s infinite linear;
+            margin: 0 auto;
+        }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(-15deg) rotateY(0deg); }
+            100% { transform: rotateX(-15deg) rotateY(360deg); }
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(108, 99, 255, 0.1);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light);
+            backdrop-filter: blur(5px);
+        }
+
+        .cube-face.front { transform: translateZ(100px); }
+        .cube-face.back { transform: rotateY(180deg) translateZ(100px); }
+        .cube-face.right { transform: rotateY(90deg) translateZ(100px); }
+        .cube-face.left { transform: rotateY(-90deg) translateZ(100px); }
+        .cube-face.top { transform: rotateX(90deg) translateZ(100px); }
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        .task-node {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            transform-style: preserve-3d;
+            z-index: 10;
+            box-shadow: 0 0 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .node-high { background: linear-gradient(135deg, var(--accent), #FF5252); box-shadow: 0 0 20px rgba(255, 107, 157, 0.5); }
+        .node-medium { background: linear-gradient(135deg, var(--warning), #FFC107); box-shadow: 0 0 20px rgba(255, 152, 0, 0.5); }
+        .node-low { background: linear-gradient(135deg, var(--secondary), #00BCD4); box-shadow: 0 0 20px rgba(54, 209, 220, 0.5); }
+
+        .node-label {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .task-node:hover .node-label {
+            opacity: 1;
+            transform: translateY(-30px);
+        }
+
+        /* Timeline Builder */
+        .timeline-container {
+            position: relative;
+            height: 200px;
+            margin: 40px 0;
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .timeline-track {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-milestone {
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--glow);
+            transition: var(--transition);
+        }
+
+        .timeline-milestone:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .timeline-task {
+            position: absolute;
+            top: 50%;
+            background: rgba(108, 99, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            max-width: 150px;
+            transform: translateY(-50%);
+            border-left: 3px solid;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-task:hover {
+            background: rgba(108, 99, 255, 0.3);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Intelligence Panel */
+        .intelligence-panel {
+            background: rgba(15, 11, 48, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(54, 209, 220, 0.3);
+            animation: glowPulse 3s infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 20px rgba(54, 209, 220, 0.2); }
+            100% { box-shadow: 0 0 40px rgba(54, 209, 220, 0.4); }
+        }
+
+        .intelligence-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .intelligence-header i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .analysis-content {
+            line-height: 1.6;
+        }
+
+        .analysis-points {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .analysis-points li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .analysis-points li:before {
+            content: "▸";
+            color: var(--secondary);
+            position: absolute;
+            left: -15px;
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: rgba(108, 99, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .nav-btn.prev {
+            background: rgba(108, 99, 255, 0.1);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            color: var(--light);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Success Animation */
+        .success-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .success-animation.show {
+            animation: successPopup 1.5s ease;
+        }
+
+        @keyframes successPopup {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            40% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--success), #8BC34A);
+            box-shadow: 0 0 50px rgba(76, 175, 80, 0.5);
+        }
+
+        .checkmark i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .progress-tracker {
+                gap: 20px;
+            }
+            
+            .task-input-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .cube {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .cube-face {
+                width: 150px;
+                height: 150px;
+                font-size: 1rem;
+            }
+            
+            .cube-face.front { transform: translateZ(75px); }
+            .cube-face.back { transform: rotateY(180deg) translateZ(75px); }
+            .cube-face.right { transform: rotateY(90deg) translateZ(75px); }
+            .cube-face.left { transform: rotateY(-90deg) translateZ(75px); }
+            .cube-face.top { transform: rotateX(90deg) translateZ(75px); }
+            .cube-face.bottom { transform: rotateX(-90deg) translateZ(75px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Success Animation -->
+    <div class="success-animation" id="successAnimation">
+        <div class="checkmark">
+            <i class="fas fa-check"></i>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Header -->
+        <header class="main-header">
+            <h1 class="main-title">Roadmap Genius Pro</h1>
+            <p class="tagline">Transform your vision into reality with intelligent planning, real-time analysis, and professional roadmap creation.</p>
+        </header>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <div class="progress-step active" data-step="1">
+                <div class="step-circle">1</div>
+                <span class="step-label">Define Goal</span>
+                <div class="step-connector"></div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-circle">2</div>
+                <span class="step-label">Add Tasks</span>
+                <div class="step-connector"></div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-circle">3</div>
+                <span class="step-label">Prioritize</span>
+                <div class="step-connector"></div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-circle">4</div>
+                <span class="step-label">Timeline</span>
+                <div class="step-connector"></div>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="step-circle">5</div>
+                <span class="step-label">Complete</span>
+            </div>
+        </div>
+
+        <!-- Step 1: Define Goal -->
+        <section class="content-section active" id="step1">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Define Your Strategic Goal</h2>
+            <p class="section-subtitle">Every great achievement begins with a clear, well-defined goal. Make it SMART: Specific, Measurable, Achievable, Relevant, and Time-bound.</p>
+            
+            <div class="interactive-card">
+                <div class="goal-input-container">
+                    <label class="input-label">
+                        <i class="fas fa-rocket"></i> What do you want to achieve?
+                    </label>
+                    <textarea class="goal-input" id="goalInput" 
+                              placeholder="Example: Launch a mobile app with 10,000 users and 4.5-star rating within 6 months"></textarea>
+                </div>
+                
+                <button class="action-button" id="setGoalBtn">
+                    <i class="fas fa-check-circle"></i> Set This Goal
+                </button>
+                
+                <!-- Goal Examples -->
+                <div class="goal-examples">
+                    <div class="example-card" data-example="1">
+                        <div class="example-category">Tech Startup</div>
+                        <p class="example-text">Launch a mobile app with 10,000 downloads and 4.5-star rating within 6 months</p>
+                    </div>
+                    <div class="example-card" data-example="2">
+                        <div class="example-category">Academic Research</div>
+                        <p class="example-text">Complete and successfully defend Master's thesis on renewable energy by May 2024</p>
+                    </div>
+                    <div class="example-card" data-example="3">
+                        <div class="example-category">Personal Development</div>
+                        <p class="example-text">Transition to data science role with 30% salary increase within 9 months</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Add Tasks -->
+        <section class="content-section" id="step2">
+            <h2 class="section-title"><i class="fas fa-tasks"></i> Break Down Into Actionable Tasks</h2>
+            <p class="section-subtitle">Transform your goal into manageable tasks. Each task should be specific, have an owner, and include estimated effort.</p>
+            
+            <div class="interactive-card">
+                <!-- Current Goal Display -->
+                <div class="current-goal-display">
+                    <i class="fas fa-bullseye"></i>
+                    <div>
+                        <strong>Current Goal:</strong>
+                        <span id="displayedGoal">Not set yet</span>
+                    </div>
+                </div>
+                
+                <!-- Task Input -->
+                <div class="task-input-container">
+                    <div class="task-input-group">
+                        <input type="text" class="task-input" id="taskInput" 
+                               placeholder="Enter a specific task (e.g., 'Design app wireframes')">
+                        <select class="priority-select" id="taskPriority">
+                            <option value="high">🚨 High Priority</option>
+                            <option value="medium" selected>🔄 Medium Priority</option>
+                            <option value="low">⚡ Low Priority</option>
+                        </select>
+                        <button class="action-button" id="addTaskBtn">
+                            <i class="fas fa-plus-circle"></i> Add Task
+                        </button>
+                    </div>
+                    
+                    <!-- Tasks List -->
+                    <div class="tasks-list-container">
+                        <div class="tasks-header">
+                            <h3><i class="fas fa-list-ol"></i> Your Tasks</h3>
+                            <span class="tasks-count" id="tasksCount">0 tasks</span>
+                        </div>
+                        <div class="tasks-list" id="tasksList">
+                            <!-- Tasks will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Prioritize -->
+        <section class="content-section" id="step3">
+            <h2 class="section-title"><i class="fas fa-sort-amount-down"></i> Intelligent Prioritization</h2>
+            <p class="section-subtitle">Visualize your tasks in 3D space. Watch as they automatically position based on priority, complexity, and dependencies.</p>
+            
+            <div class="interactive-card">
+                <!-- 3D Prioritization Cube -->
+                <div class="cube-container">
+                    <div class="cube" id="priorityCube">
+                        <div class="cube-face front">
+                            <div>High Priority</div>
+                        </div>
+                        <div class="cube-face back">
+                            <div>Medium Priority</div>
+                        </div>
+                        <div class="cube-face right">
+                            <div>Complex Tasks</div>
+                        </div>
+                        <div class="cube-face left">
+                            <div>Simple Tasks</div>
+                        </div>
+                        <div class="cube-face top">
+                            <div>Critical Path</div>
+                        </div>
+                        <div class="cube-face bottom">
+                            <div>Dependencies</div>
+                        </div>
+                        <!-- Task nodes will be added here dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Stats Dashboard -->
+                <div class="stats-dashboard">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotalTasks">0</div>
+                        <div class="stat-label">Total Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statHighPriority">0</div>
+                        <div class="stat-label">High Priority</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotalDays">0</div>
+                        <div class="stat-label">Estimated Days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAvgComplexity">0</div>
+                        <div class="stat-label">Avg. Complexity</div>
+                    </div>
+                </div>
+                
+                <!-- Intelligence Panel -->
+                <div class="intelligence-panel" id="priorityAnalysis">
+                    <div class="intelligence-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>Priority Analysis</h3>
+                    </div>
+                    <div class="analysis-content">
+                        <p>Add tasks to see intelligent analysis of your project structure, dependencies, and critical path.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Timeline -->
+        <section class="content-section" id="step4">
+            <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Build Your Timeline</h2>
+            <p class="section-subtitle">Watch your roadmap come to life with an intelligent timeline that automatically sequences tasks based on priorities and dependencies.</p>
+            
+            <div class="interactive-card">
+                <!-- Timeline Builder -->
+                <div class="timeline-container">
+                    <div class="timeline-track" id="timelineTrack"></div>
+                    <!-- Milestones and tasks will be added here dynamically -->
+                </div>
+                
+                <!-- Timeline Intelligence -->
+                <div class="intelligence-panel">
+                    <div class="intelligence-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Timeline Intelligence</h3>
+                    </div>
+                    <div class="analysis-content" id="timelineAnalysis">
+                        <p>Your timeline will automatically generate here as you add tasks. The system intelligently:</p>
+                        <ul class="analysis-points">
+                            <li>Sequences tasks based on priorities</li>
+                            <li>Identifies critical path dependencies</li>
+                            <li>Suggests realistic time buffers</li>
+                            <li>Calculates optimal resource allocation</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Timeline Stats -->
+                <div class="stats-dashboard">
+                    <div class="stat-card">
+                        <div class="stat-value" id="timelineWeeks">0</div>
+                        <div class="stat-label">Total Weeks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="timelineMilestones">0</div>
+                        <div class="stat-label">Milestones</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="timelineBuffer">20%</div>
+                        <div class="stat-label">Recommended Buffer</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="timelineEfficiency">0%</div>
+                        <div class="stat-label">Efficiency Score</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: Complete -->
+        <section class="content-section" id="step5">
+            <h2 class="section-title"><i class="fas fa-trophy"></i> Roadmap Complete!</h2>
+            <p class="section-subtitle">Congratulations! Your professional roadmap is ready. Review your strategic plan and next steps.</p>
+            
+            <div class="interactive-card">
+                <!-- Summary Dashboard -->
+                <div class="stats-dashboard">
+                    <div class="stat-card" style="background: rgba(54, 209, 220, 0.1);">
+                        <div class="stat-value" id="finalGoalCompletion">0%</div>
+                        <div class="stat-label">Goal Clarity Score</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(108, 99, 255, 0.1);">
+                        <div class="stat-value" id="finalTaskBreakdown">0</div>
+                        <div class="stat-label">Tasks Breakdown</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(255, 107, 157, 0.1);">
+                        <div class="stat-value" id="finalTimelineScore">0</div>
+                        <div class="stat-label">Timeline Quality</div>
+                    </div>
+                    <div class="stat-card" style="background: rgba(76, 175, 80, 0.1);">
+                        <div class="stat-value" id="finalSuccessProbability">0%</div>
+                        <div class="stat-label">Success Probability</div>
+                    </div>
+                </div>
+                
+                <!-- Final Intelligence -->
+                <div class="intelligence-panel">
+                    <div class="intelligence-header">
+                        <i class="fas fa-award"></i>
+                        <h3>Final Roadmap Analysis</h3>
+                    </div>
+                    <div class="analysis-content" id="finalAnalysis">
+                        <p>Your roadmap has been analyzed by our AI system. Here's your comprehensive assessment:</p>
+                        <ul class="analysis-points" id="finalAnalysisPoints">
+                            <!-- Dynamic analysis points will be added here -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Action Steps -->
+                <div style="margin-top: 40px; padding: 30px; background: rgba(15, 11, 48, 0.7); border-radius: 15px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-play-circle"></i> Your Next Action Steps
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div style="padding: 15px; background: rgba(54, 209, 220, 0.1); border-radius: 10px; border-left: 4px solid var(--secondary);">
+                            <strong>1. Review & Refine</strong>
+                            <p style="color: var(--gray); margin-top: 5px; font-size: 0.9rem;">Share with team members for feedback</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(108, 99, 255, 0.1); border-radius: 10px; border-left: 4px solid var(--primary);">
+                            <strong>2. Assign Ownership</strong>
+                            <p style="color: var(--gray); margin-top: 5px; font-size: 0.9rem;">Designate team members for each task</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(255, 107, 157, 0.1); border-radius: 10px; border-left: 4px solid var(--accent);">
+                            <strong>3. Set Up Tracking</strong>
+                            <p style="color: var(--gray); margin-top: 5px; font-size: 0.9rem;">Use project management tools</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 10px; border-left: 4px solid var(--success);">
+                            <strong>4. Start Execution</strong>
+                            <p style="color: var(--gray); margin-top: 5px; font-size: 0.9rem;">Begin with highest priority tasks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn prev" id="prevBtn">
+                <i class="fas fa-chevron-left"></i> Previous Step
+            </button>
+            <button class="nav-btn next" id="nextBtn">
+                Next Step <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" preload="auto"></audio>
+    <audio id="successSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
+    <audio id="addSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" preload="auto"></audio>
+    
+    <script>
+        // ========== ROADMAP APPLICATION STATE ==========
+        const roadmapApp = {
+            currentStep: 1,
+            totalSteps: 5,
+            userGoal: '',
+            userTasks: [],
+            
+            // AI Analysis Data
+            goalAnalysis: {
+                clarityScore: 0,
+                specificity: 0,
+                timeframe: false,
+                measurability: false
+            },
+            
+            // Statistics
+            stats: {
+                totalTasks: 0,
+                highPriority: 0,
+                mediumPriority: 0,
+                lowPriority: 0,
+                totalDays: 0,
+                avgComplexity: 0,
+                timelineWeeks: 0,
+                milestones: 0,
+                successProbability: 0
+            }
+        };
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            initApplication();
+            initEventListeners();
+            setupExampleGoals();
+        });
+
+        function initApplication() {
+            // Load any saved data from localStorage
+            const savedGoal = localStorage.getItem('roadmapGoal');
+            const savedTasks = localStorage.getItem('roadmapTasks');
+            
+            if (savedGoal) {
+                roadmapApp.userGoal = savedGoal;
+                document.getElementById('displayedGoal').textContent = savedGoal;
+            }
+            
+            if (savedTasks) {
+                roadmapApp.userTasks = JSON.parse(savedTasks);
+                updateTaskList();
+                updateStats();
+            }
+            
+            updateProgressTracker();
+        }
+
+        function initEventListeners() {
+            // Goal Setting
+            document.getElementById('setGoalBtn').addEventListener('click', setGoal);
+            document.getElementById('goalInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.ctrlKey) setGoal();
+            });
+
+            // Task Management
+            document.getElementById('addTaskBtn').addEventListener('click', addTask);
+            document.getElementById('taskInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addTask();
+            });
+
+            // Navigation
+            document.getElementById('nextBtn').addEventListener('click', nextStep);
+            document.getElementById('prevBtn').addEventListener('click', prevStep);
+            
+            // Progress steps
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNumber = parseInt(this.dataset.step);
+                    goToStep(stepNumber);
+                });
+            });
+        }
+
+        function setupExampleGoals() {
+            document.querySelectorAll('.example-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const exampleNum = this.dataset.example;
+                    let exampleGoal = '';
+                    
+                    switch(exampleNum) {
+                        case '1':
+                            exampleGoal = "Launch a mobile app with 10,000 downloads and 4.5-star rating within 6 months";
+                            break;
+                        case '2':
+                            exampleGoal = "Complete and successfully defend Master's thesis on renewable energy by May 2024";
+                            break;
+                        case '3':
+                            exampleGoal = "Transition to data science role with 30% salary increase within 9 months";
+                            break;
+                    }
+                    
+                    document.getElementById('goalInput').value = exampleGoal;
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.95)';
+                    this.style.background = 'rgba(108, 99, 255, 0.3)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.background = '';
+                    }, 300);
+                });
+            });
+        }
+
+        // ========== GOAL MANAGEMENT ==========
+        function setGoal() {
+            const goalInput = document.getElementById('goalInput');
+            const goal = goalInput.value.trim();
+            
+            if (!goal) {
+                showError(goalInput, "Please enter a valid goal");
+                return;
+            }
+            
+            if (goal.length < 10) {
+                showError(goalInput, "Goal should be more specific (minimum 10 characters)");
+                return;
+            }
+            
+            // Save goal
+            roadmapApp.userGoal = goal;
+            localStorage.setItem('roadmapGoal', goal);
+            
+            // Update display
+            document.getElementById('displayedGoal').textContent = goal;
+            
+            // Analyze goal
+            analyzeGoal(goal);
+            
+            // Show success
+            showSuccessAnimation();
+            playSound('successSound');
+            
+            // Provide intelligent feedback
+            setTimeout(() => {
+                const feedback = generateGoalFeedback(goal);
+                showIntelligenceFeedback(feedback, 'goal');
+            }, 500);
+            
+            // Auto-advance to next step
+            setTimeout(() => {
+                if (roadmapApp.currentStep === 1) nextStep();
+            }, 1500);
+        }
+
+        function analyzeGoal(goal) {
+            const analysis = {
+                clarityScore: 0,
+                specificity: 0,
+                timeframe: false,
+                measurability: false,
+                keywords: []
+            };
+            
+            // Check for specificity (length and detail)
+            analysis.specificity = Math.min(goal.length / 100, 1);
+            
+            // Check for timeframe
+            const timeKeywords = ['within', 'by', 'in', 'months', 'weeks', 'days', 'years', 'quarter', 'Q', '2024', '2025'];
+            analysis.timeframe = timeKeywords.some(keyword => goal.toLowerCase().includes(keyword));
+            
+            // Check for measurability
+            const numberPattern = /\d+/g;
+            const numbers = goal.match(numberPattern);
+            analysis.measurability = numbers && numbers.length > 0;
+            
+            // Extract keywords
+            const commonWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
+            const words = goal.toLowerCase().split(/\W+/).filter(word => 
+                word.length > 3 && !commonWords.includes(word)
+            );
+            analysis.keywords = [...new Set(words)].slice(0, 5);
+            
+            // Calculate overall clarity score
+            analysis.clarityScore = (
+                (analysis.specificity * 0.4) +
+                (analysis.timeframe ? 0.3 : 0) +
+                (analysis.measurability ? 0.3 : 0)
+            ) * 100;
+            
+            roadmapApp.goalAnalysis = analysis;
+        }
+
+        // ========== TASK MANAGEMENT ==========
+        function addTask() {
+            if (!roadmapApp.userGoal) {
+                alert("Please set a goal first before adding tasks");
+                goToStep(1);
+                return;
+            }
+            
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            const priority = document.getElementById('taskPriority').value;
+            
+            if (!taskText) {
+                showError(taskInput, "Please enter a task description");
+                return;
+            }
+            
+            if (taskText.length < 3) {
+                showError(taskInput, "Task should be more descriptive");
+                return;
+            }
+            
+            // Create task object with intelligent analysis
+            const task = createTaskObject(taskText, priority);
+            
+            // Add to tasks array
+            roadmapApp.userTasks.push(task);
+            
+            // Save to localStorage
+            localStorage.setItem('roadmapTasks', JSON.stringify(roadmapApp.userTasks));
+            
+            // Update UI
+            updateTaskList();
+            updateStats();
+            
+            // Clear input
+            taskInput.value = '';
+            
+            // Show success
+            showSuccessAnimation();
+            playSound('addSound');
+            
+            // Provide intelligent feedback
+            setTimeout(() => {
+                const feedback = generateTaskFeedback(task);
+                showIntelligenceFeedback(feedback, 'task');
+            }, 500);
+            
+            // Auto-update visualizations if on those steps
+            if (roadmapApp.currentStep >= 3) {
+                updateCubeVisualization();
+                updateTimelineVisualization();
+            }
+        }
+
+        function createTaskObject(taskText, priority) {
+            // Intelligent task analysis
+            const complexity = calculateTaskComplexity(taskText);
+            const estimatedDays = calculateTaskDuration(taskText, priority, complexity);
+            const dependencies = identifyDependencies(taskText, roadmapApp.userTasks);
+            
+            return {
+                id: Date.now() + Math.random(),
+                text: taskText,
+                priority: priority,
+                complexity: complexity,
+                estimatedDays: estimatedDays,
+                dependencies: dependencies,
+                status: 'pending',
+                addedAt: new Date().toISOString()
+            };
+        }
+
+        function calculateTaskComplexity(taskText) {
+            let complexity = 1; // Base complexity
+            
+            // Keywords that indicate complexity
+            const complexKeywords = [
+                'develop', 'build', 'create', 'implement', 'integrate', 'design', 
+                'research', 'analyze', 'optimize', 'refactor', 'migrate', 'deploy'
+            ];
+            
+            const simpleKeywords = [
+                'review', 'check', 'update', 'test', 'verify', 'document', 
+                'meet', 'discuss', 'plan', 'schedule'
+            ];
+            
+            const text = taskText.toLowerCase();
+            
+            // Check for complex keywords
+            complexKeywords.forEach(keyword => {
+                if (text.includes(keyword)) complexity += 0.5;
+            });
+            
+            // Check for simple keywords
+            simpleKeywords.forEach(keyword => {
+                if (text.includes(keyword)) complexity -= 0.2;
+            });
+            
+            // Adjust based on length
+            complexity += (text.split(' ').length / 20);
+            
+            // Normalize between 1 and 5
+            return Math.min(Math.max(Math.round(complexity * 10) / 10, 1), 5);
+        }
+
+        function calculateTaskDuration(taskText, priority, complexity) {
+            let baseDays = 3; // Default
+            
+            // Adjust based on complexity
+            baseDays *= complexity;
+            
+            // Adjust based on priority (high priority tasks get more realistic estimates)
+            if (priority === 'high') baseDays *= 0.8; // High priority might be simpler or urgent
+            if (priority === 'low') baseDays *= 1.2; // Low priority might be less defined
+            
+            // Adjust based on task type
+            const text = taskText.toLowerCase();
+            if (text.includes('research') || text.includes('analyze')) baseDays *= 1.5;
+            if (text.includes('meeting') || text.includes('discuss')) baseDays = 0.5;
+            if (text.includes('review') || text.includes('check')) baseDays = 1;
+            
+            // Round to nearest half day
+            return Math.max(0.5, Math.round(baseDays * 2) / 2);
+        }
+
+        function identifyDependencies(taskText, existingTasks) {
+            const dependencies = [];
+            const text = taskText.toLowerCase();
+            
+            // Check for dependency keywords
+            if (text.includes('after') || text.includes('depend') || text.includes('following')) {
+                // Look for potential dependencies in existing tasks
+                existingTasks.forEach(task => {
+                    const taskWords = task.text.toLowerCase().split(' ');
+                    taskWords.forEach(word => {
+                        if (word.length > 4 && text.includes(word)) {
+                            dependencies.push(task.id);
+                        }
+                    });
+                });
+            }
+            
+            return dependencies.slice(0, 2); // Max 2 dependencies
+        }
+
+        function updateTaskList() {
+            const tasksList = document.getElementById('tasksList');
+            const tasksCount = document.getElementById('tasksCount');
+            
+            if (roadmapApp.userTasks.length === 0) {
+                tasksList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--gray);">
+                        <i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>No tasks added yet. Add your first task above.</p>
+                    </div>
+                `;
+                tasksCount.textContent = '0 tasks';
+                return;
+            }
+            
+            // Update count
+            tasksCount.textContent = `${roadmapApp.userTasks.length} task${roadmapApp.userTasks.length !== 1 ? 's' : ''}`;
+            
+            // Build tasks list
+            tasksList.innerHTML = '';
+            
+            roadmapApp.userTasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.className = `task-item ${task.priority}`;
+                taskElement.dataset.id = task.id;
+                
+                const priorityText = 
+                    task.priority === 'high' ? '🚨 High' :
+                    task.priority === 'medium' ? '🔄 Medium' : '⚡ Low';
+                
+                const priorityClass = 
+                    task.priority === 'high' ? 'priority-high' :
+                    task.priority === 'medium' ? 'priority-medium' : 'priority-low';
+                
+                taskElement.innerHTML = `
+                    <div class="task-content">
+                        <span class="task-priority ${priorityClass}">${priorityText}</span>
+                        <span>${task.text}</span>
+                        <span class="task-estimate">${task.estimatedDays} day${task.estimatedDays !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="task-actions">
+                        <button class="task-action-btn edit-task" title="Edit Task">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="task-action-btn delete-task" title="Delete Task">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                tasksList.appendChild(taskElement);
+            });
+            
+            // Add event listeners for task actions
+            document.querySelectorAll('.delete-task').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const taskId = parseInt(this.closest('.task-item').dataset.id);
+                    deleteTask(taskId);
+                });
+            });
+            
+            document.querySelectorAll('.edit-task').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const taskId = parseInt(this.closest('.task-item').dataset.id);
+                    editTask(taskId);
+                });
+            });
+        }
+
+        function deleteTask(taskId) {
+            roadmapApp.userTasks = roadmapApp.userTasks.filter(task => task.id !== taskId);
+            localStorage.setItem('roadmapTasks', JSON.stringify(roadmapApp.userTasks));
+            updateTaskList();
+            updateStats();
+            updateCubeVisualization();
+            updateTimelineVisualization();
+        }
+
+        // ========== 3D PRIORITIZATION CUBE ==========
+        function updateCubeVisualization() {
+            const cube = document.getElementById('priorityCube');
+            
+            // Clear existing nodes (keep faces)
+            const existingNodes = cube.querySelectorAll('.task-node');
+            existingNodes.forEach(node => node.remove());
+            
+            if (roadmapApp.userTasks.length === 0) return;
+            
+            // Position tasks in 3D space based on priority and complexity
+            roadmapApp.userTasks.forEach((task, index) => {
+                const totalTasks = roadmapApp.userTasks.length;
+                const angle = (index / totalTasks) * Math.PI * 2;
+                const radius = 150;
+                
+                // Calculate position based on priority
+                let x, y, z;
+                
+                switch(task.priority) {
+                    case 'high':
+                        x = Math.cos(angle) * radius * 0.8;
+                        y = Math.sin(angle) * radius * 0.8;
+                        z = 80 + (task.complexity * 10);
+                        break;
+                    case 'medium':
+                        x = Math.cos(angle) * radius * 1.2;
+                        y = Math.sin(angle) * radius * 1.2;
+                        z = 40 + (task.complexity * 10);
+                        break;
+                    case 'low':
+                        x = Math.cos(angle) * radius * 1.6;
+                        y = Math.sin(angle) * radius * 1.6;
+                        z = 0 + (task.complexity * 10);
+                        break;
+                }
+                
+                // Add some randomness for visual appeal
+                x += (Math.random() - 0.5) * 20;
+                y += (Math.random() - 0.5) * 20;
+                
+                // Create node element
+                const node = document.createElement('div');
+                node.className = `task-node node-${task.priority}`;
+                node.style.cssText = `
+                    transform: translate3d(${x}px, ${y}px, ${z}px);
+                    animation-delay: ${index * 0.1}s;
+                `;
+                node.title = task.text;
+                
+                // Add label
+                const label = document.createElement('div');
+                label.className = 'node-label';
+                label.textContent = task.text.substring(0, 20) + (task.text.length > 20 ? '...' : '');
+                node.appendChild(label);
+                
+                // Add click interaction
+                node.addEventListener('click', () => {
+                    highlightTaskInCube(node, task);
+                });
+                
+                cube.appendChild(node);
+            });
+            
+            // Update priority analysis
+            updatePriorityAnalysis();
+        }
+
+        function highlightTaskInCube(node, task) {
+            // Remove existing highlights
+            document.querySelectorAll('.task-node').forEach(n => {
+                n.style.boxShadow = '';
+                n.style.transform = n.style.transform.replace('scale(1.5)', '');
+            });
+            
+            // Highlight clicked node
+            node.style.transform = node.style.transform + ' scale(1.5)';
+            node.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.8)';
+            
+            // Show detailed analysis
+            const analysis = document.getElementById('priorityAnalysis');
+            analysis.innerHTML = `
+                <div class="intelligence-header">
+                    <i class="fas fa-search"></i>
+                    <h3>Task Analysis: "${task.text.substring(0, 30)}..."</h3>
+                </div>
+                <div class="analysis-content">
+                    <p><strong>Priority:</strong> ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</p>
+                    <p><strong>Estimated Duration:</strong> ${task.estimatedDays} day${task.estimatedDays !== 1 ? 's' : ''}</p>
+                    <p><strong>Complexity Score:</strong> ${task.complexity}/5</p>
+                    <p><strong>Dependencies:</strong> ${task.dependencies.length > 0 ? task.dependencies.length + ' identified' : 'None'}</p>
+                </div>
+            `;
+        }
+
+        function updatePriorityAnalysis() {
+            const analysis = document.getElementById('priorityAnalysis');
+            
+            if (roadmapApp.userTasks.length === 0) {
+                analysis.innerHTML = `
+                    <div class="intelligence-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>Priority Analysis</h3>
+                    </div>
+                    <div class="analysis-content">
+                        <p>Add tasks to see intelligent analysis of your project structure, dependencies, and critical path.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calculate insights
+            const highPriorityTasks = roadmapApp.userTasks.filter(t => t.priority === 'high');
+            const avgComplexity = roadmapApp.userTasks.reduce((sum, t) => sum + t.complexity, 0) / roadmapApp.userTasks.length;
+            const totalDays = roadmapApp.userTasks.reduce((sum, t) => sum + t.estimatedDays, 0);
+            
+            // Generate insights
+            let insights = [];
+            
+            if (highPriorityTasks.length > roadmapApp.userTasks.length * 0.4) {
+                insights.push("High proportion of urgent tasks. Consider delegating or extending timeline.");
+            }
+            
+            if (avgComplexity > 3) {
+                insights.push("High average complexity. Consider breaking down complex tasks.");
+            }
+            
+            if (roadmapApp.userTasks.length > 10) {
+                insights.push("Large number of tasks. Consider grouping related tasks into phases.");
+            }
+            
+            if (insights.length === 0) {
+                insights.push("Good task distribution. Your priorities are well-balanced.");
+            }
+            
+            analysis.innerHTML = `
+                <div class="intelligence-header">
+                    <i class="fas fa-brain"></i>
+                    <h3>Priority Analysis</h3>
+                </div>
+                <div class="analysis-content">
+                    <p>Based on ${roadmapApp.userTasks.length} tasks:</p>
+                    <ul class="analysis-points">
+                        <li><strong>${highPriorityTasks.length} urgent tasks</strong> requiring immediate attention</li>
+                        <li><strong>Average complexity:</strong> ${avgComplexity.toFixed(1)}/5</li>
+                        <li><strong>Total estimated effort:</strong> ${totalDays} days</li>
+                        <li><strong>Recommended focus:</strong> Start with high-priority, low-complexity tasks</li>
+                    </ul>
+                    ${insights.length > 0 ? `<p><strong>Insight:</strong> ${insights[0]}</p>` : ''}
+                </div>
+            `;
+        }
+
+        // ========== TIMELINE BUILDER ==========
+        function updateTimelineVisualization() {
+            const timelineTrack = document.getElementById('timelineTrack');
+            
+            // Clear existing timeline elements
+            const existingElements = document.querySelectorAll('.timeline-milestone, .timeline-task');
+            existingElements.forEach(el => el.remove());
+            
+            if (roadmapApp.userTasks.length === 0) return;
+            
+            // Calculate timeline
+            const sortedTasks = [...roadmapApp.userTasks].sort((a, b) => {
+                // Sort by priority first, then complexity
+                const priorityOrder = { high: 3, medium: 2, low: 1 };
+                if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
+                    return priorityOrder[b.priority] - priorityOrder[a.priority];
+                }
+                return b.complexity - a.complexity;
+            });
+            
+            const totalDays = sortedTasks.reduce((sum, task) => sum + task.estimatedDays, 0);
+            const totalWeeks = Math.ceil(totalDays / 5); // 5-day work weeks
+            
+            // Update stats
+            document.getElementById('timelineWeeks').textContent = totalWeeks;
+            document.getElementById('timelineMilestones').textContent = Math.ceil(sortedTasks.length / 3);
+            
+            // Calculate efficiency score
+            const efficiencyScore = calculateEfficiencyScore(sortedTasks);
+            document.getElementById('timelineEfficiency').textContent = efficiencyScore + '%';
+            
+            // Create timeline
+            let currentDay = 0;
+            const timelineWidth = timelineTrack.offsetWidth || 800;
+            const dayWidth = timelineWidth / totalDays;
+            
+            sortedTasks.forEach((task, index) => {
+                // Calculate position
+                const position = (currentDay / totalDays) * 100;
+                const width = (task.estimatedDays / totalDays) * 100;
+                
+                // Create task element
+                const taskElement = document.createElement('div');
+                taskElement.className = 'timeline-task';
+                taskElement.style.cssText = `
+                    left: ${position}%;
+                    width: ${Math.max(width * 0.8, 3)}%;
+                    border-color: ${task.priority === 'high' ? 'var(--accent)' : 
+                                  task.priority === 'medium' ? 'var(--warning)' : 'var(--secondary)'};
+                `;
+                taskElement.title = `${task.text} (${task.estimatedDays} days)`;
+                taskElement.textContent = task.text.substring(0, 15) + (task.text.length > 15 ? '...' : '');
+                
+                timelineTrack.appendChild(taskElement);
+                
+                // Add milestone every 3 tasks or at significant points
+                if (index % 3 === 0 || index === sortedTasks.length - 1) {
+                    const milestone = document.createElement('div');
+                    milestone.className = 'timeline-milestone';
+                    milestone.style.left = `${position}%`;
+                    milestone.textContent = '✓';
+                    milestone.title = `Milestone: ${index + 1} tasks completed`;
+                    timelineTrack.appendChild(milestone);
+                }
+                
+                currentDay += task.estimatedDays;
+            });
+            
+            // Update timeline analysis
+            updateTimelineAnalysis(sortedTasks, totalWeeks, efficiencyScore);
+        }
+
+        function calculateEfficiencyScore(tasks) {
+            if (tasks.length === 0) return 0;
+            
+            let score = 100;
+            
+            // Penalize for too many high priority tasks
+            const highPriorityCount = tasks.filter(t => t.priority === 'high').length;
+            if (highPriorityCount > tasks.length * 0.4) score -= 20;
+            
+            // Penalize for uneven distribution
+            const avgComplexity = tasks.reduce((sum, t) => sum + t.complexity, 0) / tasks.length;
+            const complexityVariance = tasks.reduce((sum, t) => sum + Math.pow(t.complexity - avgComplexity, 2), 0) / tasks.length;
+            if (complexityVariance > 2) score -= 15;
+            
+            // Bonus for good dependency management
+            const tasksWithDeps = tasks.filter(t => t.dependencies.length > 0);
+            if (tasksWithDeps.length > 0 && tasksWithDeps.length < tasks.length * 0.5) score += 10;
+            
+            return Math.max(0, Math.min(100, Math.round(score)));
+        }
+
+        function updateTimelineAnalysis(tasks, totalWeeks, efficiencyScore) {
+            const analysis = document.getElementById('timelineAnalysis');
+            
+            const bufferPercentage = efficiencyScore < 70 ? '30%' : efficiencyScore < 85 ? '25%' : '20%';
+            document.getElementById('timelineBuffer').textContent = bufferPercentage;
+            
+            // Calculate critical path
+            const highPriorityDays = tasks.filter(t => t.priority === 'high')
+                .reduce((sum, t) => sum + t.estimatedDays, 0);
+            
+            analysis.innerHTML = `
+                <div class="intelligence-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Timeline Intelligence</h3>
+                </div>
+                <div class="analysis-content">
+                    <p><strong>Timeline Summary:</strong></p>
+                    <ul class="analysis-points">
+                        <li><strong>Total Duration:</strong> ${totalWeeks} weeks (${tasks.reduce((sum, t) => sum + t.estimatedDays, 0)} work days)</li>
+                        <li><strong>Critical Path:</strong> ${highPriorityDays} days of high-priority work</li>
+                        <li><strong>Efficiency Score:</strong> ${efficiencyScore}% ${efficiencyScore > 80 ? '👍 Excellent' : efficiencyScore > 60 ? '✓ Good' : '⚠️ Needs improvement'}</li>
+                        <li><strong>Recommended Buffer:</strong> Add ${bufferPercentage} for contingencies</li>
+                    </ul>
+                    ${efficiencyScore < 70 ? 
+                        '<p><strong>Recommendation:</strong> Consider breaking down complex tasks and balancing priorities.</p>' : 
+                        '<p><strong>Status:</strong> Your timeline is well-optimized for successful execution.</p>'
+                    }
+                </div>
+            `;
+        }
+
+        // ========== STATISTICS ==========
+        function updateStats() {
+            const stats = {
+                totalTasks: roadmapApp.userTasks.length,
+                highPriority: roadmapApp.userTasks.filter(t => t.priority === 'high').length,
+                mediumPriority: roadmapApp.userTasks.filter(t => t.priority === 'medium').length,
+                lowPriority: roadmapApp.userTasks.filter(t => t.priority === 'low').length,
+                totalDays: roadmapApp.userTasks.reduce((sum, t) => sum + t.estimatedDays, 0),
+                avgComplexity: roadmapApp.userTasks.length > 0 ? 
+                    (roadmapApp.userTasks.reduce((sum, t) => sum + t.complexity, 0) / roadmapApp.userTasks.length).toFixed(1) : 0
+            };
+            
+            // Update UI
+            document.getElementById('statTotalTasks').textContent = stats.totalTasks;
+            document.getElementById('statHighPriority').textContent = stats.highPriority;
+            document.getElementById('statTotalDays').textContent = stats.totalDays;
+            document.getElementById('statAvgComplexity').textContent = stats.avgComplexity;
+            
+            // Update final stats if on last step
+            if (roadmapApp.currentStep === 5) {
+                updateFinalStats();
+            }
+        }
+
+        function updateFinalStats() {
+            // Goal clarity score
+            const goalScore = Math.min(Math.round(roadmapApp.goalAnalysis.clarityScore), 95);
+            document.getElementById('finalGoalCompletion').textContent = goalScore + '%';
+            
+            // Task breakdown quality
+            const taskBreakdownScore = Math.min(roadmapApp.userTasks.length * 10, 100);
+            document.getElementById('finalTaskBreakdown').textContent = 
+                roadmapApp.userTasks.length + ' tasks';
+            
+            // Timeline quality
+            const totalDays = roadmapApp.userTasks.reduce((sum, t) => sum + t.estimatedDays, 0);
+            const timelineScore = Math.min(Math.round((totalDays > 0 ? 70 : 0) + 
+                (roadmapApp.userTasks.filter(t => t.priority === 'high').length > 0 ? 15 : 0) +
+                (roadmapApp.userTasks.length > 3 ? 15 : 0)), 100);
+            document.getElementById('finalTimelineScore').textContent = timelineScore;
+            
+            // Success probability
+            const successProbability = Math.round(
+                (goalScore * 0.4) + 
+                (taskBreakdownScore * 0.3) + 
+                (timelineScore * 0.3)
+            );
+            document.getElementById('finalSuccessProbability').textContent = successProbability + '%';
+            
+            // Generate final analysis
+            generateFinalAnalysis(goalScore, taskBreakdownScore, timelineScore, successProbability);
+        }
+
+        function generateFinalAnalysis(goalScore, taskScore, timelineScore, successProbability) {
+            const analysisPoints = document.getElementById('finalAnalysisPoints');
+            analysisPoints.innerHTML = '';
+            
+            const insights = [];
+            
+            // Goal insights
+            if (goalScore >= 80) {
+                insights.push(`<li><strong>Excellent Goal Definition (${goalScore}%):</strong> Your goal is clear, measurable, and time-bound.</li>`);
+            } else if (goalScore >= 60) {
+                insights.push(`<li><strong>Good Goal Definition (${goalScore}%):</strong> Consider adding specific metrics or deadlines for better clarity.</li>`);
+            } else {
+                insights.push(`<li><strong>Goal Needs Refinement (${goalScore}%):</strong> Make your goal more specific and measurable.</li>`);
+            }
+            
+            // Task insights
+            if (roadmapApp.userTasks.length >= 5) {
+                insights.push(`<li><strong>Comprehensive Task Breakdown:</strong> ${roadmapApp.userTasks.length} well-defined tasks provide clear action steps.</li>`);
+            } else {
+                insights.push(`<li><strong>Limited Task Breakdown:</strong> Only ${roadmapApp.userTasks.length} tasks identified. Consider breaking goals into smaller steps.</li>`);
+            }
+            
+            // Priority insights
+            const highPriorityCount = roadmapApp.userTasks.filter(t => t.priority === 'high').length;
+            if (highPriorityCount > 0) {
+                insights.push(`<li><strong>Priority Management:</strong> ${highPriorityCount} high-priority tasks identified for immediate focus.</li>`);
+            }
+            
+            // Timeline insights
+            const totalDays = roadmapApp.userTasks.reduce((sum, t) => sum + t.estimatedDays, 0);
+            insights.push(`<li><strong>Timeline Estimate:</strong> ${Math.ceil(totalDays/5)} weeks (${totalDays} days) with ${timelineScore}% efficiency score.</li>`);
+            
+            // Success probability
+            insights.push(`<li><strong>Success Probability:</strong> ${successProbability}% based on goal clarity, task breakdown, and timeline quality.</li>`);
+            
+            // Add all insights
+            analysisPoints.innerHTML = insights.join('');
+        }
+
+        // ========== INTELLIGENT FEEDBACK ==========
+        function generateGoalFeedback(goal) {
+            const analysis = roadmapApp.goalAnalysis;
+            
+            let feedback = `<div class="intelligence-header">
+                <i class="fas fa-star"></i>
+                <h3>Goal Analysis: ${Math.round(analysis.clarityScore)}% Clarity</h3>
+            </div>
+            <div class="analysis-content">
+                <p><strong>Your goal has been analyzed:</strong></p>
+                <ul class="analysis-points">`;
+            
+            // Add specific feedback based on analysis
+            if (analysis.timeframe) {
+                feedback += `<li>✅ <strong>Time-bound:</strong> Clear timeframe identified</li>`;
+            } else {
+                feedback += `<li>⏰ <strong>Add timeframe:</strong> Consider adding a completion deadline</li>`;
+            }
+            
+            if (analysis.measurability) {
+                feedback += `<li>📊 <strong>Measurable:</strong> Contains numerical targets</li>`;
+            } else {
+                feedback += `<li>🎯 <strong>Add metrics:</strong> Include specific success criteria</li>`;
+            }
+            
+            if (analysis.specificity > 0.5) {
+                feedback += `<li>✅ <strong>Specific:</strong> Well-defined and clear</li>`;
+            } else {
+                feedback += `<li>✍️ <strong>More detail:</strong> Add more specifics about deliverables</li>`;
+            }
+            
+            // Add keyword-based recommendations
+            if (analysis.keywords.length > 0) {
+                const keywordSuggestions = {
+                    'app': 'Consider user testing phases and app store submission timelines',
+                    'thesis': 'Include literature review, data collection, and defense preparation phases',
+                    'launch': 'Plan for marketing, user acquisition, and post-launch support',
+                    'develop': 'Break into design, development, testing, and deployment phases',
+                    'research': 'Include literature review, methodology, data analysis, and reporting'
+                };
+                
+                for (const [keyword, suggestion] of Object.entries(keywordSuggestions)) {
+                    if (analysis.keywords.some(k => k.includes(keyword))) {
+                        feedback += `<li>💡 <strong>Recommendation:</strong> ${suggestion}</li>`;
+                        break;
+                    }
+                }
+            }
+            
+            feedback += `</ul><p><strong>Next:</strong> Break this goal down into actionable tasks.</p></div>`;
+            
+            return feedback;
+        }
+
+        function generateTaskFeedback(task) {
+            const tasks = roadmapApp.userTasks;
+            const similarTasks = tasks.filter(t => 
+                t !== task && 
+                t.text.toLowerCase().split(' ').some(word => 
+                    task.text.toLowerCase().includes(word) && word.length > 4
+                )
+            );
+            
+            let feedback = `<div class="intelligence-header">
+                <i class="fas fa-tasks"></i>
+                <h3>Task Added: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority</h3>
+            </div>
+            <div class="analysis-content">
+                <p><strong>"${task.text.substring(0, 40)}..." has been added:</strong></p>
+                <ul class="analysis-points">
+                    <li>⏱️ <strong>Estimated Duration:</strong> ${task.estimatedDays} day${task.estimatedDays !== 1 ? 's' : ''}</li>
+                    <li>📈 <strong>Complexity Level:</strong> ${task.complexity}/5</li>
+                    <li>🔗 <strong>Dependencies:</strong> ${task.dependencies.length} identified</li>
+                </ul>`;
+            
+            // Add task-specific recommendations
+            const text = task.text.toLowerCase();
+            if (text.includes('research') || text.includes('analyze')) {
+                feedback += `<p>💡 <strong>Research task tip:</strong> Consider breaking into literature review and analysis phases.</p>`;
+            }
+            
+            if (text.includes('develop') || text.includes('build')) {
+                feedback += `<p>💡 <strong>Development task tip:</strong> Include testing and deployment subtasks.</p>`;
+            }
+            
+            if (task.priority === 'high' && task.complexity > 3) {
+                feedback += `<p>⚠️ <strong>Complex high-priority task:</strong> Consider breaking this down further or allocating more resources.</p>`;
+            }
+            
+            // Mention similar tasks if any
+            if (similarTasks.length > 0) {
+                feedback += `<p>🔍 <strong>Related tasks:</strong> ${similarTasks.length} similar task${similarTasks.length !== 1 ? 's' : ''} identified. Consider grouping them.</p>`;
+            }
+            
+            feedback += `<p><strong>Total tasks:</strong> ${tasks.length}</p></div>`;
+            
+            return feedback;
+        }
+
+        function showIntelligenceFeedback(feedback, type) {
+            let panel;
+            
+            switch(type) {
+                case 'goal':
+                    panel = document.querySelector('#step1 .interactive-card');
+                    break;
+                case 'task':
+                    panel = document.querySelector('#step2 .interactive-card');
+                    break;
+                default:
+                    return;
+            }
+            
+            // Create or update feedback element
+            let feedbackElement = panel.querySelector('.intelligence-feedback');
+            if (!feedbackElement) {
+                feedbackElement = document.createElement('div');
+                feedbackElement.className = 'intelligence-feedback';
+                panel.appendChild(feedbackElement);
+            }
+            
+            feedbackElement.innerHTML = feedback;
+            feedbackElement.style.cssText = `
+                margin-top: 25px;
+                padding: 25px;
+                background: rgba(54, 209, 220, 0.1);
+                border-radius: 15px;
+                border: 1px solid rgba(54, 209, 220, 0.3);
+                animation: glowPulse 3s infinite alternate;
+            `;
+            
+            // Auto-remove after some time
+            setTimeout(() => {
+                feedbackElement.style.opacity = '0';
+                feedbackElement.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    if (feedbackElement.parentNode) {
+                        feedbackElement.parentNode.removeChild(feedbackElement);
+                    }
+                }, 500);
+            }, 8000);
+        }
+
+        // ========== NAVIGATION ==========
+        function nextStep() {
+            if (roadmapApp.currentStep < roadmapApp.totalSteps) {
+                goToStep(roadmapApp.currentStep + 1);
+            }
+        }
+
+        function prevStep() {
+            if (roadmapApp.currentStep > 1) {
+                goToStep(roadmapApp.currentStep - 1);
+            }
+        }
+
+        function goToStep(stepNumber) {
+            // Update current step
+            roadmapApp.currentStep = stepNumber;
+            
+            // Update progress tracker
+            updateProgressTracker();
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.visibility = stepNumber > 1 ? 'visible' : 'hidden';
+            document.getElementById('nextBtn').style.visibility = stepNumber < roadmapApp.totalSteps ? 'visible' : 'hidden';
+            
+            // Update button text for last step
+            if (stepNumber === roadmapApp.totalSteps) {
+                document.getElementById('nextBtn').innerHTML = 'Complete <i class="fas fa-check"></i>';
+            } else {
+                document.getElementById('nextBtn').innerHTML = 'Next Step <i class="fas fa-chevron-right"></i>';
+            }
+            
+            // Perform step-specific updates
+            performStepUpdates(stepNumber);
+            
+            // Play sound
+            playSound('clickSound');
+        }
+
+        function updateProgressTracker() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                const stepNumber = index + 1;
+                
+                if (stepNumber < roadmapApp.currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (stepNumber === roadmapApp.currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+        }
+
+        function performStepUpdates(stepNumber) {
+            switch(stepNumber) {
+                case 3: // Prioritization step
+                    updateCubeVisualization();
+                    break;
+                case 4: // Timeline step
+                    updateTimelineVisualization();
+                    break;
+                case 5: // Complete step
+                    updateFinalStats();
+                    break;
+            }
+        }
+
+        // ========== UTILITY FUNCTIONS ==========
+        function showSuccessAnimation() {
+            const animation = document.getElementById('successAnimation');
+            animation.classList.add('show');
+            
+            setTimeout(() => {
+                animation.classList.remove('show');
+            }, 1500);
+        }
+
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log("Audio play failed:", e));
+            }
+        }
+
+        function showError(element, message) {
+            element.style.borderColor = 'var(--danger)';
+            element.style.boxShadow = '0 0 15px rgba(255, 82, 82, 0.3)';
+            
+            // Show temporary error message
+            const errorMsg = document.createElement('div');
+            errorMsg.textContent = message;
+            errorMsg.style.cssText = `
+                color: var(--danger);
+                margin-top: 10px;
+                padding: 10px;
+                background: rgba(255, 82, 82, 0.1);
+                border-radius: 8px;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            const parent = element.parentNode;
+            parent.appendChild(errorMsg);
+            
+            setTimeout(() => {
+                element.style.borderColor = '';
+                element.style.boxShadow = '';
+                if (errorMsg.parentNode) {
+                    errorMsg.parentNode.removeChild(errorMsg);
+                }
+            }, 3000);
+        }
+
+        // ========== AUTO-SAVE ==========
+        setInterval(() => {
+            if (roadmapApp.userGoal || roadmapApp.userTasks.length > 0) {
+                localStorage.setItem('roadmapGoal', roadmapApp.userGoal);
+                localStorage.setItem('roadmapTasks', JSON.stringify(roadmapApp.userTasks));
+            }
+        }, 10000); // Auto-save every 10 seconds
+    </script>
+</body>
+</html>
