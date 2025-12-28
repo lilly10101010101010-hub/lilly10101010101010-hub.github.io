@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Roadmap Creator | Multilingual Masterclass</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #36D1DC;
+            --accent: #FF6B9D;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --dark: #0F0B30;
+            --darker: #080616;
+            --light: #F5F7FF;
+            --gray: #A0A3C1;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            direction: ltr;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(15, 11, 48, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 8px;
+            display: flex;
+            gap: 5px;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-btn.active {
+            background: rgba(108, 99, 255, 0.2);
+            color: var(--secondary);
+            box-shadow: 0 0 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--light);
+        }
+
+        /* Background Particles */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Main Container */
+        .presentation-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+            position: relative;
+        }
+
+        /* Slide Styles */
+        .slide {
+            display: none;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Title Slide */
+        .title-slide {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 30px;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.4);
+        }
+
+        /* Content Slides */
+        .slide-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .text-content {
+            padding: 20px;
+        }
+
+        .visual-content {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Slide Header */
+        .slide-header {
+            margin-bottom: 40px;
+        }
+
+        .slide-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .slide-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            color: var(--light);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .slide-title .highlight {
+            color: var(--secondary);
+        }
+
+        .slide-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Interactive Elements */
+        .interactive-section {
+            background: rgba(15, 11, 48, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            margin-top: 30px;
+        }
+
+        .input-container {
+            margin-bottom: 30px;
+        }
+
+        .input-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .input-label i {
+            color: var(--secondary);
+        }
+
+        .goal-input {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 15px;
+            color: var(--light);
+            font-size: 1.1rem;
+            font-family: 'Exo 2', sans-serif;
+            transition: var(--transition);
+        }
+
+        .goal-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .action-button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Response Container */
+        .response-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(54, 209, 220, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .response-header i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .response-text {
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Task Management */
+        .task-input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .task-input-row {
+                flex-direction: column;
+            }
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .priority-select {
+            padding: 15px;
+            background: rgba(8, 6, 22, 0.8);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            min-width: 150px;
+        }
+
+        .tasks-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding-right: 10px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+            animation: slideInRight 0.3s ease;
+            transition: var(--transition);
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .task-item.high { border-color: var(--accent); }
+        .task-item.medium { border-color: var(--warning); }
+        .task-item.low { border-color: var(--secondary); }
+
+        .task-item:hover {
+            background: rgba(108, 99, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .task-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .task-priority {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .task-priority.high { background: rgba(255, 107, 157, 0.2); color: var(--accent); }
+        .task-priority.medium { background: rgba(255, 152, 0, 0.2); color: var(--warning); }
+        .task-priority.low { background: rgba(54, 209, 220, 0.2); color: var(--secondary); }
+
+        .delete-task {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 5px;
+            transition: var(--transition);
+        }
+
+        .delete-task:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Priority Matrix */
+        .priority-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .matrix-quadrant {
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+
+        .matrix-quadrant:hover {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .quadrant-1 {
+            background: rgba(76, 175, 80, 0.1);
+            border-top-left-radius: 15px;
+        }
+        .quadrant-2 {
+            background: rgba(255, 152, 0, 0.1);
+            border-top-right-radius: 15px;
+        }
+        .quadrant-3 {
+            background: rgba(33, 150, 243, 0.1);
+            border-bottom-left-radius: 15px;
+        }
+        .quadrant-4 {
+            background: rgba(158, 158, 158, 0.1);
+            border-bottom-right-radius: 15px;
+        }
+
+        .quadrant-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .quadrant-desc {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* Timeline Visualization */
+        .timeline-container {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            margin: 30px 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 20px 0;
+        }
+
+        .timeline-track {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--light);
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-marker:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .timeline-task {
+            position: absolute;
+            top: 60%;
+            transform: translateY(-50%);
+            background: rgba(108, 99, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-left: 3px solid;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .timeline-task.high { border-color: var(--accent); }
+        .timeline-task.medium { border-color: var(--warning); }
+        .timeline-task.low { border-color: var(--secondary); }
+
+        .timeline-task:hover {
+            background: rgba(108, 99, 255, 0.4);
+            transform: translateY(-50%) scale(1.05);
+            z-index: 10;
+            white-space: normal;
+            max-width: 200px;
+        }
+
+        /* Progress Navigation */
+        .progress-nav {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(15, 11, 48, 0.9);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            color: var(--light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: rgba(108, 99, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 12px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .progress-dot.active {
+            background: var(--secondary);
+            box-shadow: 0 0 15px rgba(54, 209, 220, 0.7);
+        }
+
+        /* Smart Response System */
+        .smart-analysis {
+            background: rgba(15, 11, 48, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(54, 209, 220, 0.3);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .analysis-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-header i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .analysis-content {
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .analysis-points {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .analysis-points li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .analysis-points li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: -15px;
+        }
+
+        /* Stats Display */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Success Animation */
+        .success-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2000;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .success-animation.show {
+            animation: successPopup 1.5s ease;
+        }
+
+        @keyframes successPopup {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            40% { transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--success), #8BC34A);
+            box-shadow: 0 0 50px rgba(76, 175, 80, 0.5);
+        }
+
+        .checkmark i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        /* Error Message */
+        .error-message {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 107, 157, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 1000;
+            animation: fadeInOut 3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .slide-content {
+                gap: 30px;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+                padding: 5px;
+            }
+            
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .priority-matrix {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .visual-content {
+                height: 300px;
+            }
+            
+            .timeline-container {
+                height: 180px;
+            }
+        }
+
+        /* Visual Nodes */
+        .visual-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 2;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .node-goal {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.5);
+            color: white;
+        }
+
+        .node-milestone {
+            background: linear-gradient(135deg, var(--warning), #FF5722);
+            box-shadow: 0 0 25px rgba(255, 152, 0, 0.4);
+            color: white;
+        }
+
+        .node-task {
+            background: linear-gradient(135deg, var(--accent), #FF4081);
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+            color: white;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+
+        .visual-connection {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            z-index: 1;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Export Button */
+        .export-btn {
+            background: linear-gradient(90deg, var(--warning), #FF5722);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="en">
+            <i class="fas fa-globe-americas"></i> English
+        </button>
+        <button class="lang-btn" data-lang="ar">
+            <i class="fas fa-globe-africa"></i> العربية
+        </button>
+        <button class="lang-btn" data-lang="fr">
+            <i class="fas fa-globe-europe"></i> Français
+        </button>
+    </div>
+
+    <!-- Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Success Animation -->
+    <div class="success-animation" id="successAnimation">
+        <div class="checkmark">
+            <i class="fas fa-check"></i>
+        </div>
+    </div>
+
+    <!-- Presentation Container -->
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <section class="slide active" id="slide1">
+            <div class="title-slide">
+                <h1 class="main-title" data-key="mainTitle">Strategic Roadmap Creator</h1>
+                <p class="subtitle" data-key="mainSubtitle">Master the art of planning and execution with this comprehensive guide to creating effective roadmaps</p>
+                <button class="start-btn" id="startBtn" data-key="startBtn">
+                    <i class="fas fa-play-circle"></i> Begin Masterclass
+                </button>
+            </div>
+        </section>
+
+        <!-- Slide 2: Introduction -->
+        <section class="slide" id="slide2">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">01</div>
+                        <h2 class="slide-title" data-key="slide2Title">What is a <span class="highlight">Roadmap?</span></h2>
+                    </div>
+                    <p class="slide-description" data-key="slide2Desc">
+                        A roadmap is a strategic plan that outlines the vision, direction, and progress of a project over time. It serves as a communication tool, plan, and strategic document all in one.
+                    </p>
+                    
+                    <div class="key-points" data-key="slide2Points">
+                        <div class="interactive-section">
+                            <h3><i class="fas fa-check-circle"></i> Key Characteristics</h3>
+                            <ul style="margin-top: 20px; padding-left: 20px;">
+                                <li>Visual timeline of major milestones</li>
+                                <li>Clear alignment with business objectives</li>
+                                <li>Flexible enough to adapt to changes</li>
+                                <li>Communicates priorities to all stakeholders</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <!-- Roadmap Visualization -->
+                        <div class="visual-node node-goal" style="top: 50%; left: 20%;">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="visual-connection" style="width: 100px; top: 50%; left: 20%; transform: rotate(0deg);"></div>
+                        <div class="visual-node node-milestone" style="top: 30%; left: 40%;">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div class="visual-node node-milestone" style="top: 70%; left: 40%;">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div class="visual-node node-task" style="top: 10%; left: 60%;">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="visual-node node-task" style="top: 50%; left: 60%;">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="visual-node node-task" style="top: 90%; left: 60%;">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Define Your Goal -->
+        <section class="slide" id="slide3">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">02</div>
+                        <h2 class="slide-title" data-key="slide3Title">Step 1: Define Your <span class="highlight">Strategic Goal</span></h2>
+                    </div>
+                    <p class="slide-description" data-key="slide3Desc">
+                        Every successful roadmap starts with a clear, well-defined goal. Your goal should be specific, measurable, achievable, relevant, and time-bound (SMART).
+                    </p>
+                    
+                    <div class="interactive-section">
+                        <div class="input-container">
+                            <label class="input-label" data-key="goalInputLabel">
+                                <i class="fas fa-bullseye"></i> Enter Your Strategic Goal
+                            </label>
+                            <input type="text" class="goal-input" id="goalInput" 
+                                   placeholder="Example: Launch a new mobile application with 10,000 users within 6 months" 
+                                   data-key="goalPlaceholder">
+                        </div>
+                        
+                        <button class="action-button" id="setGoalBtn" data-key="setGoalBtn">
+                            <i class="fas fa-check-circle"></i> Set This Goal
+                        </button>
+                        
+                        <!-- Goal Response Container -->
+                        <div class="response-container" id="goalResponse" style="display: none;">
+                            <div class="response-header">
+                                <i class="fas fa-brain"></i>
+                                <h4 data-key="analysisTitle">Smart Analysis</h4>
+                            </div>
+                            <div class="response-text" id="goalResponseText">
+                                <!-- Dynamic content will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <div class="smart-analysis">
+                            <div class="analysis-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <h4 data-key="tipsTitle">Goal-Setting Tips</h4>
+                            </div>
+                            <div class="analysis-content" data-key="goalTips">
+                                <p>A strong goal should:</p>
+                                <ul class="analysis-points">
+                                    <li>Be specific and unambiguous</li>
+                                    <li>Have a clear timeframe</li>
+                                    <li>Align with broader objectives</li>
+                                    <li>Be challenging yet achievable</li>
+                                    <li>Include measurable success criteria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Break Down Tasks -->
+        <section class="slide" id="slide4">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">03</div>
+                        <h2 class="slide-title" data-key="slide4Title">Step 2: Break Down Into <span class="highlight">Actionable Tasks</span></h2>
+                    </div>
+                    <p class="slide-description" data-key="slide4Desc">
+                        Transform your goal into manageable tasks. Each task should be specific, have an owner, and include estimated effort.
+                    </p>
+                    
+                    <div class="interactive-section">
+                        <div class="current-goal-display" id="currentGoalDisplay" style="margin-bottom: 20px; padding: 15px; background: rgba(108, 99, 255, 0.1); border-radius: 10px;">
+                            <i class="fas fa-bullseye" style="color: var(--secondary); margin-right: 10px;"></i>
+                            <span data-key="currentGoal">Current Goal:</span>
+                            <strong id="displayedGoal" style="color: var(--light); margin-left: 10px;">Not set yet</strong>
+                        </div>
+                        
+                        <div class="task-input-row">
+                            <input type="text" class="task-input" id="taskInput" 
+                                   placeholder="Enter a specific task..." 
+                                   data-key="taskPlaceholder">
+                            <select class="priority-select" id="taskPriority">
+                                <option value="high" data-key="priorityHigh">High Priority</option>
+                                <option value="medium" selected data-key="priorityMedium">Medium Priority</option>
+                                <option value="low" data-key="priorityLow">Low Priority</option>
+                            </select>
+                        </div>
+                        
+                        <button class="action-button" id="addTaskBtn" data-key="addTaskBtn">
+                            <i class="fas fa-plus-circle"></i> Add Task
+                        </button>
+                        
+                        <div class="tasks-list" id="tasksList">
+                            <!-- Tasks will be added here dynamically -->
+                        </div>
+                        
+                        <!-- Task Response Container -->
+                        <div class="response-container" id="taskResponse" style="display: none; margin-top: 20px;">
+                            <div class="response-header">
+                                <i class="fas fa-chart-line"></i>
+                                <h4 data-key="taskAnalysisTitle">Task Analysis</h4>
+                            </div>
+                            <div class="response-text" id="taskResponseText">
+                                <!-- Dynamic content will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Task Statistics -->
+                        <div class="stats-container" id="taskStats" style="display: none;">
+                            <!-- Stats will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <div class="smart-analysis">
+                            <div class="analysis-header">
+                                <i class="fas fa-sitemap"></i>
+                                <h4 data-key="taskStructureTitle">Task Structure Principles</h4>
+                            </div>
+                            <div class="analysis-content" data-key="taskStructureContent">
+                                <p>Effective task breakdown follows these principles:</p>
+                                <ul class="analysis-points">
+                                    <li>Each task should take 1-2 weeks to complete</li>
+                                    <li>Tasks should be independent where possible</li>
+                                    <li>Clear dependencies must be identified</li>
+                                    <li>Assign ownership to specific team members</li>
+                                    <li>Include acceptance criteria for completion</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Prioritize and Sequence -->
+        <section class="slide" id="slide5">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">04</div>
+                        <h2 class="slide-title" data-key="slide5Title">Step 3: <span class="highlight">Prioritize & Sequence</span></h2>
+                    </div>
+                    <p class="slide-description" data-key="slide5Desc">
+                        Not all tasks are created equal. Determine what needs to happen first based on dependencies, value, and urgency.
+                    </p>
+                    
+                    <div class="interactive-section">
+                        <h3><i class="fas fa-sort-amount-down"></i> <span data-key="priorityTitle">Task Prioritization Matrix</span></h3>
+                        
+                        <div class="priority-matrix" id="priorityMatrix">
+                            <!-- Quadrant 1: Urgent & Important -->
+                            <div class="matrix-quadrant quadrant-1">
+                                <div class="quadrant-title" data-key="quadrant1Title">Do First</div>
+                                <div class="quadrant-desc" data-key="quadrant1Desc">Urgent & Important</div>
+                                <div class="quadrant-tasks" id="quadrant1Tasks"></div>
+                            </div>
+                            
+                            <!-- Quadrant 2: Important, Not Urgent -->
+                            <div class="matrix-quadrant quadrant-2">
+                                <div class="quadrant-title" data-key="quadrant2Title">Schedule</div>
+                                <div class="quadrant-desc" data-key="quadrant2Desc">Important, Not Urgent</div>
+                                <div class="quadrant-tasks" id="quadrant2Tasks"></div>
+                            </div>
+                            
+                            <!-- Quadrant 3: Urgent, Not Important -->
+                            <div class="matrix-quadrant quadrant-3">
+                                <div class="quadrant-title" data-key="quadrant3Title">Delegate</div>
+                                <div class="quadrant-desc" data-key="quadrant3Desc">Urgent, Not Important</div>
+                                <div class="quadrant-tasks" id="quadrant3Tasks"></div>
+                            </div>
+                            
+                            <!-- Quadrant 4: Not Urgent, Not Important -->
+                            <div class="matrix-quadrant quadrant-4">
+                                <div class="quadrant-title" data-key="quadrant4Title">Eliminate</div>
+                                <div class="quadrant-desc" data-key="quadrant4Desc">Not Urgent, Not Important</div>
+                                <div class="quadrant-tasks" id="quadrant4Tasks"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="response-container" id="priorityResponse" style="display: none;">
+                            <div class="response-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h4 data-key="priorityInsightTitle">Priority Insight</h4>
+                            </div>
+                            <div class="response-text" id="priorityResponseText">
+                                <!-- Dynamic content will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Priority Statistics -->
+                        <div class="stats-container" id="priorityStats" style="display: none;">
+                            <!-- Stats will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <div class="smart-analysis">
+                            <div class="analysis-header">
+                                <i class="fas fa-filter"></i>
+                                <h4 data-key="priorityGuideTitle">Priority Guidelines</h4>
+                            </div>
+                            <div class="analysis-content" data-key="priorityGuideContent">
+                                <p>Use the Eisenhower Matrix:</p>
+                                <ul class="analysis-points">
+                                    <li>Urgent & Important: Do immediately</li>
+                                    <li>Important, Not Urgent: Schedule</li>
+                                    <li>Urgent, Not Important: Delegate</li>
+                                    <li>Not Urgent, Not Important: Eliminate</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Timeline and Milestones -->
+        <section class="slide" id="slide6">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">05</div>
+                        <h2 class="slide-title" data-key="slide6Title">Step 4: Create a <span class="highlight">Realistic Timeline</span></h2>
+                    </div>
+                    <p class="slide-description" data-key="slide6Desc">
+                        Map your prioritized tasks onto a timeline with clear milestones. Account for dependencies, resource availability, and potential risks.
+                    </p>
+                    
+                    <div class="interactive-section">
+                        <h3><i class="fas fa-calendar-alt"></i> <span data-key="timelineTitle">Timeline Builder</span></h3>
+                        
+                        <div class="timeline-container" id="timelinePreview">
+                            <div class="timeline-track"></div>
+                            <!-- Timeline tasks will be dynamically added here -->
+                        </div>
+                        
+                        <!-- Timeline Statistics -->
+                        <div class="stats-container" id="timelineStats" style="display: none;">
+                            <!-- Stats will be dynamically added here -->
+                        </div>
+                        
+                        <div class="response-container" id="timelineResponse" style="display: none;">
+                            <div class="response-header">
+                                <i class="fas fa-calendar-check"></i>
+                                <h4 data-key="timelineAnalysisTitle">Timeline Analysis</h4>
+                            </div>
+                            <div class="response-text" id="timelineResponseText">
+                                <!-- Dynamic content will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <div class="smart-analysis">
+                            <div class="analysis-header">
+                                <i class="fas fa-hourglass-half"></i>
+                                <h4 data-key="timelineTipsTitle">Timeline Best Practices</h4>
+                            </div>
+                            <div class="analysis-content" data-key="timelineTipsContent">
+                                <p>Creating effective timelines:</p>
+                                <ul class="analysis-points">
+                                    <li>Add 20% buffer time for unexpected delays</li>
+                                    <li>Set milestone dates before critical reviews</li>
+                                    <li>Consider team capacity and holidays</li>
+                                    <li>Plan for iterative feedback cycles</li>
+                                    <li>Build in time for testing and quality assurance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Conclusion -->
+        <section class="slide" id="slide7">
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="slide-header">
+                        <div class="slide-number">06</div>
+                        <h2 class="slide-title" data-key="slide7Title">Master the <span class="highlight">Roadmap Creation</span> Process</h2>
+                    </div>
+                    <p class="slide-description" data-key="slide7Desc">
+                        You've learned the essential steps to create effective roadmaps. Remember that roadmaps are living documents that should evolve as projects progress.
+                    </p>
+                    
+                    <div class="interactive-section">
+                        <h3><i class="fas fa-key"></i> <span data-key="keyTakeawaysTitle">Key Takeaways</span></h3>
+                        
+                        <div style="margin: 20px 0;">
+                            <div class="task-item" style="background: rgba(54, 209, 220, 0.1); margin-bottom: 15px;">
+                                <div class="task-info">
+                                    <i class="fas fa-bullseye" style="color: var(--secondary);"></i>
+                                    <span data-key="takeaway1">Start with clear, SMART goals</span>
+                                </div>
+                            </div>
+                            <div class="task-item" style="background: rgba(108, 99, 255, 0.1); margin-bottom: 15px;">
+                                <div class="task-info">
+                                    <i class="fas fa-tasks" style="color: var(--primary);"></i>
+                                    <span data-key="takeaway2">Break goals into actionable tasks</span>
+                                </div>
+                            </div>
+                            <div class="task-item" style="background: rgba(255, 107, 157, 0.1); margin-bottom: 15px;">
+                                <div class="task-info">
+                                    <i class="fas fa-sort-amount-down" style="color: var(--accent);"></i>
+                                    <span data-key="takeaway3">Prioritize based on value and urgency</span>
+                                </div>
+                            </div>
+                            <div class="task-item" style="background: rgba(255, 152, 0, 0.1);">
+                                <div class="task-info">
+                                    <i class="fas fa-calendar-alt" style="color: var(--warning);"></i>
+                                    <span data-key="takeaway4">Create realistic timelines with buffers</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="action-button" id="restartBtn" style="margin-top: 30px;" data-key="restartBtn">
+                            <i class="fas fa-redo"></i> Restart Presentation
+                        </button>
+
+                        <!-- Final Roadmap Summary -->
+                        <div class="smart-analysis" id="roadmapSummary" style="display: none; margin-top: 30px;">
+                            <div class="analysis-header">
+                                <i class="fas fa-road"></i>
+                                <h4 data-key="summaryTitle">Your Roadmap Summary</h4>
+                            </div>
+                            <div class="analysis-content" id="summaryContent">
+                                <!-- Summary will be dynamically added here -->
+                            </div>
+                            <button class="export-btn" id="exportBtn" style="margin-top: 20px;">
+                                <i class="fas fa-download"></i> Export Roadmap
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="visual-content">
+                    <div class="roadmap-visual">
+                        <div style="text-align: center; padding: 40px 20px;">
+                            <div style="width: 150px; height: 150px; margin: 0 auto 30px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px rgba(108, 99, 255, 0.5);">
+                                <i class="fas fa-check" style="font-size: 4rem; color: white;"></i>
+                            </div>
+                            <h3 style="color: var(--secondary); margin-bottom: 15px;" data-key="completionTitle">Presentation Complete</h3>
+                            <p style="color: var(--gray);" data-key="completionMessage">
+                                You now have the knowledge to create effective roadmaps for any project
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Progress Navigation -->
+    <div class="progress-nav">
+        <button class="nav-btn" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="progress-dots">
+            <div class="progress-dot active" data-slide="0"></div>
+            <div class="progress-dot" data-slide="1"></div>
+            <div class="progress-dot" data-slide="2"></div>
+            <div class="progress-dot" data-slide="3"></div>
+            <div class="progress-dot" data-slide="4"></div>
+            <div class="progress-dot" data-slide="5"></div>
+            <div class="progress-dot" data-slide="6"></div>
+        </div>
+        
+        <button class="nav-btn" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <script>
+        // ========== CONFIGURATION ==========
+        const translations = {
+            en: {
+                // Main Title
+                mainTitle: "Strategic Roadmap Creator",
+                mainSubtitle: "Master the art of planning and execution with this comprehensive guide to creating effective roadmaps",
+                startBtn: "Begin Masterclass",
+                
+                // Slide 2
+                slide2Title: "What is a <span class='highlight'>Roadmap?</span>",
+                slide2Desc: "A roadmap is a strategic plan that outlines the vision, direction, and progress of a project over time. It serves as a communication tool, plan, and strategic document all in one.",
+                slide2Points: "",
+                
+                // Slide 3
+                slide3Title: "Step 1: Define Your <span class='highlight'>Strategic Goal</span>",
+                slide3Desc: "Every successful roadmap starts with a clear, well-defined goal. Your goal should be specific, measurable, achievable, relevant, and time-bound (SMART).",
+                goalInputLabel: "Enter Your Strategic Goal",
+                goalPlaceholder: "Example: Launch a new mobile application with 10,000 users within 6 months",
+                setGoalBtn: "Set This Goal",
+                analysisTitle: "Smart Analysis",
+                tipsTitle: "Goal-Setting Tips",
+                goalTips: `<p>A strong goal should:</p><ul class="analysis-points"><li>Be specific and unambiguous</li><li>Have a clear timeframe</li><li>Align with broader objectives</li><li>Be challenging yet achievable</li><li>Include measurable success criteria</li></ul>`,
+                
+                // Slide 4
+                slide4Title: "Step 2: Break Down Into <span class='highlight'>Actionable Tasks</span>",
+                slide4Desc: "Transform your goal into manageable tasks. Each task should be specific, have an owner, and include estimated effort.",
+                currentGoal: "Current Goal:",
+                taskPlaceholder: "Enter a specific task...",
+                priorityHigh: "High Priority",
+                priorityMedium: "Medium Priority",
+                priorityLow: "Low Priority",
+                addTaskBtn: "Add Task",
+                taskAnalysisTitle: "Task Analysis",
+                taskStructureTitle: "Task Structure Principles",
+                taskStructureContent: `<p>Effective task breakdown follows these principles:</p><ul class="analysis-points"><li>Each task should take 1-2 weeks to complete</li><li>Tasks should be independent where possible</li><li>Clear dependencies must be identified</li><li>Assign ownership to specific team members</li><li>Include acceptance criteria for completion</li></ul>`,
+                
+                // Slide 5
+                slide5Title: "Step 3: <span class='highlight'>Prioritize & Sequence</span>",
+                slide5Desc: "Not all tasks are created equal. Determine what needs to happen first based on dependencies, value, and urgency.",
+                priorityTitle: "Task Prioritization Matrix",
+                quadrant1Title: "Do First",
+                quadrant1Desc: "Urgent & Important",
+                quadrant2Title: "Schedule",
+                quadrant2Desc: "Important, Not Urgent",
+                quadrant3Title: "Delegate",
+                quadrant3Desc: "Urgent, Not Important",
+                quadrant4Title: "Eliminate",
+                quadrant4Desc: "Not Urgent, Not Important",
+                priorityInsightTitle: "Priority Insight",
+                priorityGuideTitle: "Priority Guidelines",
+                priorityGuideContent: `<p>Use the Eisenhower Matrix:</p><ul class="analysis-points"><li>Urgent & Important: Do immediately</li><li>Important, Not Urgent: Schedule</li><li>Urgent, Not Important: Delegate</li><li>Not Urgent, Not Important: Eliminate</li></ul>`,
+                
+                // Slide 6
+                slide6Title: "Step 4: Create a <span class='highlight'>Realistic Timeline</span>",
+                slide6Desc: "Map your prioritized tasks onto a timeline with clear milestones. Account for dependencies, resource availability, and potential risks.",
+                timelineTitle: "Timeline Builder",
+                timelineHint: "Add tasks in the previous step to see your timeline here",
+                timelineAnalysisTitle: "Timeline Analysis",
+                timelineTipsTitle: "Timeline Best Practices",
+                timelineTipsContent: `<p>Creating effective timelines:</p><ul class="analysis-points"><li>Add 20% buffer time for unexpected delays</li><li>Set milestone dates before critical reviews</li><li>Consider team capacity and holidays</li><li>Plan for iterative feedback cycles</li><li>Build in time for testing and quality assurance</li></ul>`,
+                
+                // Slide 7
+                slide7Title: "Master the <span class='highlight'>Roadmap Creation</span> Process",
+                slide7Desc: "You've learned the essential steps to create effective roadmaps. Remember that roadmaps are living documents that should evolve as projects progress.",
+                keyTakeawaysTitle: "Key Takeaways",
+                takeaway1: "Start with clear, SMART goals",
+                takeaway2: "Break goals into actionable tasks",
+                takeaway3: "Prioritize based on value and urgency",
+                takeaway4: "Create realistic timelines with buffers",
+                summaryTitle: "Your Roadmap Summary",
+                restartBtn: "Restart Presentation",
+                completionTitle: "Presentation Complete",
+                completionMessage: "You now have the knowledge to create effective roadmaps for any project"
+            },
+            
+            ar: {
+                // Main Title
+                mainTitle: "منشئ خارطة الطريق الاستراتيجية",
+                mainSubtitle: "أتقن فن التخطيط والتنفيذ مع هذا الدليل الشامل لإنشاء خرائط طريق فعالة",
+                startBtn: "ابدأ الدورة",
+                
+                // Slide 2
+                slide2Title: "ما هي <span class='highlight'>خارطة الطريق؟</span>",
+                slide2Desc: "خارطة الطريق هي خطة استراتيجية تحدد الرؤية والاتجاه والتقدم للمشروع بمرور الوقت. تعمل كأداة اتصال وخطة ووثيقة استراتيجية في آن واحد.",
+                slide2Points: "",
+                
+                // Slide 3
+                slide3Title: "الخطوة 1: حدد <span class='highlight'>هدفك الاستراتيجي</span>",
+                slide3Desc: "تبدأ كل خارطة طريق ناجحة بهدف واضح ومُحدد جيدًا. يجب أن يكون هدفك محددًا وقابلًا للقياس وقابلًا للتحقيق وذو صلة ومحددًا زمنيًا (SMART).",
+                goalInputLabel: "أدخل هدفك الاستراتيجي",
+                goalPlaceholder: "مثال: إطلاق تطبيق جوال جديد مع 10,000 مستخدم خلال 6 أشهر",
+                setGoalBtn: "تعيين هذا الهدف",
+                analysisTitle: "تحليل ذكي",
+                tipsTitle: "نصائح لتحديد الأهداف",
+                goalTips: `<p>يجب أن يتميز الهدف القوي بما يلي:</p><ul class="analysis-points"><li>أن يكون محددًا ولا يحتمل التأويل</li><li>أن يكون له إطار زمني واضح</li><li>أن يتماشى مع الأهداف الأوسع</li><li>أن يكون صعبًا لكنه قابل للتحقيق</li><li>أن يشمل معايير نجاح قابلة للقياس</li></ul>`,
+                
+                // Slide 4
+                slide4Title: "الخطوة 2: تقسيم إلى <span class='highlight'>مهام قابلة للتنفيذ</span>",
+                slide4Desc: "حول هدفك إلى مهام قابلة للإدارة. يجب أن تكون كل مهمة محددة ولها مالك وتشمل جهدًا مقدرًا.",
+                currentGoal: "الهدف الحالي:",
+                taskPlaceholder: "أدخل مهمة محددة...",
+                priorityHigh: "أولوية عالية",
+                priorityMedium: "أولوية متوسطة",
+                priorityLow: "أولوية منخفضة",
+                addTaskBtn: "إضافة مهمة",
+                taskAnalysisTitle: "تحليل المهام",
+                taskStructureTitle: "مبادئ هيكلة المهام",
+                taskStructureContent: `<p>يتبع التقسيم الفعال للمهام هذه المبادئ:</p><ul class="analysis-points"><li>يجب أن تستغرق كل مهمة 1-2 أسابيع للإكمال</li><li>يجب أن تكون المهام مستقلة حيثما أمكن</li><li>يجب تحديد التبعيات الواضحة</li><li>تعيين الملكية لأعضاء فريق محددين</li><li>تضمين معايير القبول للإكمال</li></ul>`,
+                
+                // Slide 5
+                slide5Title: "الخطوة 3: <span class='highlight'>ترتيب الأولويات والتسلسل</span>",
+                slide5Desc: "ليست كل المهام متساوية. حدد ما يجب أن يحدث أولاً بناءً على التبعيات والقيمة والإلحاح.",
+                priorityTitle: "مصفوفة أولوية المهام",
+                quadrant1Title: "نفذ أولاً",
+                quadrant1Desc: "عاجل ومهم",
+                quadrant2Title: "جدول",
+                quadrant2Desc: "مهم وغير عاجل",
+                quadrant3Title: "فوض",
+                quadrant3Desc: "عاجل وغير مهم",
+                quadrant4Title: "استبعد",
+                quadrant4Desc: "غير عاجل وغير مهم",
+                priorityInsightTitle: "رؤية الأولوية",
+                priorityGuideTitle: "إرشادات الأولوية",
+                priorityGuideContent: `<p>استخدم مصفوفة أيزنهاور:</p><ul class="analysis-points"><li>عاجل ومهم: نفذ فورًا</li><li>مهم وغير عاجل: جدوله</li><li>عاجل وغير مهم: فوضه</li><li>غير عاجل وغير مهم: استبعده</li></ul>`,
+                
+                // Slide 6
+                slide6Title: "الخطوة 4: إنشاء <span class='highlight'>جدول زمني واقعي</span>",
+                slide6Desc: "ارسم مهامك ذات الأولوية على جدول زمني بمعالم واضحة. ضع في الاعتبار التبعيات وتوفر الموارد والمخاطر المحتملة.",
+                timelineTitle: "منشئ الجدول الزمني",
+                timelineHint: "أضف مهام في الخطوة السابقة لترى جدولك الزمني هنا",
+                timelineAnalysisTitle: "تحليل الجدول الزمني",
+                timelineTipsTitle: "أفضل ممارسات الجدول الزمني",
+                timelineTipsContent: `<p>إنشاء جداول زمنية فعالة:</p><ul class="analysis-points"><li>أضف 20% وقت احتياطي للتأخيرات غير المتوقعة</li><li>حدد تواريخ المعالم قبل المراجعات الحرجة</li><li>ضع في اعتبارك قدرة الفريق والإجازات</li><li>خطط لدورات التغذية الراجعة التكرارية</li><li>بناء وقت للاختبار وضمان الجودة</li></ul>`,
+                
+                // Slide 7
+                slide7Title: "أتقن عملية <span class='highlight'>إنشاء خارطة الطريق</span>",
+                slide7Desc: "لقد تعلمت الخطوات الأساسية لإنشاء خرائط طريق فعالة. تذكر أن خرائط الطريق هي وثائق حية يجب أن تتطور مع تقدم المشاريع.",
+                keyTakeawaysTitle: "النقاط الرئيسية",
+                takeaway1: "ابدأ بأهداف SMART واضحة",
+                takeaway2: "قسّم الأهداف إلى مهام قابلة للتنفيذ",
+                takeaway3: "رتب الأولويات بناءً على القيمة والإلحاح",
+                takeaway4: "أنشئ جداول زمنية واقعية مع فترات احتياطية",
+                summaryTitle: "ملخص خريطة طريقك",
+                restartBtn: "إعادة تشغيل العرض",
+                completionTitle: "اكتمل العرض",
+                completionMessage: "لديك الآن المعرفة لإنشاء خرائط طريق فعالة لأي مشروع"
+            },
+            
+            fr: {
+                // Main Title
+                mainTitle: "Créateur de Feuille de Route Stratégique",
+                mainSubtitle: "Maîtrisez l'art de la planification et de l'exécution avec ce guide complet pour créer des feuilles de route efficaces",
+                startBtn: "Commencer le Masterclass",
+                
+                // Slide 2
+                slide2Title: "Qu'est-ce qu'une <span class='highlight'>Feuille de Route?</span>",
+                slide2Desc: "Une feuille de route est un plan stratégique qui décrit la vision, la direction et les progrès d'un projet dans le temps. Elle sert d'outil de communication, de plan et de document stratégique à la fois.",
+                slide2Points: "",
+                
+                // Slide 3
+                slide3Title: "Étape 1: Définir Votre <span class='highlight'>Objectif Stratégique</span>",
+                slide3Desc: "Toute feuille de route réussie commence par un objectif clair et bien défini. Votre objectif doit être spécifique, mesurable, atteignable, pertinent et temporel (SMART).",
+                goalInputLabel: "Entrez votre objectif stratégique",
+                goalPlaceholder: "Exemple: Lancer une nouvelle application mobile avec 10 000 utilisateurs en 6 mois",
+                setGoalBtn: "Définir cet objectif",
+                analysisTitle: "Analyse Intelligente",
+                tipsTitle: "Conseils pour la définition d'objectifs",
+                goalTips: `<p>Un objectif solide devrait:</p><ul class="analysis-points"><li>Être spécifique et non ambigu</li><li>Avoir un délai clair</li><li>S'aligner sur des objectifs plus larges</li><li>Être difficile mais réalisable</li><li>Inclure des critères de réussite mesurables</li></ul>`,
+                
+                // Slide 4
+                slide4Title: "Étape 2: Décomposer en <span class='highlight'>Tâches Actionnables</span>",
+                slide4Desc: "Transformez votre objectif en tâches gérables. Chaque tâche doit être spécifique, avoir un propriétaire et inclure un effort estimé.",
+                currentGoal: "Objectif actuel:",
+                taskPlaceholder: "Entrez une tâche spécifique...",
+                priorityHigh: "Priorité élevée",
+                priorityMedium: "Priorité moyenne",
+                priorityLow: "Priorité faible",
+                addTaskBtn: "Ajouter une tâche",
+                taskAnalysisTitle: "Analyse des tâches",
+                taskStructureTitle: "Principes de structure des tâches",
+                taskStructureContent: `<p>La décomposition efficace des tâches suit ces principes:</p><ul class="analysis-points"><li>Chaque tâche devrait prendre 1-2 semaines à compléter</li><li>Les tâches devraient être indépendantes si possible</li><li>Les dépendances claires doivent être identifiées</li><li>Assigner la propriété à des membres d'équipe spécifiques</li><li>Inclure des critères d'acceptation pour la complétion</li></ul>`,
+                
+                // Slide 5
+                slide5Title: "Étape 3: <span class='highlight'>Prioriser et Séquence</span>",
+                slide5Desc: "Toutes les tâches ne sont pas égales. Déterminez ce qui doit se passer en premier en fonction des dépendances, de la valeur et de l'urgence.",
+                priorityTitle: "Matrice de priorisation des tâches",
+                quadrant1Title: "Faire d'abord",
+                quadrant1Desc: "Urgent & Important",
+                quadrant2Title: "Planifier",
+                quadrant2Desc: "Important, Non Urgent",
+                quadrant3Title: "Déléguer",
+                quadrant3Desc: "Urgent, Non Important",
+                quadrant4Title: "Éliminer",
+                quadrant4Desc: "Non Urgent, Non Important",
+                priorityInsightTitle: "Aperçu des priorités",
+                priorityGuideTitle: "Lignes directrices de priorisation",
+                priorityGuideContent: `<p>Utilisez la matrice d'Eisenhower:</p><ul class="analysis-points"><li>Urgent & Important: Faire immédiatement</li><li>Important, Non Urgent: Planifier</li><li>Urgent, Non Important: Déléguer</li><li>Non Urgent, Non Important: Éliminer</li></ul>`,
+                
+                // Slide 6
+                slide6Title: "Étape 4: Créer un <span class='highlight'>Calendrier Réaliste</span>",
+                slide6Desc: "Mappez vos tâches prioritaires sur un calendrier avec des jalons clairs. Prenez en compte les dépendances, la disponibilité des ressources et les risques potentiels.",
+                timelineTitle: "Constructeur de calendrier",
+                timelineHint: "Ajoutez des tâches à l'étape précédente pour voir votre calendrier ici",
+                timelineAnalysisTitle: "Analyse du calendrier",
+                timelineTipsTitle: "Meilleures pratiques de calendrier",
+                timelineTipsContent: `<p>Créer des calendriers efficaces:</p><ul class="analysis-points"><li>Ajoutez 20% de temps tampon pour les retards inattendus</li><li>Fixez les dates des jalons avant les revues critiques</li><li>Considérez la capacité de l'équipe et les vacances</li><li>Planifiez des cycles de feedback itératifs</li><li>Intégrez du temps pour les tests et l'assurance qualité</li></ul>`,
+                
+                // Slide 7
+                slide7Title: "Maîtriser le processus de <span class='highlight'>Création de Feuille de Route</span>",
+                slide7Desc: "Vous avez appris les étapes essentielles pour créer des feuilles de route efficaces. Rappelez-vous que les feuilles de route sont des documents vivants qui doivent évoluer avec la progression des projets.",
+                keyTakeawaysTitle: "Points clés à retenir",
+                takeaway1: "Commencez par des objectifs SMART clairs",
+                takeaway2: "Décomposez les objectifs en tâches actionnables",
+                takeaway3: "Priorisez en fonction de la valeur et de l'urgence",
+                takeaway4: "Créez des calendriers réalistes avec des tampons",
+                summaryTitle: "Résumé de votre feuille de route",
+                restartBtn: "Redémarrer la présentation",
+                completionTitle: "Présentation terminée",
+                completionMessage: "Vous avez maintenant les connaissances pour créer des feuilles de route efficaces pour n'importe quel projet"
+            }
+        };
+
+        // ========== APPLICATION STATE ==========
+        let currentLang = 'en';
+        let currentSlide = 0;
+        let userGoal = '';
+        let userTasks = [];
+        
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            initPresentation();
+            initParticleBackground();
+            initLanguageSwitcher();
+            initInteractiveElements();
+            loadFromLocalStorage();
+            initVisualNodes();
+        });
+        
+        // ========== PRESENTATION CONTROLS ==========
+        function initPresentation() {
+            const totalSlides = 7;
+            
+            // Start button
+            document.getElementById('startBtn').addEventListener('click', function() {
+                goToSlide(1);
+            });
+            
+            // Navigation buttons
+            document.getElementById('nextBtn').addEventListener('click', nextSlide);
+            document.getElementById('prevBtn').addEventListener('click', prevSlide);
+            
+            // Restart button
+            document.getElementById('restartBtn').addEventListener('click', function() {
+                resetApplication();
+                goToSlide(0);
+            });
+            
+            // Export button
+            document.getElementById('exportBtn').addEventListener('click', exportRoadmap);
+            
+            // Progress dots
+            document.querySelectorAll('.progress-dot').forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.dataset.slide);
+                    goToSlide(slideIndex);
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'Escape') goToSlide(0);
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    saveToLocalStorage();
+                    showTemporaryMessage("Roadmap saved!");
+                }
+            });
+            
+            // Add click sounds
+            document.querySelectorAll('.action-button, .nav-btn, .lang-btn, .start-btn, .export-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < 6) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+        
+        function goToSlide(slideIndex) {
+            // Hide current slide
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Update current slide
+            currentSlide = slideIndex;
+            
+            // Show new slide
+            document.getElementById(`slide${slideIndex + 1}`).classList.add('active');
+            
+            // Update progress dots
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                if (index === slideIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = slideIndex === 0;
+            document.getElementById('nextBtn').disabled = slideIndex === 6;
+            
+            // Update button text for last step
+            if (slideIndex === 6) {
+                document.getElementById('nextBtn').style.visibility = 'hidden';
+                updateRoadmapSummary();
+            } else {
+                document.getElementById('nextBtn').style.visibility = 'visible';
+            }
+            
+            // Update visualizations for specific slides
+            if (slideIndex === 3) updateTaskStatistics();
+            if (slideIndex === 4) updatePriorityMatrix();
+            if (slideIndex === 5) updateTimelinePreview();
+            
+            // Save progress
+            localStorage.setItem('currentSlide', slideIndex);
+        }
+        
+        // ========== LANGUAGE SWITCHER ==========
+        function initLanguageSwitcher() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update language
+                    currentLang = lang;
+                    translatePage(lang);
+                    
+                    // Update displayed content
+                    updateTaskList();
+                    if (userGoal) {
+                        document.getElementById('displayedGoal').textContent = userGoal;
+                    }
+                    
+                    // Save language preference
+                    localStorage.setItem('preferredLanguage', lang);
+                });
+            });
+            
+            // Load preferred language
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                currentLang = savedLang;
+                translatePage(savedLang);
+                document.querySelector(`[data-lang="${savedLang}"]`).classList.add('active');
+                document.querySelectorAll(`[data-lang]:not([data-lang="${savedLang}"])`).forEach(btn => {
+                    btn.classList.remove('active');
+                });
+            }
+        }
+        
+        function translatePage(lang) {
+            // Update all elements with data-key attribute
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.hasAttribute('placeholder')) {
+                        element.placeholder = translations[lang][key];
+                    } else if (element.tagName === 'INPUT') {
+                        // Don't translate input values
+                    } else if (element.tagName === 'OPTION') {
+                        element.textContent = translations[lang][key];
+                    } else {
+                        // Handle HTML content
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update select options
+            const prioritySelect = document.getElementById('taskPriority');
+            if (prioritySelect) {
+                Array.from(prioritySelect.options).forEach(option => {
+                    const key = option.getAttribute('data-key');
+                    if (key && translations[lang] && translations[lang][key]) {
+                        option.textContent = translations[lang][key];
+                    }
+                });
+            }
+            
+            // Update quadrant titles
+            const quadrants = ['quadrant1Title', 'quadrant1Desc', 'quadrant2Title', 'quadrant2Desc', 
+                              'quadrant3Title', 'quadrant3Desc', 'quadrant4Title', 'quadrant4Desc'];
+            quadrants.forEach(quadrantKey => {
+                const elements = document.querySelectorAll(`[data-key="${quadrantKey}"]`);
+                elements.forEach(element => {
+                    if (translations[lang] && translations[lang][quadrantKey]) {
+                        element.textContent = translations[lang][quadrantKey];
+                    }
+                });
+            });
+        }
+        
+        // ========== GOAL MANAGEMENT ==========
+        function initInteractiveElements() {
+            // Set Goal Button
+            document.getElementById('setGoalBtn').addEventListener('click', setGoal);
+            
+            // Add Task Button
+            document.getElementById('addTaskBtn').addEventListener('click', addTask);
+            
+            // Enter key support for inputs
+            document.getElementById('goalInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    setGoal();
+                }
+            });
+            
+            document.getElementById('taskInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+        }
+        
+        function setGoal() {
+            const goalInput = document.getElementById('goalInput');
+            const goal = goalInput.value.trim();
+            
+            if (!goal) {
+                showError("Please enter a valid goal");
+                goalInput.focus();
+                return;
+            }
+            
+            if (goal.length < 10) {
+                showError("Goal should be more specific (minimum 10 characters)");
+                goalInput.focus();
+                return;
+            }
+            
+            // Save goal
+            userGoal = goal;
+            localStorage.setItem('roadmapGoal', goal);
+            
+            // Update display
+            updateGoalDisplay();
+            
+            // Show success
+            showSuccessAnimation();
+            
+            // Generate smart response
+            generateGoalResponse(goal);
+            
+            // Show goal response
+            document.getElementById('goalResponse').style.display = 'block';
+            
+            // Auto-advance to next slide after delay
+            setTimeout(() => {
+                if (currentSlide === 2) nextSlide();
+            }, 1500);
+            
+            // Save to localStorage
+            saveToLocalStorage();
+        }
+        
+        function updateGoalDisplay() {
+            const goalDisplay = document.getElementById('displayedGoal');
+            goalDisplay.textContent = userGoal;
+            goalDisplay.style.color = "var(--secondary)";
+        }
+        
+        // ========== TASK MANAGEMENT ==========
+        function addTask() {
+            if (!userGoal) {
+                showError("Please set a goal first before adding tasks");
+                goToSlide(2);
+                return;
+            }
+            
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            const priority = document.getElementById('taskPriority').value;
+            
+            if (!taskText) {
+                showError("Please enter a task description");
+                taskInput.focus();
+                return;
+            }
+            
+            if (taskText.length < 3) {
+                showError("Task should be more descriptive");
+                taskInput.focus();
+                return;
+            }
+            
+            // Create task object with intelligent analysis
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                priority: priority,
+                estimatedDays: calculateTaskDuration(taskText, priority),
+                addedAt: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Add to tasks array
+            userTasks.push(task);
+            
+            // Update UI
+            updateTaskList();
+            updateTaskStatistics();
+            
+            // Clear input
+            taskInput.value = '';
+            taskInput.focus();
+            
+            // Show success
+            showSuccessAnimation();
+            
+            // Generate smart response
+            generateTaskResponse(task);
+            
+            // Show task response
+            document.getElementById('taskResponse').style.display = 'block';
+            
+            // Update visualizations if on those slides
+            if (currentSlide >= 4) updatePriorityMatrix();
+            if (currentSlide >= 5) updateTimelinePreview();
+            
+            // Save to localStorage
+            saveToLocalStorage();
+        }
+        
+        function calculateTaskDuration(taskText, priority) {
+            // Intelligent duration estimation based on task content
+            let baseDays = 2; // Default 2 days
+            
+            const text = taskText.toLowerCase();
+            
+            // Adjust based on complexity indicators
+            if (text.includes('research') || text.includes('analyze') || text.includes('study')) baseDays += 3;
+            if (text.includes('develop') || text.includes('build') || text.includes('create')) baseDays += 5;
+            if (text.includes('test') || text.includes('review') || text.includes('evaluate')) baseDays += 2;
+            if (text.includes('design') || text.includes('plan')) baseDays += 3;
+            if (text.includes('implement') || text.includes('deploy')) baseDays += 4;
+            if (text.includes('meeting') || text.includes('discuss')) baseDays = 0.5;
+            
+            // Adjust based on priority
+            if (priority === 'high') baseDays = Math.max(1, baseDays * 0.8); // High priority tasks get faster estimates
+            if (priority === 'low') baseDays *= 1.2; // Low priority tasks get more time
+            
+            // Round to nearest half day
+            return Math.max(0.5, Math.round(baseDays * 2) / 2);
+        }
+        
+        function updateTaskList() {
+            const tasksList = document.getElementById('tasksList');
+            
+            if (userTasks.length === 0) {
+                tasksList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>No tasks added yet. Add your first task above.</p>
+                    </div>
+                `;
+                document.getElementById('taskResponse').style.display = 'none';
+                document.getElementById('taskStats').style.display = 'none';
+                return;
+            }
+            
+            // Clear and rebuild task list
+            tasksList.innerHTML = '';
+            
+            userTasks.forEach(task => {
+                const taskItem = document.createElement('div');
+                taskItem.className = `task-item ${task.priority}`;
+                taskItem.dataset.id = task.id;
+                
+                const priorityText = 
+                    task.priority === 'high' ? translations[currentLang]?.priorityHigh || 'High' :
+                    task.priority === 'medium' ? translations[currentLang]?.priorityMedium || 'Medium' :
+                    translations[currentLang]?.priorityLow || 'Low';
+                
+                const priorityClass = 
+                    task.priority === 'high' ? 'high' :
+                    task.priority === 'medium' ? 'medium' : 'low';
+                
+                taskItem.innerHTML = `
+                    <div class="task-info">
+                        <span class="task-priority ${priorityClass}">${priorityText}</span>
+                        <span>${task.text}</span>
+                        <small style="color: var(--gray); margin-left: 10px;">${task.estimatedDays} day${task.estimatedDays !== 1 ? 's' : ''}</small>
+                    </div>
+                    <button class="delete-task" data-id="${task.id}" title="Delete task">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                tasksList.appendChild(taskItem);
+            });
+            
+            // Add delete functionality
+            document.querySelectorAll('.delete-task').forEach(button => {
+                button.addEventListener('click', function() {
+                    const taskId = parseInt(this.dataset.id);
+                    deleteTask(taskId);
+                });
+            });
+            
+            // Show response and stats
+            document.getElementById('taskResponse').style.display = 'block';
+            document.getElementById('taskStats').style.display = 'grid';
+        }
+        
+        function deleteTask(taskId) {
+            userTasks = userTasks.filter(task => task.id !== taskId);
+            updateTaskList();
+            updateTaskStatistics();
+            
+            if (currentSlide >= 4) updatePriorityMatrix();
+            if (currentSlide >= 5) updateTimelinePreview();
+            
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Show feedback
+            showTemporaryMessage("Task deleted successfully");
+        }
+        
+        function updateTaskStatistics() {
+            const statsContainer = document.getElementById('taskStats');
+            
+            if (userTasks.length === 0) {
+                statsContainer.style.display = 'none';
+                return;
+            }
+            
+            const totalTasks = userTasks.length;
+            const highPriority = userTasks.filter(t => t.priority === 'high').length;
+            const mediumPriority = userTasks.filter(t => t.priority === 'medium').length;
+            const lowPriority = userTasks.filter(t => t.priority === 'low').length;
+            const totalDays = userTasks.reduce((sum, task) => sum + task.estimatedDays, 0);
+            
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${totalTasks}</div>
+                    <div class="stat-label">Total Tasks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${highPriority}</div>
+                    <div class="stat-label">High Priority</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${mediumPriority}</div>
+                    <div class="stat-label">Medium Priority</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${totalDays}</div>
+                    <div class="stat-label">Total Days</div>
+                </div>
+            `;
+        }
+        
+        // ========== PRIORITY MATRIX ==========
+        function updatePriorityMatrix() {
+            // Clear existing task displays
+            document.querySelectorAll('.quadrant-tasks').forEach(q => q.innerHTML = '');
+            
+            if (userTasks.length === 0) {
+                document.getElementById('priorityResponse').style.display = 'none';
+                document.getElementById('priorityStats').style.display = 'none';
+                return;
+            }
+            
+            // Categorize tasks into quadrants
+            userTasks.forEach(task => {
+                let quadrant;
+                
+                // Simple categorization based on priority and task type
+                if (task.priority === 'high') {
+                    quadrant = document.getElementById('quadrant1Tasks'); // Urgent & Important
+                } else if (task.priority === 'medium') {
+                    quadrant = document.getElementById('quadrant2Tasks'); // Important, Not Urgent
+                } else {
+                    // For low priority, check if it's delegation material
+                    const text = task.text.toLowerCase();
+                    if (text.includes('meeting') || text.includes('email') || text.includes('report')) {
+                        quadrant = document.getElementById('quadrant3Tasks'); // Urgent, Not Important (delegate)
+                    } else {
+                        quadrant = document.getElementById('quadrant4Tasks'); // Not Urgent, Not Important
+                    }
+                }
+                
+                if (quadrant) {
+                    const taskElement = document.createElement('div');
+                    taskElement.className = 'matrix-task';
+                    taskElement.textContent = task.text.substring(0, 20) + (task.text.length > 20 ? '...' : '');
+                    taskElement.title = task.text;
+                    taskElement.style.cssText = `
+                        font-size: 0.7rem;
+                        margin: 2px 0;
+                        padding: 3px 5px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 3px;
+                        cursor: pointer;
+                        transition: var(--transition);
+                    `;
+                    
+                    taskElement.addEventListener('mouseenter', () => {
+                        taskElement.style.background = 'rgba(255, 255, 255, 0.2)';
+                    });
+                    
+                    taskElement.addEventListener('mouseleave', () => {
+                        taskElement.style.background = 'rgba(255, 255, 255, 0.1)';
+                    });
+                    
+                    quadrant.appendChild(taskElement);
+                }
+            });
+            
+            // Update priority statistics
+            updatePriorityStatistics();
+            
+            // Show response
+            document.getElementById('priorityResponse').style.display = 'block';
+        }
+        
+        function updatePriorityStatistics() {
+            const statsContainer = document.getElementById('priorityStats');
+            
+            const highPriority = userTasks.filter(t => t.priority === 'high').length;
+            const mediumPriority = userTasks.filter(t => t.priority === 'medium').length;
+            const lowPriority = userTasks.filter(t => t.priority === 'low').length;
+            const totalTasks = userTasks.length;
+            
+            const urgentImportant = userTasks.filter(t => t.priority === 'high').length;
+            const importantNotUrgent = userTasks.filter(t => t.priority === 'medium').length;
+            const urgentNotImportant = userTasks.filter(t => t.priority === 'low' && 
+                (t.text.toLowerCase().includes('meeting') || t.text.toLowerCase().includes('email'))).length;
+            const notUrgentNotImportant = totalTasks - urgentImportant - importantNotUrgent - urgentNotImportant;
+            
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${urgentImportant}</div>
+                    <div class="stat-label">Do First</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${importantNotUrgent}</div>
+                    <div class="stat-label">Schedule</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${urgentNotImportant}</div>
+                    <div class="stat-label">Delegate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${notUrgentNotImportant}</div>
+                    <div class="stat-label">Eliminate</div>
+                </div>
+            `;
+            
+            statsContainer.style.display = 'grid';
+            
+            // Update priority response
+            const responseText = document.getElementById('priorityResponseText');
+            const highPercentage = Math.round((highPriority / totalTasks) * 100);
+            
+            let insight = '';
+            if (highPercentage > 50) {
+                insight = `<p><strong>📊 Insight:</strong> You have ${highPercentage}% high priority tasks. Consider if all are truly urgent or if some can be rescheduled.</p>`;
+            } else if (highPercentage < 20) {
+                insight = `<p><strong>📊 Insight:</strong> Good balance! Only ${highPercentage}% are high priority, allowing for focused execution.</p>`;
+            } else {
+                insight = `<p><strong>📊 Insight:</strong> Balanced priority distribution with ${highPercentage}% high priority tasks.</p>`;
+            }
+            
+            responseText.innerHTML = `
+                <p>Your ${totalTasks} tasks have been categorized using the Eisenhower Matrix:</p>
+                <ul class="analysis-points">
+                    <li><strong>${urgentImportant} tasks</strong> are urgent and important (Do First)</li>
+                    <li><strong>${importantNotUrgent} tasks</strong> are important but not urgent (Schedule)</li>
+                    <li><strong>${urgentNotImportant} tasks</strong> are urgent but not important (Delegate)</li>
+                    <li><strong>${notUrgentNotImportant} tasks</strong> are neither urgent nor important (Eliminate)</li>
+                </ul>
+                ${insight}
+                <p><strong>💡 Recommendation:</strong> Focus on quadrant 1 tasks first, schedule quadrant 2, delegate quadrant 3, and eliminate or postpone quadrant 4.</p>
+            `;
+        }
+        
+        // ========== TIMELINE BUILDER ==========
+        function updateTimelinePreview() {
+            const timelineContainer = document.getElementById('timelinePreview');
+            const timelineTrack = timelineContainer.querySelector('.timeline-track');
+            
+            // Clear existing timeline elements
+            timelineContainer.querySelectorAll('.timeline-task, .timeline-marker').forEach(el => el.remove());
+            
+            if (userTasks.length === 0) {
+                timelineContainer.innerHTML = `
+                    <div class="timeline-track"></div>
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>Add tasks in the previous step to see your timeline here</p>
+                    </div>
+                `;
+                document.getElementById('timelineResponse').style.display = 'none';
+                document.getElementById('timelineStats').style.display = 'none';
+                return;
+            }
+            
+            // Calculate timeline metrics
+            const totalDays = userTasks.reduce((sum, task) => sum + task.estimatedDays, 0);
+            const weeks = Math.ceil(totalDays / 7);
+            const months = Math.ceil(weeks / 4);
+            
+            // Create timeline visualization
+            let currentPosition = 0;
+            const timelineWidth = timelineTrack.offsetWidth - 40; // Account for padding
+            
+            userTasks.forEach((task, index) => {
+                // Calculate position based on cumulative days
+                const position = (currentPosition / totalDays) * 100;
+                const width = Math.max((task.estimatedDays / totalDays) * 100 * 0.9, 5); // Minimum width 5%
+                
+                // Create task element
+                const taskElement = document.createElement('div');
+                taskElement.className = `timeline-task ${task.priority}`;
+                taskElement.style.left = `${position}%`;
+                taskElement.style.width = `${width}%`;
+                taskElement.textContent = task.text.substring(0, 15) + (task.text.length > 15 ? '...' : '');
+                taskElement.title = `${task.text} (${task.estimatedDays} days, ${task.priority} priority)`;
+                
+                timelineContainer.appendChild(taskElement);
+                
+                // Add milestone marker for every 3 tasks or at significant points
+                if (index % 3 === 0 || index === userTasks.length - 1) {
+                    const marker = document.createElement('div');
+                    marker.className = 'timeline-marker';
+                    marker.style.left = `${position}%`;
+                    marker.title = `Milestone: ${index + 1} tasks completed`;
+                    timelineContainer.appendChild(marker);
+                }
+                
+                currentPosition += task.estimatedDays;
+            });
+            
+            // Update timeline statistics
+            updateTimelineStatistics(totalDays, weeks, months);
+            
+            // Show response
+            document.getElementById('timelineResponse').style.display = 'block';
+        }
+        
+        function updateTimelineStatistics(totalDays, weeks, months) {
+            const statsContainer = document.getElementById('timelineStats');
+            const highPriorityTasks = userTasks.filter(t => t.priority === 'high');
+            const highPriorityDays = highPriorityTasks.reduce((sum, t) => sum + t.estimatedDays, 0);
+            
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${totalDays}</div>
+                    <div class="stat-label">Total Days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${weeks}</div>
+                    <div class="stat-label">Weeks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${months}</div>
+                    <div class="stat-label">Months</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${highPriorityDays}</div>
+                    <div class="stat-label">Critical Days</div>
+                </div>
+            `;
+            
+            statsContainer.style.display = 'grid';
+            
+            // Update timeline response
+            const responseText = document.getElementById('timelineResponseText');
+            const bufferPercentage = 20; // 20% buffer recommended
+            const bufferedDays = Math.ceil(totalDays * (1 + bufferPercentage/100));
+            const bufferedWeeks = Math.ceil(bufferedDays / 7);
+            
+            let timelineInsight = '';
+            if (highPriorityDays > totalDays * 0.5) {
+                timelineInsight = `<p><strong>⚠️ Attention:</strong> More than 50% of your timeline is high-priority work. Consider extending deadlines or adding resources.</p>`;
+            } else if (totalDays > 90) {
+                timelineInsight = `<p><strong>📅 Long-term project:</strong> Consider breaking into phases with intermediate milestones.</p>`;
+            } else {
+                timelineInsight = `<p><strong>✅ Well-paced:</strong> Your timeline appears realistic and manageable.</p>`;
+            }
+            
+            responseText.innerHTML = `
+                <p>Based on your ${userTasks.length} tasks:</p>
+                <ul class="analysis-points">
+                    <li><strong>Core timeline:</strong> ${totalDays} days (${weeks} weeks)</li>
+                    <li><strong>With ${bufferPercentage}% buffer:</strong> ${bufferedDays} days (${bufferedWeeks} weeks)</li>
+                    <li><strong>Critical path:</strong> ${highPriorityDays} days of high-priority work</li>
+                    <li><strong>Milestones:</strong> ${Math.ceil(userTasks.length / 3)} suggested checkpoints</li>
+                </ul>
+                ${timelineInsight}
+                <p><strong>💡 Recommendation:</strong> Start with high-priority tasks and build in weekly reviews to track progress.</p>
+            `;
+        }
+        
+        // ========== ROADMAP SUMMARY ==========
+        function updateRoadmapSummary() {
+            const summaryContainer = document.getElementById('roadmapSummary');
+            const summaryContent = document.getElementById('summaryContent');
+            
+            if (!userGoal || userTasks.length === 0) {
+                summaryContainer.style.display = 'none';
+                return;
+            }
+            
+            const totalTasks = userTasks.length;
+            const totalDays = userTasks.reduce((sum, task) => sum + task.estimatedDays, 0);
+            const highPriorityTasks = userTasks.filter(t => t.priority === 'high').length;
+            const completionWeeks = Math.ceil(totalDays / 7);
+            
+            // Calculate success probability
+            let successProbability = 80; // Base probability
+            
+            // Adjust based on factors
+            if (userGoal.length > 50) successProbability += 5; // Detailed goal
+            if (totalTasks >= 5) successProbability += 5; // Good task breakdown
+            if (highPriorityTasks <= totalTasks * 0.4) successProbability += 5; // Balanced priorities
+            if (totalDays <= 60) successProbability += 5; // Reasonable timeline
+            
+            // Cap at 95%
+            successProbability = Math.min(successProbability, 95);
+            
+            summaryContent.innerHTML = `
+                <p><strong>🎯 Your Goal:</strong> ${userGoal}</p>
+                <p><strong>📊 Project Breakdown:</strong></p>
+                <ul class="analysis-points">
+                    <li>${totalTasks} actionable tasks defined</li>
+                    <li>${highPriorityTasks} high-priority items for immediate focus</li>
+                    <li>${totalDays} estimated work days (${completionWeeks} weeks)</li>
+                    <li>${Math.ceil(totalTasks / 3)} recommended milestones</li>
+                </ul>
+                <p><strong>📈 Success Probability:</strong> ${successProbability}%</p>
+                <p><strong>🚀 Next Steps:</strong></p>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Start with your high-priority tasks</li>
+                    <li>Schedule weekly progress reviews</li>
+                    <li>Adjust timeline as needed based on progress</li>
+                    <li>Celebrate milestones along the way!</li>
+                </ol>
+            `;
+            
+            summaryContainer.style.display = 'block';
+        }
+        
+        // ========== SMART RESPONSE SYSTEM ==========
+        function generateGoalResponse(goal) {
+            const responseText = document.getElementById('goalResponseText');
+            
+            let analysis = '';
+            let recommendations = '';
+            
+            // Analyze goal characteristics
+            const hasNumbers = /\d+/.test(goal);
+            const hasTimeframe = /within|by|in|months|weeks|days|years|quarter|Q\d|202[3-9]/.test(goal.toLowerCase());
+            const isSpecific = goal.length > 30;
+            
+            analysis += `<p><strong>✅ Goal Analysis:</strong></p><ul class="analysis-points">`;
+            
+            if (isSpecific) {
+                analysis += `<li>Well-defined and specific goal</li>`;
+            } else {
+                analysis += `<li>Consider adding more specific details</li>`;
+            }
+            
+            if (hasTimeframe) {
+                analysis += `<li>Clear timeframe identified</li>`;
+            } else {
+                analysis += `<li>Add a specific deadline for better planning</li>`;
+            }
+            
+            if (hasNumbers) {
+                analysis += `<li>Measurable success criteria included</li>`;
+            } else {
+                analysis += `<li>Include numerical targets for better tracking</li>`;
+            }
+            
+            analysis += `</ul>`;
+            
+            // Generate recommendations based on goal type
+            const goalLower = goal.toLowerCase();
+            
+            if (goalLower.includes('app') || goalLower.includes('software') || goalLower.includes('platform')) {
+                recommendations = `
+                    <p><strong>💡 Technical Project Tips:</strong></p>
+                    <ul class="analysis-points">
+                        <li>Include user testing phases</li>
+                        <li>Plan for iterative development sprints</li>
+                        <li>Consider backend and frontend as separate workstreams</li>
+                        <li>Allocate time for bug fixes and quality assurance</li>
+                    </ul>
+                `;
+            } else if (goalLower.includes('thesis') || goalLower.includes('research') || goalLower.includes('study')) {
+                recommendations = `
+                    <p><strong>💡 Academic Project Tips:</strong></p>
+                    <ul class="analysis-points">
+                        <li>Break into literature review, data collection, analysis phases</li>
+                        <li>Include peer review time</li>
+                        <li>Plan for revisions and editing</li>
+                        <li>Consider ethical approval timelines if needed</li>
+                    </ul>
+                `;
+            } else if (goalLower.includes('launch') || goalLower.includes('marketing') || goalLower.includes('campaign')) {
+                recommendations = `
+                    <p><strong>💡 Marketing Project Tips:</strong></p>
+                    <ul class="analysis-points">
+                        <li>Include audience research phase</li>
+                        <li>Plan for content creation and approval cycles</li>
+                        <li>Schedule A/B testing periods</li>
+                        <li>Allocate budget for advertising if applicable</li>
+                    </ul>
+                `;
+            }
+            
+            responseText.innerHTML = analysis + recommendations;
+        }
+        
+        function generateTaskResponse(task) {
+            const responseText = document.getElementById('taskResponseText');
+            
+            const wordCount = task.text.split(' ').length;
+            const complexity = wordCount > 8 ? 'complex' : wordCount > 4 ? 'moderate' : 'simple';
+            
+            let analysis = `<p><strong>📝 Task Added Successfully:</strong></p>`;
+            analysis += `<ul class="analysis-points">`;
+            analysis += `<li><strong>Priority:</strong> ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</li>`;
+            analysis += `<li><strong>Estimated Duration:</strong> ${task.estimatedDays} day${task.estimatedDays !== 1 ? 's' : ''}</li>`;
+            analysis += `<li><strong>Complexity:</strong> ${complexity.charAt(0).toUpperCase() + complexity.slice(1)}</li>`;
+            analysis += `</ul>`;
+            
+            // Task-specific tips
+            const taskLower = task.text.toLowerCase();
+            let tips = '';
+            
+            if (taskLower.includes('research') || taskLower.includes('analyze')) {
+                tips = `<p><strong>🔍 Research Task Tip:</strong> Consider breaking into literature review and analysis phases.</p>`;
+            } else if (taskLower.includes('develop') || taskLower.includes('build')) {
+                tips = `<p><strong>⚙️ Development Task Tip:</strong> Include testing and deployment subtasks.</p>`;
+            } else if (taskLower.includes('meeting') || taskLower.includes('discuss')) {
+                tips = `<p><strong>🤝 Meeting Task Tip:</strong> Prepare agenda and follow-up action items.</p>`;
+            }
+            
+            // Priority-specific advice
+            if (task.priority === 'high') {
+                tips += `<p><strong>🚨 High Priority:</strong> Schedule this task early and allocate sufficient resources.</p>`;
+            } else if (task.priority === 'low') {
+                tips += `<p><strong>⚡ Low Priority:</strong> Consider batching with similar low-priority tasks.</p>`;
+            }
+            
+            responseText.innerHTML = analysis + tips;
+        }
+        
+        // ========== UTILITY FUNCTIONS ==========
+        function showSuccessAnimation() {
+            const animation = document.getElementById('successAnimation');
+            animation.classList.add('show');
+            setTimeout(() => {
+                animation.classList.remove('show');
+            }, 1500);
+        }
+        
+        function showError(message) {
+            showTemporaryMessage(message);
+        }
+        
+        function showTemporaryMessage(message) {
+            // Remove existing error messages
+            document.querySelectorAll('.error-message').forEach(msg => msg.remove());
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'error-message';
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        // ========== LOCAL STORAGE ==========
+        function saveToLocalStorage() {
+            localStorage.setItem('roadmapGoal', userGoal);
+            localStorage.setItem('roadmapTasks', JSON.stringify(userTasks));
+            localStorage.setItem('currentSlide', currentSlide);
+        }
+        
+        function loadFromLocalStorage() {
+            const savedGoal = localStorage.getItem('roadmapGoal');
+            const savedTasks = localStorage.getItem('roadmapTasks');
+            const savedSlide = localStorage.getItem('currentSlide');
+            
+            if (savedGoal) {
+                userGoal = savedGoal;
+                document.getElementById('goalInput').value = savedGoal;
+                updateGoalDisplay();
+            }
+            
+            if (savedTasks) {
+                userTasks = JSON.parse(savedTasks);
+                updateTaskList();
+                updateTaskStatistics();
+            }
+            
+            if (savedSlide) {
+                goToSlide(parseInt(savedSlide));
+            }
+        }
+        
+        function resetApplication() {
+            userGoal = '';
+            userTasks = [];
+            
+            // Clear inputs
+            document.getElementById('goalInput').value = '';
+            document.getElementById('taskInput').value = '';
+            
+            // Update displays
+            updateGoalDisplay();
+            updateTaskList();
+            updateTaskStatistics();
+            updatePriorityMatrix();
+            updateTimelinePreview();
+            
+            // Clear response containers
+            document.getElementById('goalResponse').style.display = 'none';
+            document.getElementById('taskResponse').style.display = 'none';
+            document.getElementById('priorityResponse').style.display = 'none';
+            document.getElementById('timelineResponse').style.display = 'none';
+            document.getElementById('roadmapSummary').style.display = 'none';
+            
+            // Clear localStorage
+            localStorage.removeItem('roadmapGoal');
+            localStorage.removeItem('roadmapTasks');
+            localStorage.removeItem('currentSlide');
+            
+            showTemporaryMessage("Presentation reset. Ready to create a new roadmap!");
+        }
+        
+        // ========== PARTICLE BACKGROUND ==========
+        function initParticleBackground() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Create particles
+            const particles = [];
+            const particleCount = 50;
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.color = `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${Math.random() * 0.3 + 0.1})`;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x > canvas.width) this.x = 0;
+                    else if (this.x < 0) this.x = canvas.width;
+                    
+                    if (this.y > canvas.height) this.y = 0;
+                    else if (this.y < 0) this.y = canvas.height;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Create glow effect
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            
+            // Animation loop
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw connecting lines between close particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(100, 150, 255, ${0.15 * (1 - distance/100)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                    
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            animateParticles();
+        }
+        
+        // ========== VISUAL NODES ==========
+        function initVisualNodes() {
+            const visualNodes = document.querySelectorAll('.visual-node');
+            visualNodes.forEach(node => {
+                // Add hover effect
+                node.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2)';
+                    this.style.zIndex = '10';
+                });
+                
+                node.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.zIndex = '2';
+                });
+            });
+        }
+        
+        // ========== EXPORT FUNCTIONALITY ==========
+        function exportRoadmap() {
+            if (!userGoal && userTasks.length === 0) {
+                showError("No roadmap data to export");
+                return;
+            }
+            
+            const roadmapData = {
+                goal: userGoal,
+                tasks: userTasks,
+                created: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(roadmapData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `roadmap-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showTemporaryMessage("Roadmap exported successfully!");
+        }
+        
+        // Start auto-save
+        setInterval(() => {
+            if (userGoal || userTasks.length > 0) {
+                saveToLocalStorage();
+            }
+        }, 30000); // Save every 30 seconds
+        
+        // Add beforeunload warning
+        window.addEventListener('beforeunload', function(e) {
+            if (userGoal || userTasks.length > 0) {
+                saveToLocalStorage();
+            }
+        });
+        
+        // Add touch support for mobile devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left
+                } else {
+                    prevSlide(); // Swipe right
+                }
+            }
+        }
+        
+        // Final initialization message
+        console.log("Strategic Roadmap Creator initialized successfully!");
+        console.log("Available features:");
+        console.log("- Multi-language support (English, Arabic, French)");
+        console.log("- Interactive goal setting");
+        console.log("- Task management with priority levels");
+        console.log("- Eisenhower Matrix prioritization");
+        console.log("- Timeline visualization");
+        console.log("- Local storage for persistence");
+        console.log("- Export functionality");
+        console.log("- Touch/swipe support for mobile");
+        console.log("- Smart analysis and recommendations");
+        
+    </script>
+</body>
+</html>
