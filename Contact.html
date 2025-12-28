@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Storage App</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #2575fc;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #2575fc;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1c6ae4;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .contacts-container {
+            margin-top: 20px;
+        }
+        
+        .contact-card {
+            background: #f8f9fa;
+            border-left: 4px solid #2575fc;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            transition: transform 0.2s;
+        }
+        
+        .contact-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .contact-id {
+            font-weight: bold;
+            color: #2575fc;
+            margin-bottom: 5px;
+        }
+        
+        .contact-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .contact-detail {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-detail i {
+            margin-right: 10px;
+            color: #6c757d;
+            width: 20px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .info-section {
+            background-color: #e7f3ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .info-section h3 {
+            color: #2575fc;
+            margin-bottom: 15px;
+        }
+        
+        .info-section ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-section li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .highlight-contact {
+            background-color: #fffacd;
+            border-left-color: #ffc107;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-address-book"></i> Contact Storage App</h1>
+        <p class="subtitle">A browser-based application that stores contact information locally. Data persists even after closing the browser.</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Add New Contact</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="text" id="id" placeholder="Enter unique ID" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telephone">Telephone Number</label>
+                    <input type="tel" id="telephone" placeholder="Enter telephone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" placeholder="Enter full address" required></textarea>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Save Contact
+                    </button>
+                    <button type="button" id="loadSample" class="btn-secondary">
+                        <i class="fas fa-download"></i> Load Sample Data
+                    </button>
+                    <button type="button" id="clearAll" class="btn-danger">
+                        <i class="fas fa-trash-alt"></i> Clear All Data
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card">
+            <h2>Stored Contacts</h2>
+            <div id="contactsList" class="contacts-container">
+                <!-- Contacts will be displayed here dynamically -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-section">
+        <h3><i class="fas fa-info-circle"></i> How This Works</h3>
+        <p>This application uses the browser's <span class="highlight">localStorage</span> API to store contact data. Here's what happens:</p>
+        <ul>
+            <li>When you add a contact, it's saved to <span class="highlight">localStorage</span> in your browser.</li>
+            <li>The data persists even after closing the browser or restarting your computer.</li>
+            <li>When the page loads, it automatically retrieves and displays all stored contacts.</li>
+            <li>Each contact contains: <span class="highlight">ID, Name, Telephone Number, and Address</span>.</li>
+            <li>The sample data button pre-loads 5 example contacts, including <strong>Layla's contact</strong>.</li>
+        </ul>
+        
+        <h3><i class="fas fa-check-circle"></i> How to Test Before Sending to Your Professor</h3>
+        <ul>
+            <li><strong>Test adding contacts</strong>: Fill out the form and click "Save Contact"</li>
+            <li><strong>Test persistence</strong>: Close the browser tab, then reopen it to see if contacts are still there</li>
+            <li><strong>Try the sample data</strong>: Click "Load Sample Data" to see 5 pre-filled contacts including Layla's</li>
+            <li><strong>Check browser developer tools</strong>: Press F12, go to the "Application" tab, and look under "Local Storage" to see the raw stored data</li>
+            <li><strong>Test on different devices</strong>: Open the link on your phone or another computer to confirm data is stored locally on each device</li>
+        </ul>
+        
+        <div class="button-group">
+            <button id="viewStorage" class="btn-success">
+                <i class="fas fa-database"></i> View localStorage Data
+            </button>
+            <button id="printInstructions" class="btn-secondary">
+                <i class="fas fa-print"></i> Print Instructions
+            </button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Created for College Assignment | Data stored locally in browser using localStorage API</p>
+        <p>To share with your professor, simply send them the link to this HTML file hosted online or run it locally.</p>
+    </footer>
+
+    <script>
+        // Initialize contacts array from localStorage or create empty array
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+        
+        // DOM elements
+        const contactForm = document.getElementById('contactForm');
+        const contactsList = document.getElementById('contactsList');
+        const loadSampleBtn = document.getElementById('loadSample');
+        const clearAllBtn = document.getElementById('clearAll');
+        const viewStorageBtn = document.getElementById('viewStorage');
+        const printInstructionsBtn = document.getElementById('printInstructions');
+        
+        // Display contacts on page load
+        document.addEventListener('DOMContentLoaded', displayContacts);
+        
+        // Handle form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const id = document.getElementById('id').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            
+            // Check if ID already exists
+            const idExists = contacts.some(contact => contact.id === id);
+            if (idExists) {
+                alert(`Contact with ID "${id}" already exists. Please use a different ID.`);
+                return;
+            }
+            
+            // Create new contact object
+            const newContact = {
+                id,
+                name,
+                telephone,
+                address
+            };
+            
+            // Add to contacts array
+            contacts.push(newContact);
+            
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Clear form
+            contactForm.reset();
+            
+            // Update display
+            displayContacts();
+            
+            // Show success message
+            alert(`Contact "${name}" has been saved successfully!`);
+        });
+        
+        // Load sample data
+        loadSampleBtn.addEventListener('click', function() {
+            // Sample contact data - Now includes Layla's contact
+            const sampleContacts = [
+                {
+                    id: "001",
+                    name: "Layla",
+                    telephone: "0101362937",
+                    address: "El Sherook"
+                },
+                {
+                    id: "002",
+                    name: "Dr. James Wilson",
+                    telephone: "+1 (555) 123-4567",
+                    address: "123 University Ave, Science Building, Room 305, Boston, MA 02115"
+                },
+                {
+                    id: "003",
+                    name: "Prof. Sarah Johnson",
+                    telephone: "+1 (555) 987-6543",
+                    address: "456 College Boulevard, Engineering Department, Chicago, IL 60616"
+                },
+                {
+                    id: "004",
+                    name: "Dr. Michael Chen",
+                    telephone: "+1 (555) 456-7890",
+                    address: "789 Research Park, Laboratory Building, San Francisco, CA 94107"
+                },
+                {
+                    id: "005",
+                    name: "Prof. Emily Davis",
+                    telephone: "+1 (555) 234-5678",
+                    address: "321 Academic Lane, Humanities Building, New York, NY 10001"
+                }
+            ];
+            
+            // Check if we already have contacts
+            if (contacts.length > 0) {
+                if (!confirm("This will add 5 sample contacts to your existing data. Continue?")) {
+                    return;
+                }
+            }
+            
+            // Clear existing contacts before loading sample
+            contacts = [];
+            
+            // Add sample contacts
+            sampleContacts.forEach(contact => {
+                contacts.push(contact);
+            });
+            
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Update display
+            displayContacts();
+            
+            alert("Sample data loaded successfully! You now have 5 contacts stored, including Layla's contact which is highlighted in yellow.");
+        });
+        
+        // Clear all data
+        clearAllBtn.addEventListener('click', function() {
+            if (contacts.length === 0) {
+                alert("There are no contacts to clear.");
+                return;
+            }
+            
+            if (confirm("Are you sure you want to delete ALL contacts? This cannot be undone.")) {
+                contacts = [];
+                saveToLocalStorage();
+                displayContacts();
+                alert("All contacts have been deleted.");
+            }
+        });
+        
+        // View localStorage data
+        viewStorageBtn.addEventListener('click', function() {
+            const storageData = localStorage.getItem('contacts');
+            if (storageData) {
+                const formattedData = JSON.stringify(JSON.parse(storageData), null, 2);
+                alert("Raw localStorage data:\n\n" + formattedData);
+            } else {
+                alert("No data found in localStorage.");
+            }
+        });
+        
+        // Print instructions
+        printInstructionsBtn.addEventListener('click', function() {
+            const printContent = `
+                <h1>Contact Storage App - Instructions</h1>
+                <h2>How This Works</h2>
+                <p>This application uses the browser's localStorage API to store contact data. Here's what happens:</p>
+                <ul>
+                    <li>When you add a contact, it's saved to localStorage in your browser.</li>
+                    <li>The data persists even after closing the browser or restarting your computer.</li>
+                    <li>When the page loads, it automatically retrieves and displays all stored contacts.</li>
+                    <li>Each contact contains: ID, Name, Telephone Number, and Address.</li>
+                    <li>The sample data button pre-loads 5 example contacts including Layla's contact.</li>
+                </ul>
+                <h2>Sample Contacts Included</h2>
+                <ol>
+                    <li><strong>Layla</strong> - Telephone: 0101362937 - Address: El Sherook</li>
+                    <li>Dr. James Wilson - Telephone: +1 (555) 123-4567 - Address: 123 University Ave, Boston</li>
+                    <li>Prof. Sarah Johnson - Telephone: +1 (555) 987-6543 - Address: 456 College Boulevard, Chicago</li>
+                    <li>Dr. Michael Chen - Telephone: +1 (555) 456-7890 - Address: 789 Research Park, San Francisco</li>
+                    <li>Prof. Emily Davis - Telephone: +1 (555) 234-5678 - Address: 321 Academic Lane, New York</li>
+                </ol>
+                <h2>Testing Instructions</h2>
+                <ol>
+                    <li><strong>Test adding contacts</strong>: Fill out the form and click "Save Contact"</li>
+                    <li><strong>Test persistence</strong>: Close the browser tab, then reopen it to see if contacts are still there</li>
+                    <li><strong>Try the sample data</strong>: Click "Load Sample Data" to see 5 pre-filled contacts</li>
+                    <li><strong>Check browser developer tools</strong>: Press F12, go to the "Application" tab, and look under "Local Storage" to see the raw stored data</li>
+                </ol>
+                <p><strong>To share with your professor:</strong> Send them the link to this HTML file hosted online or run it locally.</p>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Contact App Instructions</title></head><body>' + printContent + '</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+        
+        // Function to save contacts to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('contacts', JSON.stringify(contacts));
+        }
+        
+        // Function to display all contacts
+        function displayContacts() {
+            if (contacts.length === 0) {
+                contactsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-address-book"></i>
+                        <h3>No Contacts Stored</h3>
+                        <p>Add a contact using the form or click "Load Sample Data" to get 5 sample contacts including Layla's.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let contactsHTML = '';
+            
+            contacts.forEach(contact => {
+                // Highlight Layla's contact
+                const isLayla = contact.name.toLowerCase().includes('layla');
+                const highlightClass = isLayla ? 'highlight-contact' : '';
+                
+                contactsHTML += `
+                    <div class="contact-card ${highlightClass}">
+                        <div class="contact-id">ID: ${contact.id}</div>
+                        <div class="contact-name">${contact.name}</div>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>${contact.telephone}</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${contact.address}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            contactsList.innerHTML = contactsHTML;
+        }
+        
+        // Auto-load sample data on first visit if no contacts exist
+        window.addEventListener('load', function() {
+            // Check if this is first load and no contacts exist
+            const firstVisit = localStorage.getItem('firstVisit');
+            
+            if (!firstVisit && contacts.length === 0) {
+                // Set flag that we've visited
+                localStorage.setItem('firstVisit', 'true');
+                
+                // Ask user if they want to load sample data
+                setTimeout(() => {
+                    if (confirm("Welcome to the Contact Storage App! Would you like to load sample data including Layla's contact?")) {
+                        loadSampleBtn.click();
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
