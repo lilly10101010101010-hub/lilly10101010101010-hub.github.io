@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager | Elegant Storage Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --lancome-pink: #e4007f;
+            --lancome-gold: #d4af37;
+            --soft-pink: #f8e7f0;
+            --light-pink: #fff5fa;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-pink);
+            color: var(--dark-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #fff5fa 0%, #f8e7f0 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--lancome-pink), var(--lancome-gold));
+            border-radius: 2px;
+        }
+
+        .logo {
+            font-family: 'Georgia', serif;
+            font-size: 2.8rem;
+            color: var(--lancome-pink);
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo::before,
+        .logo::after {
+            content: '✦';
+            color: var(--lancome-gold);
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 35px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(228, 0, 127, 0.1);
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(228, 0, 127, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--lancome-pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--lancome-gold);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(228, 0, 127, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--soft-pink);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--lancome-pink);
+            box-shadow: 0 0 0 3px rgba(228, 0, 127, 0.1);
+            background-color: var(--white);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Button Styles */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--lancome-pink), #ff66a3);
+            color: var(--white);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(228, 0, 127, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--soft-pink);
+            color: var(--lancome-pink);
+            border: 1px solid rgba(228, 0, 127, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(228, 0, 127, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #fff0f0;
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(231, 76, 60, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Contacts List */
+        .contacts-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .contact-card {
+            background: var(--soft-pink);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--lancome-pink);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--lancome-pink), var(--lancome-gold));
+        }
+
+        .contact-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(228, 0, 127, 0.1);
+        }
+
+        .contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .contact-id {
+            font-size: 0.9rem;
+            color: var(--lancome-gold);
+            font-weight: 600;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .contact-name {
+            font-size: 1.4rem;
+            color: var(--dark-text);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            color: var(--light-text);
+        }
+
+        .contact-detail i {
+            color: var(--lancome-pink);
+            width: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-text);
+        }
+
+        .empty-state i {
+            font-size: 3.5rem;
+            color: var(--lancome-gold);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border: 1px solid rgba(228, 0, 127, 0.1);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-label {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .status-value {
+            color: var(--lancome-pink);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--soft-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--lancome-pink);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(228, 0, 127, 0.1);
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .footer-link {
+            color: var(--lancome-pink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--lancome-gold);
+            text-decoration: underline;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--soft-pink);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--lancome-pink);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c6006c;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contact-card {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--white);
+            padding: 20px 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid var(--lancome-pink);
+            transform: translateX(400px);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-title {
+            color: var(--lancome-pink);
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification-message {
+            color: var(--dark-text);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Notification Container -->
+    <div id="notification" class="notification">
+        <div class="notification-title">
+            <i class="fas fa-check-circle"></i>
+            <span>Success!</span>
+        </div>
+        <div class="notification-message">Contact saved successfully</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">Contact Manager</div>
+            <div class="subtitle">Elegant Contact Storage Solution</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Add Contact Form -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-user-plus"></i>
+                        Add New Contact
+                    </h2>
+                </div>
+                
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="id" class="form-label">Contact ID</label>
+                        <input type="text" id="id" class="form-input" placeholder="Enter unique identifier" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone" class="form-label">Telephone Number</label>
+                        <input type="tel" id="telephone" class="form-input" placeholder="Enter telephone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea id="address" class="form-textarea" placeholder="Enter complete address" required></textarea>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Contact
+                        </button>
+                        <button type="button" id="loadSample" class="btn btn-secondary">
+                            <i class="fas fa-magic"></i>
+                            Load Elegant Sample
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Contacts Display -->
+            <section class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-address-book"></i>
+                        Stored Contacts
+                    </h2>
+                </div>
+                
+                <div id="contactsList" class="contacts-container">
+                    <!-- Contacts will be displayed here dynamically -->
+                </div>
+                
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button id="clearAll" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear All Contacts
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div>
+                    <div class="status-label">Storage Status</div>
+                    <div id="storageStatus" class="status-value">Local Storage Active</div>
+                </div>
+            </div>
+            
+            <div class="status-item">
+                <div class="status-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <div class="status-label">Contacts Count</div>
+                    <div id="contactsCount" class="status-value">0 contacts</div>
+                </div>
+            </div>
+            
+            <div class="status-item">
+                <div class="status-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <div class="status-label">Data Persistence</div>
+                    <div class="status-value">Browser Storage</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Contact Storage Application • Data persists in browser local storage</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link" id="viewStorageBtn">View Storage Data</a>
+                <a href="#" class="footer-link" id="exportDataBtn">Export Contacts</a>
+                <a href="#" class="footer-link" id="refreshBtn">Refresh Display</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize contacts array from localStorage or create empty array
+        let contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+        
+        // DOM elements
+        const contactForm = document.getElementById('contactForm');
+        const contactsList = document.getElementById('contactsList');
+        const loadSampleBtn = document.getElementById('loadSample');
+        const clearAllBtn = document.getElementById('clearAll');
+        const contactsCount = document.getElementById('contactsCount');
+        const storageStatus = document.getElementById('storageStatus');
+        const notification = document.getElementById('notification');
+        
+        // Footer buttons
+        const viewStorageBtn = document.getElementById('viewStorageBtn');
+        const exportDataBtn = document.getElementById('exportDataBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        
+        // Display contacts on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            displayContacts();
+            updateStatus();
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Welcome!', 'Ready to manage your contacts elegantly.');
+            }, 1000);
+        });
+        
+        // Handle form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const id = document.getElementById('id').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            
+            // Validate input
+            if (!id || !name || !telephone || !address) {
+                showNotification('Error', 'Please fill in all fields.', 'error');
+                return;
+            }
+            
+            // Check if ID already exists
+            const idExists = contacts.some(contact => contact.id === id);
+            if (idExists) {
+                showNotification('Duplicate ID', `Contact with ID "${id}" already exists. Please use a different ID.`, 'error');
+                return;
+            }
+            
+            // Create new contact object
+            const newContact = {
+                id,
+                name,
+                telephone,
+                address,
+                dateAdded: new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                })
+            };
+            
+            // Add to contacts array
+            contacts.push(newContact);
+            
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Clear form
+            contactForm.reset();
+            
+            // Update display
+            displayContacts();
+            updateStatus();
+            
+            // Show success notification
+            showNotification('Success!', `Contact "${name}" has been saved elegantly.`);
+        });
+        
+        // Load sample data
+        loadSampleBtn.addEventListener('click', function() {
+            // Elegant sample contact data
+            const sampleContacts = [
+                {
+                    id: "LD001",
+                    name: "Layla",
+                    telephone: "0101362937",
+                    address: "El Sherook, Cairo",
+                    dateAdded: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                },
+                {
+                    id: "PR002",
+                    name: "Sophia Richardson",
+                    telephone: "+1 (555) 123-4567",
+                    address: "123 Park Avenue, New York, NY",
+                    dateAdded: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                },
+                {
+                    id: "DR003",
+                    name: "Dr. Isabella Chen",
+                    telephone: "+44 20 7946 0858",
+                    address: "45 Harley Street, London W1G 8QJ",
+                    dateAdded: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                },
+                {
+                    id: "PR004",
+                    name: "Professor Emma Laurent",
+                    telephone: "+33 1 42 96 12 82",
+                    address: "7 Rue de la Paix, Paris 75002",
+                    dateAdded: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                },
+                {
+                    id: "MD005",
+                    name: "Madame Gabrielle Dubois",
+                    telephone: "+41 22 908 04 40",
+                    address: "Rue du Rhône 14, Geneva 1204",
+                    dateAdded: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                }
+            ];
+            
+            // Check if we already have contacts
+            if (contacts.length > 0) {
+                if (!confirm("This will replace all existing contacts with elegant sample data. Continue?")) {
+                    return;
+                }
+            }
+            
+            // Replace existing contacts with sample data
+            contacts = [...sampleContacts];
+            
+            // Save to localStorage
+            saveToLocalStorage();
+            
+            // Update display
+            displayContacts();
+            updateStatus();
+            
+            // Show notification
+            showNotification('Sample Loaded', 'Elegant sample contacts have been loaded successfully.');
+        });
+        
+        // Clear all data
+        clearAllBtn.addEventListener('click', function() {
+            if (contacts.length === 0) {
+                showNotification('Info', 'There are no contacts to clear.', 'info');
+                return;
+            }
+            
+            if (confirm("Are you sure you want to delete all contacts? This action cannot be undone.")) {
+                contacts = [];
+                saveToLocalStorage();
+                displayContacts();
+                updateStatus();
+                showNotification('All Cleared', 'All contacts have been removed elegantly.');
+            }
+        });
+        
+        // View localStorage data
+        viewStorageBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const storageData = localStorage.getItem('contacts');
+            if (storageData) {
+                const formattedData = JSON.stringify(JSON.parse(storageData), null, 2);
+                alert("LocalStorage Data:\n\n" + formattedData);
+            } else {
+                alert("No data found in localStorage.");
+            }
+        });
+        
+        // Export data
+        exportDataBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (contacts.length === 0) {
+                showNotification('Info', 'No contacts to export.', 'info');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(contacts, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = 'contacts_export.json';
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Export Complete', 'Contacts exported successfully as JSON file.');
+        });
+        
+        // Refresh display
+        refreshBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            displayContacts();
+            updateStatus();
+            showNotification('Refreshed', 'Display updated successfully.');
+        });
+        
+        // Function to save contacts to localStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('contacts', JSON.stringify(contacts));
+                storageStatus.textContent = 'Local Storage Active';
+                storageStatus.style.color = 'var(--lancome-pink)';
+            } catch (e) {
+                storageStatus.textContent = 'Storage Error';
+                storageStatus.style.color = '#e74c3c';
+                showNotification('Storage Error', 'Could not save to localStorage.', 'error');
+            }
+        }
+        
+        // Function to display all contacts
+        function displayContacts() {
+            if (contacts.length === 0) {
+                contactsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-heart"></i>
+                        <h3>No Contacts Yet</h3>
+                        <p>Add your first contact or load the elegant sample</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let contactsHTML = '';
+            
+            contacts.forEach(contact => {
+                // Determine icon based on name
+                let icon = 'fas fa-user';
+                if (contact.name.toLowerCase().includes('layla')) {
+                    icon = 'fas fa-star';
+                } else if (contact.name.toLowerCase().includes('dr.')) {
+                    icon = 'fas fa-user-md';
+                } else if (contact.name.toLowerCase().includes('professor') || contact.name.toLowerCase().includes('prof.')) {
+                    icon = 'fas fa-graduation-cap';
+                } else if (contact.name.toLowerCase().includes('madame')) {
+                    icon = 'fas fa-crown';
+                }
+                
+                contactsHTML += `
+                    <div class="contact-card">
+                        <div class="contact-header">
+                            <div class="contact-name">
+                                <i class="${icon}"></i> ${contact.name}
+                            </div>
+                            <div class="contact-id">${contact.id}</div>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>${contact.telephone}</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${contact.address}</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Added: ${contact.dateAdded}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            contactsList.innerHTML = contactsHTML;
+        }
+        
+        // Function to update status bar
+        function updateStatus() {
+            contactsCount.textContent = `${contacts.length} contact${contacts.length !== 1 ? 's' : ''}`;
+        }
+        
+        // Function to show notifications
+        function showNotification(title, message, type = 'success') {
+            const titleEl = notification.querySelector('.notification-title');
+            const messageEl = notification.querySelector('.notification-message');
+            const icon = titleEl.querySelector('i');
+            
+            // Set notification content
+            titleEl.innerHTML = `<i class="${type === 'error' ? 'fas fa-exclamation-circle' : type === 'info' ? 'fas fa-info-circle' : 'fas fa-check-circle'}"></i> ${title}`;
+            messageEl.textContent = message;
+            
+            // Set color based on type
+            notification.style.borderLeftColor = 
+                type === 'error' ? '#e74c3c' : 
+                type === 'info' ? '#3498db' : 
+                'var(--lancome-pink)';
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Auto-hide after 4 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+        
+        // Auto-load sample data on first visit
+        window.addEventListener('load', function() {
+            const firstVisit = localStorage.getItem('firstVisit');
+            
+            if (!firstVisit && contacts.length === 0) {
+                localStorage.setItem('firstVisit', 'true');
+                
+                // Auto-load sample after a short delay
+                setTimeout(() => {
+                    if (confirm("Welcome to the elegant Contact Manager! Would you like to load beautiful sample contacts?")) {
+                        loadSampleBtn.click();
+                    }
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
